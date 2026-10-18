@@ -16,6 +16,7 @@ hackathon-agent-mailbox/
 ```
 
 角色标识：`coordinator`、`workflow`、`backend`、`frontend`；`ima`、`qa` 仅用于旧会话交接。
+`messages/user` 用于本需求讨论会话代用户转述明确要求，须注明转述身份和原意；它不代表第五个开发角色，也不冒充 Coordinator。所有角色同时检查发给自己或 all 的用户需求消息。
 发送者只在自己的 messages 子目录新增消息；消息 ID 全局唯一，例如 `20261018T083000Z_a93f_workflow_llm-contract`。先写 `.tmp`，完成后同目录改名为 `.md`，接收方只读取 `.md`。发布后不改原消息，纠正用新消息引用旧 ID。
 接收者只在自己的 receipts 子目录写回执，可更新状态；回复详情另发自己名下的新消息。不要覆盖别人的消息或回执。
 
