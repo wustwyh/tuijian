@@ -5,7 +5,8 @@
 - 已发布 API §8 和共享类型，冻结 B1 身份/任务、IMA 模块与 LLMAdapter；根 Node 要求对齐 >=24。角色回执及双方接缝意见经共享信箱接收。
 - 发现并通知 Workflow：真实 IMG source_url:null 会被旧 remoteUrl 校验拒绝；由 Workflow 自己修复，Coordinator 不代改。
 - 尚未合入 Frontend/Backend/Workflow 业务分支；未生成公共锁文件；缺服务端 LLM key，真实 LLM/完整生成闭环尚未验证。Backend 接续 B4/B5，Workflow 接续 W0，Frontend 可继续既有结构预览。
-- 下一可验收动作：接收 W0 和各模块具体交付，冻结确认/失效/导出和图片 HTTP，再逐提交集成并执行所需检查。见 `docs/next-batch.md`。
+- 已收到并定向评估 W0 草案 ab7e3a2；已发正式契约提交 39d15df 通知、IMA 精确类型/真实摘要路径、Backend 图片/确认接口请求并填写回执。消息 `20261018T074700Z_c2-seams-v1-published`。
+- 下一可验收动作：Backend 回 D1—D7 与图片 HTTP 草案，Workflow 自验真实来源格式修复；收口确认/失效接口后逐提交集成。导出产品取舍仍待决定。见 `docs/next-batch.md`。
 - 原子信箱消息及回执见 `E:\Codex\workspace\hackathon-agent-mailbox`；仅讨论不等于正式契约。旧记录保留在下方。
 
 ---
