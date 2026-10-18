@@ -11,12 +11,13 @@ import './styles.css';
 function Login({ api, initialError, onLogin, blocked }) {
   const [account, setAccount] = useState(''); const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false); const [error, setError] = useState(''); const abort = useRef(null);
+  const [registering, setRegistering] = useState(false);
   useEffect(() => () => abort.current?.abort(), []);
   async function submit(event) {
     event.preventDefault(); if (busy || blocked) return;
     setBusy(true); setError(''); abort.current = new AbortController();
     try {
-      const user = await api.login({ account: account.trim(), password }, abort.current.signal);
+      const user = await api[registering ? 'register' : 'login']({ account: account.trim(), password }, abort.current.signal);
       if (abort.current.signal.aborted) return;
       if (!user?.id) throw new Error('账号服务尚未返回有效身份，请联系演示负责人。');
       setPassword(''); onLogin(user);
@@ -27,18 +28,18 @@ function Login({ api, initialError, onLogin, blocked }) {
     h('section', { className: 'login-story' }, h('div', { className: 'wordmark' }, h('span', { className: 'brand-symbol' }, 'H'), '华为 PC · 营销工作台'),
       h('div', { className: 'story-copy' }, h('p', { className: 'eyebrow' }, '从产品事实，到有说服力的表达'), h('h1', null, '把好产品，', h('br'), '讲给对的人。'), h('p', null, '找依据、定人群、写内容、做核验。', h('br'), '让每一次营销，都有据可循。'), h('div', { className: 'process' }, '01  查找依据', h('span', null, '→'), '02  形成策略', h('span', null, '→'), '03  生成内容')),
       h('p', { className: 'story-foot' }, 'HUAWEI PC / 营销智能体 DEMO')),
-    h('main', { className: 'login-main' }, h('div', { className: 'login-card' }, h('p', { className: 'eyebrow' }, '你的营销工作，从这里开始'), h('h2', null, '登录工作台'), h('p', { className: 'muted' }, '登录后查看和管理自己的营销任务。'),
+    h('main', { className: 'login-main' }, h('div', { className: 'login-card' }, h('p', { className: 'eyebrow' }, '你的营销工作，从这里开始'), h('h2', null, registering ? '创建演示账号' : '登录工作台'), h('p', { className: 'muted' }, registering ? '使用邮箱创建本地演示账号，密码至少 12 位。' : '登录后查看和管理自己的营销任务。'),
       (error || initialError) && notice(error || initialError, 'error'),
-      h('form', { onSubmit: submit }, h('div', { className: 'field' }, h('label', { htmlFor: 'account' }, '账号'), h('input', { id: 'account', autoComplete: 'username', value: account, required: true, disabled: busy || blocked, onChange: e => setAccount(e.target.value) })),
-        h('div', { className: 'field' }, h('label', { htmlFor: 'password' }, '密码'), h('input', { id: 'password', type: 'password', autoComplete: 'current-password', value: password, required: true, disabled: busy || blocked, onChange: e => setPassword(e.target.value) })),
-        h('button', { className: 'primary full', disabled: busy || blocked, type: 'submit' }, busy ? '正在登录…' : '登录并开始工作  →')),
-      h('p', { className: 'login-note' }, '需要新账号？请联系演示负责人开通。'))));
+      h('form', { onSubmit: submit }, h('div', { className: 'field' }, h('label', { htmlFor: 'account' }, '邮箱'), h('input', { id: 'account', type: 'email', autoComplete: 'username', value: account, required: true, disabled: busy || blocked, onChange: e => setAccount(e.target.value) })),
+        h('div', { className: 'field' }, h('label', { htmlFor: 'password' }, '密码'), h('input', { id: 'password', type: 'password', autoComplete: registering ? 'new-password' : 'current-password', minLength: registering ? 12 : undefined, maxLength: 128, value: password, required: true, disabled: busy || blocked, onChange: e => setPassword(e.target.value) })),
+        h('button', { className: 'primary full', disabled: busy || blocked, type: 'submit' }, busy ? '正在处理…' : registering ? '创建账号并进入工作台  →' : '登录并开始工作  →')),
+      h('div', { className: 'login-note' }, button(registering ? '已有账号？返回登录' : '还没有账号？创建演示账号', () => { setRegistering(value => !value); setPassword(''); setError(''); }, { className: 'quiet', disabled: busy || blocked })))));
 }
 function Shell({ user, route, api, onLogout, error }) {
   return h('div', { className: 'app-layout' }, h('aside', { className: 'sidebar' },
     h('a', { className: 'wordmark', href: '#/tasks' }, h('span', { className: 'brand-symbol' }, 'H'), h('span', null, '华为 PC', h('small', null, '营销工作台'))), h('p', { className: 'nav-label' }, 'WORKSPACE'),
     h('nav', { 'aria-label': '主导航' }, h('a', { href: '#/tasks', className: route.page !== 'leads' ? 'active' : '', 'aria-current': route.page !== 'leads' ? 'page' : undefined }, '◫  营销任务'), h('a', { href: '#/leads', className: route.page === 'leads' ? 'active' : '', 'aria-current': route.page === 'leads' ? 'page' : undefined }, '◎  客户跟进')),
-    h('div', { className: 'sidebar-bottom' }, h('p', null, user.display_name || '当前营销员'), button('退出登录', onLogout, { className: 'logout' }), h('small', null, 'HUAWEI PC / DEMO'))),
+    h('div', { className: 'sidebar-bottom' }, h('p', null, user.display_name || user.email || '当前营销员'), button('退出登录', onLogout, { className: 'logout' }), h('small', null, 'HUAWEI PC / DEMO'))),
     h('main', { className: 'workspace' }, error && notice(error, 'error'), route.page === 'workbench' ? h(Workbench, { api, taskId: route.id, key: route.id }) : route.page === 'leads' ? h(Section, { title: '客户跟进' }, blank('跟进功能将在后续批次接入', '演示仅使用虚构客户。当前批次先完成营销任务工作台。')) : h(Tasks, { api, onCreated: task => go(taskRoute(task.id)) })));
 }
 function App() {

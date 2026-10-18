@@ -7,7 +7,7 @@ export class ApiError extends Error {
 }
 
 export function createApi({ integration = {}, fetchImpl = globalThis.fetch, onUnauthorized = () => {} } = {}) {
-  async function request(path, { method = 'GET', body, signal } = {}) {
+  async function request(path, { method = 'GET', body, signal, notifyUnauthorized = true } = {}) {
     if (!path.startsWith('/api/') || path.includes('..') || path.includes('\\')) {
       throw new ApiError('INVALID_API_PATH', '接口地址必须位于当前站点 /api 下。');
     }
@@ -29,7 +29,7 @@ export function createApi({ integration = {}, fetchImpl = globalThis.fetch, onUn
       }
     }
     if (!response.ok) {
-      if (response.status === 401 || raw?.error?.code === 'UNAUTHORIZED') onUnauthorized();
+      if (notifyUnauthorized && (response.status === 401 || raw?.error?.code === 'UNAUTHORIZED')) onUnauthorized();
       throw new ApiError(raw?.error?.code || `HTTP_${response.status}`,
         raw?.error?.message || `请求失败（${response.status}），请稍后重试。`, response.status, raw?.error?.details || []);
     }
@@ -50,6 +50,7 @@ export function createApi({ integration = {}, fetchImpl = globalThis.fetch, onUn
     request,
     session: async signal => requireBinding('auth', 'session')({ request, signal }),
     login: async (credentials, signal) => requireBinding('auth', 'login')({ request, signal, credentials }),
+    register: async (credentials, signal) => requireBinding('auth', 'register')({ request, signal, credentials }),
     logout: async signal => requireBinding('auth', 'logout')({ request, signal }),
     tasks: async signal => decode('tasks', '/api/tasks', { signal }),
     createTask: async (input, signal) => decode('task', '/api/tasks', { method: 'POST', body: input, signal }),
