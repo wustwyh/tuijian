@@ -1,3 +1,10 @@
+# 最新模块集成 / PR1接续
+
+- 主树已合入Backend907094d、Workflow69c5230、Frontend916c1f3；本批分别16/22/13项通过，默认前端构建成功，统一根锁文件生成。IMA此前18项通过。未代改角色业务源码。
+- Backend新交接报告真实Kimi简单JSON通过，缺key阻塞解除；主树不复制角色.env。真实营销及整链路尚待联调。
+- 已读ea6dbf8的PR1需求，下一批CP1真实目录/WP1系统推荐/BP1连续执行/FP1产品卡片。旧W0逐步确认作为可选模式；后续联合契约需区分system_recommended和user_confirmed。
+- 下方为历史检查点，旧“未合入/缺key”描述以本节为准。信箱通知：20261018T080521Z_c4-modules-pr1-checkpoint。
+
 # Coordinator + IMA 接续 — C1 / seams-v1-20261018
 
 - 已读新版入口、角色、看板、职责切换与通信规则；本会话为唯一合并角色，不新建 IMA/QA。

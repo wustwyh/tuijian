@@ -11,6 +11,10 @@
     "node": ">=24"
   },
   "scripts": {
-    "test:ima": "node --test packages/ima/test/client.test.mjs"
+    "test:ima": "node --test packages/ima/test/client.test.mjs",
+    "test:api": "npm run test --workspace=@huawei-demo/api",
+    "test:workflow": "npm run test --workspace=@huawei-demo/workflow",
+    "test:web": "npm run test --workspace=@huawei-demo/web",
+    "build:web": "npm run build --workspace=@huawei-demo/web"
   }
 }
