@@ -2,5 +2,8 @@
   "name": "@huawei-demo/workflow",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "exports": { ".": { "types": "./src/index.d.ts", "import": "./src/index.js" } },
+  "scripts": { "test": "node --test test/workflow.test.js", "example": "node test/example.mjs" },
+  "engines": { "node": ">=22" }
 }
