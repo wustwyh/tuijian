@@ -1,0 +1,23 @@
+# Secrets stay outside source control.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+# Local reference materials and personal state are not runtime data.
+/华为PC知识库/
+/任德耀新建华为PC知识库/
+/ima-skills-1.1.10/
+/*.zip
+/*.pdf
+.workbuddy/
+.history/
+__MACOSX/
+.DS_Store
+# Generated/private runtime artifacts, real API responses, dependencies.
+node_modules/
+dist/
+coverage/
+.runtime/
+artifacts/
+*.log
