@@ -16,7 +16,7 @@ npm.cmd run dev --workspace @huawei-demo/web
 
 ```powershell
 npm.cmd run build --workspace @huawei-demo/web
-node --test apps/web/test/api.test.js apps/web/test/model.test.js
+npm.cmd run test --workspace @huawei-demo/web
 ```
 
 ## 页面与 API
@@ -40,4 +40,16 @@ node --test apps/web/test/api.test.js apps/web/test/model.test.js
 
 2026-10-18：生产构建及 10 项模块测试通过。实际 Edge 浏览器验证了登录/注册切换、匿名路由保护和 390px 移动布局，无页面脚本异常。前端首页 HTTP 200；代理和后端会话接口均返回匿名 401。
 
-尚未执行真实账号注册、登录、创建任务的完整浏览器验收。后端 B1 尚无证据端点，`GET /api/tasks/:taskId/evidence` 的失败会真实展示；生成、型号/画像确认、修改输入后的下游失效、图片直链、导出及客户跟进等待 B2/B3 和统一契约。缺失结果保持待处理，不伪造线上 ima 事实。
+已通过真实本地 B1 浏览器注册、创建标识为自验的任务、刷新重读、退出及路由保护（专用演示账号）。尚未验证双账号隔离。后端 B1 尚无证据端点，`GET /api/tasks/:taskId/evidence` 的失败会真实展示；生成、型号/画像确认、修改输入后的下游失效、图片直链、导出及客户跟进等待 B2/B3 和统一契约。缺失结果保持待处理，不伪造线上 ima 事实。
+
+## 职责 v2 接续检查点
+
+新增 `ContentPreview.js`：公众号/小红书排版预览、内容结构切换、备选标题、版本和逐图证据。核验页有暂不可用的 Markdown/JSON 导出入口及原因；不绕过服务端复制或下载限制。图片代理未实现时只显示配图方案，不加载猜测链接。
+
+本次 13 项模块测试通过；测试文件内的合成内容不进入运行入口。Edge 验证预览切换、证据入口、禁用导出、390px 无横向溢出、无脚本异常；另完成真实 B1 注册/创建/刷新/退出。
+
+本机默认构建在清空已有 dist 时异常退出（3221226505）；以下构建通过，不据此宣称默认构建已通过。尚未更改默认清理策略，生产交付仍需解决此环境问题：
+
+```powershell
+npm.cmd run build --workspace @huawei-demo/web -- --emptyOutDir false
+```

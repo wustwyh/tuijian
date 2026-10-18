@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { formatTime, platforms, safeSource, tabs, taskInput, verificationLabel } from './model.js';
+import { formatTime, safeSource, tabs, taskInput, verificationLabel } from './model.js';
 import { h, list, button, badge, blank, notice, textList, Section, InputFields } from './ui.js';
+import { ContentPreview, ExportEntry } from './ContentPreview.js';
 
 function Evidence({ api, taskId }) {
   const [items, setItems] = useState([]); const [error, setError] = useState(''); const [loading, setLoading] = useState(true); const [reload, setReload] = useState(0);
@@ -27,17 +28,11 @@ function Strategy({ strategy }) {
     h('p', { className: 'eyebrow' }, '本次主矛盾'), h('h3', null, strategy.main_conflict), h('p', null, strategy.key_message), h('h4', null, '主要人群'), h('p', null, strategy.primary_persona),
     h('h4', null, '论据与结构'), textList(strategy.proof_points), textList(strategy.outline), h('h4', null, '行动引导'), h('p', null, strategy.cta), h('h4', null, '风险提醒'), textList(strategy.risk_notes)));
 }
-function Content({ contents }) {
-  return h(Section, { title: '平台成稿' }, !list(contents).length ? blank('成稿尚未生成', '生成后的标题、正文与配图方案将在这里展示。') : list(contents).map(content => h('article', { className: 'draft', key: content.id },
-    h('div', { className: 'list-heading' }, badge(platforms[content.platform] || '平台待确认'), badge(verificationLabel(content.verification_status), content.verification_status)),
-    h('h3', null, content.selected_title || list(content.title_options)[0] || '标题待确认'), h('div', { className: 'draft-body' }, content.body), h('p', null, content.cta),
-    ...list(content.image_plan).map((image, index) => h('div', { className: 'image-note', key: index }, h('strong', null, image.caption || '图注待确认'), h('p', null, `${image.position || '位置待确认'} · ${image.purpose || '用途待确认'}`), h('small', null, `证据：${image.evidence_id || '待人工核验'}`))))));
-}
 function Verification({ report }) {
   return h(Section, { title: '核验结果' }, !report ? blank('尚无核验结果', '未知项不会自动视为通过；导出将在核验规则确定后接通。') : h(React.Fragment, null,
     badge(verificationLabel(report.overall_status), report.overall_status),
     ...list(report.checks).map((check, index) => h('article', { key: index, className: 'check' }, h('div', { className: 'list-heading' }, h('h3', null, check.item), badge(verificationLabel(check.status), check.status)), h('p', null, check.reason || '核验原因待确认'), h('small', null, `证据：${list(check.evidence_ids).join('、') || '待人工核验'}`))),
-    h('h4', null, '人工确认清单'), textList(report.manual_actions)));
+    h('h4', null, '人工确认清单'), textList(report.manual_actions)), h(ExportEntry));
 }
 export function Workbench({ api, taskId }) {
   const [detail, setDetail] = useState(null); const [tab, setTab] = useState(0); const [error, setError] = useState(''); const [loading, setLoading] = useState(true); const [reload, setReload] = useState(0);
@@ -63,5 +58,5 @@ export function Workbench({ api, taskId }) {
     h('nav', { className: 'tabs', role: 'tablist', 'aria-label': '任务工作台' }, ...tabs.map((text, index) => h('button', { key: text, ref: element => { tabRefs.current[index] = element; }, id: `tab-${index}`, role: 'tab', 'aria-selected': tab === index, 'aria-controls': `panel-${index}`, tabIndex: tab === index ? 0 : -1, onClick: () => setTab(index), onKeyDown: tabKey }, h('span', { className: 'tab-number' }, `0${index + 1}`), text))),
     loading ? notice('正在读取任务及结果…') : !detail ? blank('暂时无法打开任务', '请重新读取，或返回列表选择自己的任务。') : h('div', { id: `panel-${tab}`, role: 'tabpanel', 'aria-labelledby': `tab-${tab}`, tabIndex: 0 },
       tab === 0 && h(React.Fragment, null, h(Section, { title: '场景判断' }, h('p', { className: 'muted' }, '平台、人群、场景与目标动作，决定这次内容的表达。'), h(InputFields, { value: taskInput(detail.task), disabled: true }), notice('当前任务输入只读。如需更换人群或平台，请创建新任务。')), h(Evidence, { key: `${taskId}-${reload}`, api, taskId })),
-      tab === 1 && h(Personas, { report: detail.personas }), tab === 2 && h(Strategy, { strategy: detail.strategy }), tab === 3 && h(Content, { contents: detail.contents }), tab === 4 && h(Verification, { report: detail.verification })));
+      tab === 1 && h(Personas, { report: detail.personas }), tab === 2 && h(Strategy, { strategy: detail.strategy }), tab === 3 && h(ContentPreview, { contents: detail.contents, onViewEvidence: () => changeTab(0) }), tab === 4 && h(Verification, { report: detail.verification })));
 }
