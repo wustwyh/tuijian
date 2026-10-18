@@ -13,13 +13,13 @@ npm.cmd run start --workspace=@huawei-demo/api
 npm.cmd run test --workspace=@huawei-demo/api
 ```
 
-也可在 `apps/api` 下执行 `node src/server.mjs` / `node --test test/api.test.mjs`。
+也可在 `apps/api` 下执行 `node src/server.mjs` / `node --test test/*.test.mjs`。
 
 默认监听 `127.0.0.1:3001`；首次启动自动建立真实 SQLite 文件 `apps/api/.runtime/marketing.sqlite`，重复启动使用同一个文件。账号、哈希会话与任务都会保存，退出会话在数据库中删除。迁移由 `PRAGMA user_version` 管理，当前版本为 1；业务数据不写入 Git。
 
 ## 服务端配置
 
-本模块只读取进程环境变量，不自动加载 `.env`，不读取或打印 IMA/LLM 凭证。
+服务入口与 `llm:check` 自动加载 `apps/api/.env`；已存在的进程环境变量优先。只在服务端使用凭证，不打印其值。首次使用复制 `.env.example` 为 `.env` 并填写 `LLM_API_KEY`；该文件由根 `.gitignore` 排除，不能提交或放进前端 `VITE_*`。
 
 | 变量 | 默认 / 用途 |
 | --- | --- |
@@ -91,3 +91,33 @@ npm.cmd run start --workspace=@huawei-demo/api
 `test/api.test.mjs` 使用真实 HTTP 服务器及临时文件 SQLite，6 个测试覆盖：注册/登录/退出/重启、哈希落库与会话撤销、双账号任务隔离与身份伪造、origin/跨站拒绝、输入/大请求体/SQL 文本处理、会话到期/认证限流/生产配置。
 
 测试临时库只保存虚构测试账号与测试任务，不调用 IMA、LLM、Auth 云服务，不代表线上知识库或真实营销结论。测试结束删除专属临时目录。
+
+
+## B4 真实 LLM 适配器
+
+`src/llm.mjs` 导出 `loadLLMConfig(env?)` 和 `createLLMAdapter(config?, {fetchImpl?}?)`。后者返回 Workflow 所需的 `llm({stage,system,prompt,response_schema}) => Promise<object>`。集成端把它传入 `createWorkflow({llm})`，适配器不生成第二套营销提示词。B4 已具备真实 HTTPS 调用实现；生成 HTTP 编排仍待 B2/B3，不能据此声称整个闭环接通。
+
+默认中转站 `https://api.openai-next.com/v1`，模型 ID `kimi-k2.5`，来自用户指定中转站公开指南和模型列表。实际账户的模型权限、计费、速度、输出质量仍需带 key 验证。只填写服务端 `apps/api/.env` 的 `LLM_API_KEY=`。从根目录检查：
+
+```powershell
+npm.cmd run llm:check --workspace=@huawei-demo/api
+```
+
+缺 key 时退出码2，不发网络请求；成功时仅输出 `ok,configured,model,elapsed_ms`。失败为净化后的 `LLM_FAILED`，不输出供应商响应或凭证。检查会产生一次真实模型请求（传输失败时按重试配置有界重试）。
+
+| 变量 | 默认 / 用途 |
+| --- | --- |
+| `LLM_BASE_URL` | `https://api.openai-next.com/v1`；仅 HTTPS，无凭证/查询/hash |
+| `LLM_MODEL` | `kimi-k2.5` |
+| `LLM_API_KEY` | 空；缺失返回 `LLM_FAILED`/503 |
+| `LLM_TIMEOUT_MS` | 60000；总时限1000—120000ms，覆盖请求、响应读取、重试和退避 |
+| `LLM_MAX_RETRIES` | 1；0—2；一次 llm 最多 `1+retries` 次外呼 |
+| `LLM_MAX_TOKENS` | 8192；128—32768 |
+| `LLM_JSON_MODE` | true；发送 `response_format:json_object`，不等于原生 JSON Schema 约束 |
+| `LLM_THINKING` | 空；默认不发送；只在中转站确认支持后设 enabled/disabled |
+
+原始 Workflow `system,prompt` 与结构要求发给 Chat Completions；严格提取正文 JSON 对象，拒绝供应商 envelope、代码围栏、数组、空/纯 reasoning、拒绝与截断输出。Schema 和营销业务检查仍由 Workflow 执行。不声称中转站支持原生 schema、思考开关或已经达到预期速度。
+
+只重试网络连接失败与408/429/500/502/503/504；不重试无效模型输出或401/403。默认每次适配器调用最多2次外呼，Workflow 若启用一次输出修复，业务层必须把最多4次外呼纳入预算；不在此层自动修复内容。重定向禁用，输入上限512KiB，供应商响应上限2MiB。超时504、鉴权/格式/上游失败502、缺配置/最终限流503，code 均为 `LLM_FAILED`。
+
+模块自验 `npm.cmd run test --workspace=@huawei-demo/api` 共16项，包含已有6项真实 HTTP/SQLite、1项本地配置优先级、9项适配器传输/错误/结构测试。适配器测试使用测试 transport 和本机 HTTP 慢响应，不能当作真实 LLM 验证。

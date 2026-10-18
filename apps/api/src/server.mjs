@@ -1,8 +1,10 @@
 import { createApi } from './api.mjs';
 import { loadConfig } from './config.mjs';
+import { loadLocalEnv } from './env.mjs';
 
 let server;
 try {
+  loadLocalEnv();
   const config = loadConfig();
   server = createApi(config);
   server.once('error', () => {
