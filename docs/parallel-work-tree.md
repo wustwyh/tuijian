@@ -1,111 +1,71 @@
-# 黑客松多 Agent 并行工作树
+# 黑客松四角色工作树与集成约定
 
-## 当前范围与状态
+## 职责基线
 
-本文件设计协作、阅读入口与执行调度，不代表业务实现已经启动。
-最初检查时项目尚无工程与 Git；现已建立共享结构基线和五个独立 worktree，实际状态以 `agent-status.md` 为准。
-先由 Coordinator 建立一份可运行的公共基线，再创建独立 worktree；不要各自创建一套工程。
+`roles-v2-20261018`：Coordinator 兼 IMA，Workflow 主导营销业务逻辑，Backend 管服务与状态，Frontend 管交互展示。用户最终验收，独立 QA 暂停。
+这是职责基线，不代表 API 已冻结或真实闭环已通过；实现情况见看板与各分支交接。
 
-## 工作树与文件所有权
+## 所有权
 
-```text
-Coordinator：需求收口、契约冻结、工程基线、集成与验收
-├─ Frontend：apps/web/**
-│  ├─ F1 登录、路由、任务列表
-│  ├─ F2 工作台、型号选择、画像确认
-│  └─ F3 成稿/证据/核验、导出入口、轻量客户跟进
-├─ Backend：apps/api/**
-│  ├─ B1 真实 Auth/Database、用户隔离
-│  ├─ B2 任务/证据/客户/跟进持久化
-│  └─ B3 ima/Workflow 接入、导出、下游失效
-├─ IMA：packages/ima/**
-│  ├─ I1 线上检索、Markdown 与图片读取
-│  └─ I2 型号候选、证据规范化、错误与脱敏报告
-├─ Workflow：packages/workflow/**
-│  ├─ W1 画像与策略
-│  ├─ W2 小红书/公众号内容及配图方案
-│  └─ W3 事实/型号/图片/平台/合规核验
-└─ QA：tests/e2e/**、docs/demo/**
-   ├─ Q1 真实闭环、双账号隔离、失败分支
-   └─ Q2 单变量人群/平台对比、客户跟进、演示脚本
-```
-
-Coordinator 独占 `packages/contracts/**`、根依赖/锁文件/启动配置、`docs/api-contract.md`、`docs/agent-status.md` 和协作文档。只维护公共骨架、契约和集成，不直接代改各模块业务实现。
-各角色独占自己的模块与 `docs/handoffs/<role>.md`；模块测试放在所属模块内。QA 对业务代码提出缺陷，由所属角色修复。
-角色所需新依赖报给 Coordinator；单一依赖锁文件由 Coordinator 更新，避免跨 worktree 冲突。
-
-## Git worktree 规划
-
-以下目录与分支已创建；业务模块实施状态见进度看板：
-
-| 目录 | 分支 | 用途 |
+| 角色 | 独占范围 | 结果责任 |
 |---|---|---|
-| `E:\codes\创业\10.18黑客松` | `integration` | Coordinator 的集成工作树 |
-| `E:\codes\创业\10.18黑客松-worktrees\frontend` | `feat/frontend` | Frontend |
-| `E:\codes\创业\10.18黑客松-worktrees\backend` | `feat/backend` | Backend |
-| `E:\codes\创业\10.18黑客松-worktrees\ima` | `feat/ima` | IMA |
-| `E:\codes\创业\10.18黑客松-worktrees\workflow` | `feat/workflow` | Workflow |
-| `E:\codes\创业\10.18黑客松-worktrees\qa` | `test/demo` | QA |
+| Coordinator + IMA | packages/ima、packages/contracts、根配置/锁文件、公共文档、tests/e2e、docs/demo、coordinator 交接 | 真实知识接入、公共契约、可运行基线与集成 |
+| Workflow | packages/workflow、模块测试、workflow 交接 | 业务理解、画像/策略/内容、核验、修订、跟进建议 |
+| Backend | apps/api、模块测试/迁移、backend 交接 | 身份/存储、LLM 适配器、图片访问、状态/版本与导出 |
+| Frontend | apps/web、模块测试、frontend 交接 | 操作/确认/修订、内容预览、证据与核验展示 |
 
-先建立 `.gitignore`，排除凭证、两个本地知识库、压缩包、个人工具记忆、构建产物和依赖目录。显式选择代码与项目文档提交，不批量把现有资料全部纳入 Git。
-任务接收时明确 worktree 的绝对路径和基线提交。共享路径不直接跨分支编辑；依赖上游变更时，由 Coordinator 先集成上游提交，再通知下游同步。
+模块负责人提出完整的接口/依赖草案，Coordinator 负责跨消费者收口及共享文件修改。业务实现由所属角色修复。
+旧 IMA/QA 交接只用于迁移，当前协作通过 `communication.md` 的共享信箱进行。
 
-## 4 个并发槽位如何调度
+## 工作树
 
-主 Coordinator 占 1 个槽位，最多同时运行 3 个子 Agent。五个角色是责任分工，不表示五个子 Agent 同时常驻。
+| 路径 | 分支 | 当前用途 |
+|---|---|---|
+| `E:\codes\创业\10.18黑客松` | integration | 合并后的 Coordinator 主工作树 |
+| `E:\codes\创业\10.18黑客松-worktrees\workflow` | feat/workflow | Workflow |
+| `E:\codes\创业\10.18黑客松-worktrees\backend` | feat/backend | Backend |
+| `E:\codes\创业\10.18黑客松-worktrees\frontend` | feat/frontend | Frontend |
+| `E:\codes\创业\10.18黑客松-worktrees\ima` | feat/ima | 原成果交接保留；原会话停止写入后由 Coordinator 接续 |
+| `E:\codes\创业\10.18黑客松-worktrees\qa` | test/demo | 历史保留，暂停开发 |
 
-| 批次 | 槽位 1 | 槽位 2 | 槽位 3 | 切换条件 |
-|---|---|---|---|---|
-| 0：基线 | 暂不实施业务模块 | 暂不实施业务模块 | 暂不实施业务模块 | Coordinator 冻结接缝、可启动骨架和任务包 |
-| 1：三路并行 | Frontend F1/F2 | Backend B1/B2 | IMA I1/I2 | IMA 交付真实证据服务与接入说明即可释放槽位 |
-| 2：生成接入 | Frontend F2/F3 | Backend B2/B3 | Workflow W1/W2/W3 | 第一条真实生成链路完成；IMA 修复按需短暂切回 |
-| 3：验收收口 | Frontend 修复与演示 | Backend 修复与集成 | QA Q1/Q2 | 缺陷修复、完整演示和交接通过 |
+不删除/重建已有工作树，不丢弃未提交工作。合并角色不要同时在 integration 与旧 ima 工作树实现同一模块。
 
-工作流是生成主链的关键路径：若 IMA 阻塞在外部凭证/权限，已提交可验证的客户端实现后应释放该槽位，让 Workflow 先按证据接口开发；真实依赖未解决时 G1 保持失败，不视为线上集成完成。Coordinator 跟踪外部阻塞，再按需调回 IMA。
-若外部工具能同时运行更多 Agent，可把 Workflow 与 IMA 同时启动；不要假设本会话有更多并发槽位。
+## 同步策略
 
-## 开工前只冻结跨模块接缝
+- 本次职责提交在 integration 建立本地标签 `roles-v2-20261018`，用 `git rev-parse roles-v2-20261018` 获取确切 SHA。
+- 各工作树合并同一个提交；干净且可快进时快进，有独立提交时普通合并，保留原提交历史。
+- 旧 ima 的未提交工作必须与本次文档路径无重叠，且同步前后状态和内容一致；否则停止该工作树同步并报告。
+- 不使用 hard reset、强制 checkout、clean 或隐式 stash；遇冲突保留现场，协调后处理。
+- 不混用 merge 与 cherry-pick 接收同一批业务提交。本次只同步职责文档，不将各角色业务实现顺带合入 integration。
+- 基线已是祖先时无需再次合并。共享信箱不依赖分支同步，正式契约/交接仍通过提交集成。
 
-Coordinator 优先处理以下契约缺口，不等实现完成后补：
+## 并行安排
 
-1. Auth/Database 提供方及登录、退出、当前用户的调用方式。
-2. 各生成接口、任务详情接口的完整请求/响应与错误形状。
-3. 型号候选、明确型号确认、画像选择/修改/确认的稳定标识与请求方式。
-4. 证据的检索词、适用版本、图片展示/刷新或后端转发方式。
-5. 事实引用 `evidence_id` 的结构，避免核验只能检查一整段文字。
-6. 修改产品/平台/画像后哪些结果失效；过时请求的结果不得覆盖新输入。
-7. `pending/rejected` 核验时导出的行为；任务状态与核验状态分别使用各自枚举。
+合并后的 Coordinator 加 Workflow、Backend、Frontend 共四个角色。外部独立会话可以各自运行；不据此自动新建子 Agent。
+四方可以按稳定接口并行：Coordinator 推进 IMA 与公共接缝；Workflow 接续已有模块并补业务规则；Backend 推进接口/状态/LLM；Frontend 接通现有页面。
+外部服务受阻时先交付可验证部分与明确阻塞，不以假数据冒充真实接通，不让其他角色无条件空等。
 
-这些是待决项，角色不可把本文的建议当作已经生效的 API 契约。
+## 接缝清单
 
-## 模块间依赖
+1. Backend 提案 Auth/存储、登录与身份、成功/错误响应；Coordinator 收口，Frontend 消费。
+2. Coordinator 提供 IMA 证据/候选/图片访问元数据，Backend 保存并提供访问，Frontend 展示。
+3. Workflow 提案生成输入/输出、型号/画像/策略确认、引用粒度及修订语义；Backend/Frontend 评估，Coordinator 冻结。
+4. Backend 提案真实 LLM 适配器，Workflow 提供调用/结构化输出需求；Coordinator 收口。
+5. Workflow 定义修改输入/证据后的影响范围，Backend 实现版本与过时回写保护，Frontend 显示失效。
+6. Workflow 提出 pending/rejected 导出规则，产品取舍交用户，Coordinator 收口，Backend 强制执行。
+7. Workflow 实现跟进建议；Backend 持久化；Frontend 展示/确认。卡片/海报成品格式需收口后实施。
 
-- IMA 接收查询及已确认型号，返回规范化的未入库证据或型号候选；不写业务库、不分配任务证据 ID。
-- Backend 检查任务所有权，分配 `id/task_id` 并保存证据，然后向 Workflow 提供当前证据包。
-- Workflow 接收任务、已确认画像/策略、证据和 LLM 调用适配器；返回结构化画像/策略/成稿/核验结果。不查业务库、不持有 ima 凭证。
-- Backend 拥有 HTTP 路由和编排接入，Frontend 通过共享契约调用 API。
-- 测试夹具仅用于模块测试/开发；正式页面和演示链路只能使用真实线上服务。外部服务失败显示真实错误，不自动切换到假结果。
+以上为责任分配，未写入 API 契约的具体字段/签名仍是待决项。
 
-## 小批集成，不等全部做完
+## 集成与验收
 
-每个交付分成可验证的小提交：入口与类型 → 一个最小功能 → 异常处理。Coordinator 选择一个接收策略，避免同时合并与 cherry-pick 同一批提交。
-优先接收 Backend 可调用基础接口与 IMA 证据服务，再接 Workflow 主链，Frontend 持续按接口增量接入。每次只验收本批受影响路径。
-契约变更格式：原因、字段差异、兼容方式、受影响角色。只有 Coordinator 修改共享契约并通知消费者。
+每次交付一个可观察结果，附输入输出、协作方、依赖及验证证据。小批提交，及时集成。
 
-## 集成门禁
+| 门禁 | 通过证据 | 检查责任 |
+|---|---|---|
+| G0 基线 | 必要接口明确、模块可启动/验证、依赖与基线可追溯 | Coordinator + 模块负责人 |
+| G1 真实依赖 | 线上 Markdown/可展示图片、真实 LLM、持久化重开与双账号隔离 | Coordinator + Backend/Workflow/Frontend 按模块验证 |
+| G2 纵向闭环 | 登录→任务→真实证据→画像确认→策略→内容→核验→导出，证据与版本一致 | Coordinator 集成检查，各模块修复 |
+| G3 演示 | 两平台、单变量人群/平台对比、失败/歧义、虚构客户跟进和整体体验 | 用户最终验收，Coordinator 提供材料 |
 
-| 门禁 | 通过证据 |
-|---|---|
-| G0 基线 | 公共契约冻结；各 worktree 可启动或执行所属模块验证；提交与任务包可追溯 |
-| G1 真实依赖 | 线上 ima 至少读取 1 份 Markdown、1 张可展示图片；真实存储可重开；两个账号隔离通过 |
-| G2 纵向闭环 | 登录→任务→真实证据→画像确认→策略→内容→核验→导出；证据 ID 前后一致 |
-| G3 演示 | 小红书+公众号、单变量人群/平台对比、型号歧义、无结果/失败、虚构客户跟进均通过 |
-
-当前 A/B 示例同时改变人群与平台，不能单独证明适配；验收增加两组单变量对照。
-断网或服务故障不允许以本地知识库、伪造来源或假账号系统替代验收。历史真实记录可用于说明已完成成果，但不能声称为本次实时检索。
-
-## 进度与阻塞
-
-状态：待启动 → 进行中 → 待集成 → 验收通过；阻塞单列原因、处理人和下一步。
-发生阻塞立即报送，不等待本批结束；先交付可接入部分。协调人根据阻塞释放槽位或调整任务，不让所有下游一起空等。
-所有交接按 `agent-start.md` 模板，只报告实际交付和实际验证，不以完成百分比代替证据。
+详细检查见 `demo/acceptance.md`。未执行项写未验证；历史真实记录不能声称是本次实时请求。

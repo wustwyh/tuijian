@@ -1,6 +1,6 @@
 # API 与数据契约 — MVP
 
-> 本文件是前端、后端、ima 集成和 Agent 工作流之间的唯一接口约定。字段变更必须由 Coordinator 统一修改本文件。
+> 本文件是前端、后端、ima 集成和 Agent 工作流之间的唯一接口约定。字段变更由模块负责人提出具体草案，Coordinator（兼 IMA）统一收口。职责基线 roles-v2-20261018 仅调整负责人，未补齐的字段/签名仍待冻结。
 
 ## 1. 通用约定
 
@@ -229,3 +229,20 @@
 - 广告平台投放 API。
 - 自动发布到公众号/小红书/朋友圈。
 - 向量数据库或知识库本地镜像。
+
+
+## 7. 接缝责任（职责基线 v2）
+
+| 接缝 | 提案/实现主责 | 消费/协作 |
+|---|---|---|
+| 线上证据、型号候选、图片元数据 | Coordinator 的 IMA 模块 | Backend 入库分配 ID，Workflow 使用，Frontend 展示 |
+| HTTP、身份、任务详情与保存 | Backend | Frontend 调用；Coordinator 收口公共契约 |
+| 生成输入输出、确认/失效/修订语义、跟进建议 | Workflow | Backend 执行保存，Frontend 交互；Coordinator 收口 |
+| 服务端真实 LLM 适配器、超时和传输重试 | Backend | Workflow 提供调用/结构化输出需求 |
+| 图片代理/刷新与访问接口 | Backend | Coordinator 提供上游约束，Frontend 实际显示 |
+| 成稿内容/配图语义与排版预览 | Workflow / Frontend 各负责其部分 | Backend 提供数据；成品导出格式另行收口 |
+| 核验结果与导出限制 | Workflow 提业务规则，Backend 强制执行 | Frontend 展示；产品取舍交用户 |
+
+本节不新增或批准具体 API 字段。生成接口完整请求响应、型号/画像/策略确认、证据版本、LLM 函数签名、修订/跟进建议端点、pending/rejected 导出策略仍需提出草案并冻结。
+身份隔离由 Backend 服务端检查，不能以 LLM 自评替代；Workflow 仅报告已获得的证据与自身规则检查结果。
+协商使用 `communication.md` 的共享信箱，正式变更必须提交本契约和相关共享类型后通知消费者。
