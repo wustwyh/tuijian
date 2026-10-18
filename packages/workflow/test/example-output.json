@@ -1,0 +1,530 @@
+{
+  "notice": "SYNTHETIC TEST ONLY：不是线上 ima 证据，不是真实 LLM 输出或产品事实，不得进入正式运行链路。",
+  "task": {
+    "id": "task_test",
+    "user_id": "user_test",
+    "product_query": "MateBook 14",
+    "resolved_product_name": "HUAWEI MateBook 14（鸿蒙版）",
+    "platform": "xiaohongshu",
+    "audience_hint": "准备开学的大学生",
+    "scenario": "课堂笔记与宿舍学习",
+    "goal": "引导到店体验",
+    "status": "retrieved",
+    "created_at": "2026-10-18T00:00:00Z",
+    "updated_at": "2026-10-18T00:00:00Z"
+  },
+  "evidence": [
+    {
+      "task_id": "task_test",
+      "knowledge_base_id": "SYNTHETIC_TEST_ONLY",
+      "source_url": "https://example.invalid/test-only",
+      "fetched_at": "2026-10-18T00:00:00Z",
+      "applicable_model": "HUAWEI MateBook 14（鸿蒙版）",
+      "verification_status": "passed",
+      "id": "ev_fact",
+      "media_id": "TEST_MARKDOWN",
+      "media_type": "MARKDOWN",
+      "title": "测试事实（非线上结果）",
+      "fact_excerpt": "【合成测试文本，不是真实产品事实】这款测试设备可用于整理资料。未提供价格、补贴、销量、用户评价与奖项。"
+    },
+    {
+      "task_id": "task_test",
+      "knowledge_base_id": "SYNTHETIC_TEST_ONLY",
+      "source_url": "https://example.invalid/test-only",
+      "fetched_at": "2026-10-18T00:00:00Z",
+      "applicable_model": "HUAWEI MateBook 14（鸿蒙版）",
+      "verification_status": "passed",
+      "id": "ev_image_0",
+      "media_id": "TEST_IMG_0",
+      "media_type": "IMG",
+      "title": "测试图片 0",
+      "image_metadata": {
+        "width": 800,
+        "height": 1000,
+        "format": "png",
+        "usage": "产品外观（合成测试元数据）"
+      }
+    },
+    {
+      "task_id": "task_test",
+      "knowledge_base_id": "SYNTHETIC_TEST_ONLY",
+      "source_url": "https://example.invalid/test-only",
+      "fetched_at": "2026-10-18T00:00:00Z",
+      "applicable_model": "HUAWEI MateBook 14（鸿蒙版）",
+      "verification_status": "passed",
+      "id": "ev_image_1",
+      "media_id": "TEST_IMG_1",
+      "media_type": "IMG",
+      "title": "测试图片 1",
+      "image_metadata": {
+        "width": 800,
+        "height": 1000,
+        "format": "png",
+        "usage": "产品外观（合成测试元数据）"
+      }
+    },
+    {
+      "task_id": "task_test",
+      "knowledge_base_id": "SYNTHETIC_TEST_ONLY",
+      "source_url": "https://example.invalid/test-only",
+      "fetched_at": "2026-10-18T00:00:00Z",
+      "applicable_model": "HUAWEI MateBook 14（鸿蒙版）",
+      "verification_status": "passed",
+      "id": "ev_image_2",
+      "media_id": "TEST_IMG_2",
+      "media_type": "IMG",
+      "title": "测试图片 2",
+      "image_metadata": {
+        "width": 800,
+        "height": 1000,
+        "format": "png",
+        "usage": "产品外观（合成测试元数据）"
+      }
+    },
+    {
+      "task_id": "task_test",
+      "knowledge_base_id": "SYNTHETIC_TEST_ONLY",
+      "source_url": "https://example.invalid/test-only",
+      "fetched_at": "2026-10-18T00:00:00Z",
+      "applicable_model": "HUAWEI MateBook 14（鸿蒙版）",
+      "verification_status": "passed",
+      "id": "ev_image_3",
+      "media_id": "TEST_IMG_3",
+      "media_type": "IMG",
+      "title": "测试图片 3",
+      "image_metadata": {
+        "width": 800,
+        "height": 1000,
+        "format": "png",
+        "usage": "产品外观（合成测试元数据）"
+      }
+    },
+    {
+      "task_id": "task_test",
+      "knowledge_base_id": "SYNTHETIC_TEST_ONLY",
+      "source_url": "https://example.invalid/test-only",
+      "fetched_at": "2026-10-18T00:00:00Z",
+      "applicable_model": "HUAWEI MateBook 14（鸿蒙版）",
+      "verification_status": "passed",
+      "id": "ev_image_4",
+      "media_id": "TEST_IMG_4",
+      "media_type": "IMG",
+      "title": "测试图片 4",
+      "image_metadata": {
+        "width": 800,
+        "height": 1000,
+        "format": "png",
+        "usage": "产品外观（合成测试元数据）"
+      }
+    },
+    {
+      "task_id": "task_test",
+      "knowledge_base_id": "SYNTHETIC_TEST_ONLY",
+      "source_url": "https://example.invalid/test-only",
+      "fetched_at": "2026-10-18T00:00:00Z",
+      "applicable_model": "HUAWEI MateBook 14（鸿蒙版）",
+      "verification_status": "passed",
+      "id": "ev_image_5",
+      "media_id": "TEST_IMG_5",
+      "media_type": "IMG",
+      "title": "测试图片 5",
+      "image_metadata": {
+        "width": 800,
+        "height": 1000,
+        "format": "png",
+        "usage": "产品外观（合成测试元数据）"
+      }
+    }
+  ],
+  "personaReport": {
+    "id": "persona_example_1",
+    "task_id": "task_test",
+    "personas": [
+      {
+        "name": "准备开学的大学生",
+        "typical_tasks": [
+          "资料整理"
+        ],
+        "pain_points": [
+          "场景切换需要整理资料"
+        ],
+        "buying_triggers": [
+          "到店对照实际任务"
+        ],
+        "objections": [
+          "适用性待确认"
+        ],
+        "content_angle": "准备开学的大学生的任务清单",
+        "evidence_ids": [
+          "ev_fact"
+        ],
+        "assumptions": [
+          "基于产品事实的营销假设，需求待确认"
+        ],
+        "pending_checks": [
+          "价格待人工核验"
+        ]
+      },
+      {
+        "name": "准备开学的大学生中重视资料管理的人",
+        "typical_tasks": [
+          "整理文档"
+        ],
+        "pain_points": [
+          "文档查找费时"
+        ],
+        "buying_triggers": [
+          "实际整理任务"
+        ],
+        "objections": [
+          "兼容性待确认"
+        ],
+        "content_angle": "资料归档场景",
+        "evidence_ids": [
+          "ev_fact"
+        ],
+        "assumptions": [
+          "资料整理需求是营销假设"
+        ],
+        "pending_checks": [
+          "软件兼容性待人工核验"
+        ]
+      }
+    ],
+    "status": "confirmed"
+  },
+  "strategy": {
+    "id": "strategy_example_2",
+    "task_id": "task_test",
+    "main_conflict": "任务资料分散与整理需求",
+    "primary_persona": "准备开学的大学生",
+    "key_message": "围绕准备开学的大学生的资料整理任务到店体验",
+    "proof_points": [
+      "可用于整理资料 [ev_fact]"
+    ],
+    "outline": [
+      "场景问题",
+      "证据",
+      "适用边界",
+      "行动建议"
+    ],
+    "cta": "带一份实际资料到店体验",
+    "risk_notes": [
+      "价格待人工核验"
+    ]
+  },
+  "outputs": [
+    {
+      "draft": {
+        "id": "content_example_3",
+        "task_id": "task_test",
+        "platform": "xiaohongshu",
+        "version": 1,
+        "title_options": [
+          "准备开学的大学生的资料整理清单",
+          "带实际任务到店体验",
+          "先确认需求，再核验配置"
+        ],
+        "selected_title": "准备开学的大学生的资料整理清单",
+        "body": "### 卡片 1｜任务清单\nHUAWEI MateBook 14（鸿蒙版），从准备开学的大学生的资料整理场景开始。\n### 卡片 2｜证据与边界\n可用于整理资料 [ev_fact]。价格待人工核验。\n### 卡片 3｜到店体验\n带一份实际资料确认适用性。",
+        "cta": "带你的任务清单到店体验",
+        "image_plan": [
+          {
+            "evidence_id": "ev_image_0",
+            "position": "cover",
+            "caption": "HUAWEI MateBook 14（鸿蒙版），测试图片",
+            "purpose": "完整型号与外观介绍"
+          },
+          {
+            "evidence_id": "ev_image_1",
+            "position": "body",
+            "caption": "HUAWEI MateBook 14（鸿蒙版），测试图片",
+            "purpose": "解释素材位置，不暗示未证实功能"
+          },
+          {
+            "evidence_id": "ev_image_2",
+            "position": "body",
+            "caption": "HUAWEI MateBook 14（鸿蒙版），测试图片",
+            "purpose": "解释素材位置，不暗示未证实功能"
+          },
+          {
+            "evidence_id": "ev_image_3",
+            "position": "body",
+            "caption": "HUAWEI MateBook 14（鸿蒙版），测试图片",
+            "purpose": "解释素材位置，不暗示未证实功能"
+          },
+          {
+            "evidence_id": "ev_image_4",
+            "position": "body",
+            "caption": "HUAWEI MateBook 14（鸿蒙版），测试图片",
+            "purpose": "解释素材位置，不暗示未证实功能"
+          },
+          {
+            "evidence_id": "ev_image_5",
+            "position": "body",
+            "caption": "HUAWEI MateBook 14（鸿蒙版），测试图片",
+            "purpose": "解释素材位置，不暗示未证实功能"
+          }
+        ],
+        "verification_status": "draft"
+      },
+      "verification": {
+        "task_id": "task_test",
+        "overall_status": "pending",
+        "checks": [
+          {
+            "type": "platform",
+            "item": "任务、画像与平台结构",
+            "status": "passed",
+            "reason": "任务一致，已确认画像、完整型号和平台字段满足代码规则",
+            "evidence_ids": []
+          },
+          {
+            "type": "fact",
+            "item": "事实引用 ev_fact",
+            "status": "passed",
+            "reason": "引用存在且属于当前任务和完整型号；语义支持另行检查",
+            "evidence_ids": [
+              "ev_fact"
+            ]
+          },
+          {
+            "type": "image",
+            "item": "图片引用 ev_image_0",
+            "status": "passed",
+            "reason": "图片来源、型号、尺寸与用途元数据齐全；实际访问有效性和视觉语义仍需核验",
+            "evidence_ids": [
+              "ev_image_0"
+            ]
+          },
+          {
+            "type": "image",
+            "item": "图片引用 ev_image_1",
+            "status": "passed",
+            "reason": "图片来源、型号、尺寸与用途元数据齐全；实际访问有效性和视觉语义仍需核验",
+            "evidence_ids": [
+              "ev_image_1"
+            ]
+          },
+          {
+            "type": "image",
+            "item": "图片引用 ev_image_2",
+            "status": "passed",
+            "reason": "图片来源、型号、尺寸与用途元数据齐全；实际访问有效性和视觉语义仍需核验",
+            "evidence_ids": [
+              "ev_image_2"
+            ]
+          },
+          {
+            "type": "image",
+            "item": "图片引用 ev_image_3",
+            "status": "passed",
+            "reason": "图片来源、型号、尺寸与用途元数据齐全；实际访问有效性和视觉语义仍需核验",
+            "evidence_ids": [
+              "ev_image_3"
+            ]
+          },
+          {
+            "type": "image",
+            "item": "图片引用 ev_image_4",
+            "status": "passed",
+            "reason": "图片来源、型号、尺寸与用途元数据齐全；实际访问有效性和视觉语义仍需核验",
+            "evidence_ids": [
+              "ev_image_4"
+            ]
+          },
+          {
+            "type": "image",
+            "item": "图片引用 ev_image_5",
+            "status": "passed",
+            "reason": "图片来源、型号、尺寸与用途元数据齐全；实际访问有效性和视觉语义仍需核验",
+            "evidence_ids": [
+              "ev_image_5"
+            ]
+          },
+          {
+            "type": "image",
+            "item": "平台素材数量",
+            "status": "passed",
+            "reason": "配图数量符合当前平台规则且未重复凑图",
+            "evidence_ids": []
+          },
+          {
+            "type": "image",
+            "item": "实际图片与访问有效性",
+            "status": "pending",
+            "reason": "本模块未下载或查看图片，无法确认访问有效性、外观型号、参数及脚注是否保留",
+            "evidence_ids": []
+          },
+          {
+            "type": "compliance",
+            "item": "确定性断言检查",
+            "status": "passed",
+            "reason": "未命中当前数值、无来源敏感断言和绝对化表述规则；仍需语义核验",
+            "evidence_ids": []
+          },
+          {
+            "type": "fact",
+            "item": "测试语义 fact",
+            "status": "passed",
+            "reason": "仅测试适配器返回，用于验证合并逻辑，不代表真实语义审核",
+            "evidence_ids": [
+              "ev_fact"
+            ]
+          },
+          {
+            "type": "image",
+            "item": "测试语义 image",
+            "status": "passed",
+            "reason": "仅测试适配器返回，用于验证合并逻辑，不代表真实语义审核",
+            "evidence_ids": []
+          },
+          {
+            "type": "platform",
+            "item": "测试语义 platform",
+            "status": "passed",
+            "reason": "仅测试适配器返回，用于验证合并逻辑，不代表真实语义审核",
+            "evidence_ids": []
+          },
+          {
+            "type": "compliance",
+            "item": "测试语义 compliance",
+            "status": "passed",
+            "reason": "仅测试适配器返回，用于验证合并逻辑，不代表真实语义审核",
+            "evidence_ids": []
+          }
+        ],
+        "manual_actions": [
+          "发布前打开每张 ima 原图，核对外观型号、用途、参数脚注和链接有效性",
+          "实际图片与访问有效性：本模块未下载或查看图片，无法确认访问有效性、外观型号、参数及脚注是否保留"
+        ]
+      }
+    },
+    {
+      "draft": {
+        "id": "content_example_4",
+        "task_id": "task_test",
+        "platform": "wechat_official",
+        "version": 1,
+        "title_options": [
+          "准备开学的大学生的资料整理清单",
+          "带实际任务到店体验",
+          "先确认需求，再核验配置"
+        ],
+        "selected_title": "准备开学的大学生的资料整理清单",
+        "body": "## 场景问题\n准备开学的大学生如何准备资料整理任务？\n## 产品证据\nHUAWEI MateBook 14（鸿蒙版）可用于整理资料 [ev_fact]。\n## 适用边界\n价格和软件兼容性待人工核验。\n## 行动建议\n准备工作流与配置需求。",
+        "cta": "携带工作流与配置需求咨询并核验",
+        "image_plan": [
+          {
+            "evidence_id": "ev_image_0",
+            "position": "cover",
+            "caption": "HUAWEI MateBook 14（鸿蒙版），测试图片",
+            "purpose": "完整型号与外观介绍"
+          },
+          {
+            "evidence_id": "ev_image_1",
+            "position": "body",
+            "caption": "HUAWEI MateBook 14（鸿蒙版），测试图片",
+            "purpose": "解释素材位置，不暗示未证实功能"
+          }
+        ],
+        "verification_status": "draft"
+      },
+      "verification": {
+        "task_id": "task_test",
+        "overall_status": "pending",
+        "checks": [
+          {
+            "type": "platform",
+            "item": "任务、画像与平台结构",
+            "status": "passed",
+            "reason": "任务一致，已确认画像、完整型号和平台字段满足代码规则",
+            "evidence_ids": []
+          },
+          {
+            "type": "fact",
+            "item": "事实引用 ev_fact",
+            "status": "passed",
+            "reason": "引用存在且属于当前任务和完整型号；语义支持另行检查",
+            "evidence_ids": [
+              "ev_fact"
+            ]
+          },
+          {
+            "type": "image",
+            "item": "图片引用 ev_image_0",
+            "status": "passed",
+            "reason": "图片来源、型号、尺寸与用途元数据齐全；实际访问有效性和视觉语义仍需核验",
+            "evidence_ids": [
+              "ev_image_0"
+            ]
+          },
+          {
+            "type": "image",
+            "item": "图片引用 ev_image_1",
+            "status": "passed",
+            "reason": "图片来源、型号、尺寸与用途元数据齐全；实际访问有效性和视觉语义仍需核验",
+            "evidence_ids": [
+              "ev_image_1"
+            ]
+          },
+          {
+            "type": "image",
+            "item": "平台素材数量",
+            "status": "passed",
+            "reason": "配图数量符合当前平台规则且未重复凑图",
+            "evidence_ids": []
+          },
+          {
+            "type": "image",
+            "item": "实际图片与访问有效性",
+            "status": "pending",
+            "reason": "本模块未下载或查看图片，无法确认访问有效性、外观型号、参数及脚注是否保留",
+            "evidence_ids": []
+          },
+          {
+            "type": "compliance",
+            "item": "确定性断言检查",
+            "status": "passed",
+            "reason": "未命中当前数值、无来源敏感断言和绝对化表述规则；仍需语义核验",
+            "evidence_ids": []
+          },
+          {
+            "type": "fact",
+            "item": "测试语义 fact",
+            "status": "passed",
+            "reason": "仅测试适配器返回，用于验证合并逻辑，不代表真实语义审核",
+            "evidence_ids": [
+              "ev_fact"
+            ]
+          },
+          {
+            "type": "image",
+            "item": "测试语义 image",
+            "status": "passed",
+            "reason": "仅测试适配器返回，用于验证合并逻辑，不代表真实语义审核",
+            "evidence_ids": []
+          },
+          {
+            "type": "platform",
+            "item": "测试语义 platform",
+            "status": "passed",
+            "reason": "仅测试适配器返回，用于验证合并逻辑，不代表真实语义审核",
+            "evidence_ids": []
+          },
+          {
+            "type": "compliance",
+            "item": "测试语义 compliance",
+            "status": "passed",
+            "reason": "仅测试适配器返回，用于验证合并逻辑，不代表真实语义审核",
+            "evidence_ids": []
+          }
+        ],
+        "manual_actions": [
+          "发布前打开每张 ima 原图，核对外观型号、用途、参数脚注和链接有效性",
+          "实际图片与访问有效性：本模块未下载或查看图片，无法确认访问有效性、外观型号、参数及脚注是否保留"
+        ]
+      }
+    }
+  ]
+}
