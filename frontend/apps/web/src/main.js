@@ -66,4 +66,4 @@ function App() {
   if (!user) return h(Login, { key: sessionEpoch, api, blocked: logoutBusy, initialError: logoutBusy ? '正在结束上一次会话，请稍候。' : error, onLogin: current => { setError(''); setUser(current); go('#/products'); } });
   return h(Shell, { key: `${user.id}-${sessionEpoch}`, user, route, api, onLogout: logout, error });
 }
-createRoot(document.getElementById('root')).render(h(App));
+createRoot(document.getElementById('root')).render(h(PipelinePreview));

@@ -1,0 +1,30 @@
+[
+  {
+    "file": "matebook-14-harmony-green.png",
+    "model": "HUAWEI MateBook 14（鸿蒙版）",
+    "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-14-harmonyos-version/list/green.png",
+    "sha256": "c3fb824ac35456f1e829fc4fec8e824c48a2309997a19ebc5a41ab88fe22aec2",
+    "byte_length": 49416
+  },
+  {
+    "file": "matebook-14-harmony-pink.png",
+    "model": "HUAWEI MateBook 14（鸿蒙版）",
+    "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-14-harmonyos-version/list/pink.png",
+    "sha256": "a51a762d4e66d9a963d954f0329c100622b40edd781395a763551d8ab12c0ff4",
+    "byte_length": 41986
+  },
+  {
+    "file": "matebook-x-pro-blue.png",
+    "model": "HUAWEI MateBook X Pro 微绒典藏版",
+    "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-x-pro-ultra-premium-edition/list/blue.png",
+    "sha256": "6691b5c52ed4c1abb923e5e503870629e9b73459facc1516eff844759f5abb45",
+    "byte_length": 82987
+  },
+  {
+    "file": "matebook-gt-14-silver.png",
+    "model": "HUAWEI MateBook GT 14",
+    "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-gt-14/list/sliver.png",
+    "sha256": "d360a77e224e9836ebd06210904c93ca2da5b5f2abbcc0500b7f39557ab5ae28",
+    "byte_length": 112864
+  }
+]

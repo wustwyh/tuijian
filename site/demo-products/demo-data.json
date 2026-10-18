@@ -1,0 +1,643 @@
+{
+  "is_demo": true,
+  "label": "演示种子数据 · 非实时AI生成或真实市场调研",
+  "products": [
+    {
+      "id": "sample-14",
+      "name": "HUAWEI MateBook 14（鸿蒙版）",
+      "category": "轻薄本",
+      "image_url": "/demo-products/matebook-14-harmony-green.png",
+      "note": "官方产品图 · 人群和营销文案为演示假设，参数与价格待核验。"
+    },
+    {
+      "id": "sample-x",
+      "name": "HUAWEI MateBook X Pro 微绒典藏版",
+      "category": "高性能轻薄本",
+      "image_url": "/demo-products/matebook-x-pro-blue.png",
+      "note": "官方对应型号产品图 · 本条为静态演示选项，不表示已接通 IMA。"
+    },
+    {
+      "id": "sample-gt",
+      "name": "HUAWEI MateBook GT 14",
+      "category": "高性能轻薄本",
+      "image_url": "/demo-products/matebook-gt-14-silver.png",
+      "note": "官方产品图 · 演示内容不含性能、价格或配置承诺。"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task_seed_demo_1",
+      "product": {
+        "id": "sample-14",
+        "name": "HUAWEI MateBook 14（鸿蒙版）",
+        "category": "轻薄本",
+        "image_url": "/demo-products/matebook-14-harmony-green.png",
+        "note": "官方产品图 · 人群和营销文案为演示假设，参数与价格待核验。"
+      },
+      "platform": "xiaohongshu",
+      "audience_hint": "开学资料管理型学生",
+      "scenario": "整理课程资料 / 准备课堂展示",
+      "goal": "引导到店体验",
+      "artifacts": {
+        "personas": {
+          "id": "persona_seed_demo_1",
+          "task_id": "task_seed_demo_1",
+          "personas": [
+            {
+              "name": "开学资料管理型学生",
+              "typical_tasks": [
+                "整理课程资料",
+                "准备课堂展示",
+                "归档学习笔记"
+              ],
+              "pain_points": [
+                "课程文件分散",
+                "选购前不清楚常用软件是否适用"
+              ],
+              "buying_triggers": [
+                "开学准备",
+                "携带实际学习任务到店体验"
+              ],
+              "objections": [
+                "具体配置与预算待确认",
+                "常用软件兼容性待验证"
+              ],
+              "content_angle": "先列课程任务，再带着清单到店体验",
+              "evidence_ids": [],
+              "assumptions": [
+                "演示营销假设，不是调研统计或真实客户行为"
+              ],
+              "pending_checks": [
+                "软件、具体SKU与价格需按实际情况核验"
+              ]
+            },
+            {
+              "name": "移动办公型职场人",
+              "typical_tasks": [
+                "整理会议材料",
+                "准备演示文档",
+                "处理日常办公资料"
+              ],
+              "pain_points": [
+                "办公地点变化",
+                "设备选型与实际工作流匹配不清楚"
+              ],
+              "buying_triggers": [
+                "办公设备更新",
+                "需要现场测试常用工作流"
+              ],
+              "objections": [
+                "续航与接口不作无条件承诺",
+                "企业软件与具体版本需验证"
+              ],
+              "content_angle": "带一份会议材料，核对真实工作流程",
+              "evidence_ids": [],
+              "assumptions": [
+                "演示营销假设，不代表用户研究结论"
+              ],
+              "pending_checks": [
+                "工作软件、接口与设备协作条件待核验"
+              ]
+            },
+            {
+              "name": "内容表达型创作者",
+              "typical_tasks": [
+                "整理灵感素材",
+                "制作作品提案",
+                "展示个人作品"
+              ],
+              "pain_points": [
+                "创作流程与选购参数脱节",
+                "难以仅凭宣传判断具体软件适用性"
+              ],
+              "buying_triggers": [
+                "创作设备更新",
+                "希望用自己的素材做现场演示"
+              ],
+              "objections": [
+                "不把外观图片当性能证据",
+                "具体创作软件版本与负载待验证"
+              ],
+              "content_angle": "从一份自己的作品开始，现场验证再做选择",
+              "evidence_ids": [],
+              "assumptions": [
+                "演示营销假设，未开展真实市场调研"
+              ],
+              "pending_checks": [
+                "创作软件、素材规模和具体配置待核验"
+              ]
+            }
+          ],
+          "status": "draft",
+          "is_demo": true,
+          "data_origin": "seeded_demo"
+        },
+        "strategy": {
+          "id": "strategy_seed_demo_1",
+          "task_id": "task_seed_demo_1",
+          "main_conflict": "课程文件分散",
+          "primary_persona": "开学资料管理型学生",
+          "key_message": "用自己的实际任务验证适用性，再选择具体配置",
+          "proof_points": [
+            "演示策略：暂不写未经证据验证的产品能力"
+          ],
+          "outline": [
+            "任务场景",
+            "待验证需求",
+            "到店演示",
+            "咨询与核验"
+          ],
+          "cta": "带上常用软件和任务清单，预约到店体验",
+          "risk_notes": [
+            "本方案是静态演示文案",
+            "不含已核验的价格、性能或兼容性承诺"
+          ],
+          "is_demo": true
+        },
+        "content": {
+          "id": "content_seed_demo_1",
+          "task_id": "task_seed_demo_1",
+          "platform": "xiaohongshu",
+          "version": 1,
+          "title_options": [
+            "开学资料管理型学生：带着你的任务，到店体验",
+            "先列需求，再看配置",
+            "一份任务清单，开启到店体验"
+          ],
+          "selected_title": "开学资料管理型学生：带着你的任务，到店体验",
+          "body": "### 卡片 1｜先从你的任务开始\nHUAWEI MateBook 14（鸿蒙版）\n整理课程资料、准备课堂展示，先把日常需求列清楚。\n\n### 卡片 2｜带着清单来体验\n准备常用软件和一份真实材料，到店核对具体型号、配置与适用条件。\n\n### 卡片 3｜确认之后再选择\n价格、软件兼容性与服务内容待现场核验。本文为演示营销初稿。",
+          "cta": "带上常用软件和任务清单，预约到店体验",
+          "image_plan": [],
+          "demo_image_url": "/demo-products/matebook-14-harmony-green.png",
+          "verification_status": "pending",
+          "is_demo": true,
+          "data_origin": "seeded_demo"
+        },
+        "verification": {
+          "task_id": "task_seed_demo_1",
+          "overall_status": "pending",
+          "checks": [
+            {
+              "type": "fact",
+              "item": "产品事实",
+              "status": "pending",
+              "reason": "演示数据尚未执行真实生成与事实审核",
+              "evidence_ids": []
+            },
+            {
+              "type": "image",
+              "item": "官方静态产品图片",
+              "status": "pending",
+              "reason": "演示数据尚未执行真实生成与事实审核",
+              "evidence_ids": []
+            },
+            {
+              "type": "compliance",
+              "item": "营销表达",
+              "status": "pending",
+              "reason": "演示数据尚未执行真实生成与事实审核",
+              "evidence_ids": []
+            }
+          ],
+          "manual_actions": [
+            "演示数据，仅供页面与流程展示",
+            "正式使用前重新取得IMA证据并执行核验"
+          ],
+          "is_demo": true
+        },
+        "evidence": []
+      }
+    },
+    {
+      "id": "task_seed_demo_2",
+      "product": {
+        "id": "sample-x",
+        "name": "HUAWEI MateBook X Pro 微绒典藏版",
+        "category": "高性能轻薄本",
+        "image_url": "/demo-products/matebook-x-pro-blue.png",
+        "note": "官方对应型号产品图 · 本条为静态演示选项，不表示已接通 IMA。"
+      },
+      "platform": "wechat_official",
+      "audience_hint": "移动办公型职场人",
+      "scenario": "整理会议材料 / 准备演示文档",
+      "goal": "引导到店体验",
+      "artifacts": {
+        "personas": {
+          "id": "persona_seed_demo_2",
+          "task_id": "task_seed_demo_2",
+          "personas": [
+            {
+              "name": "开学资料管理型学生",
+              "typical_tasks": [
+                "整理课程资料",
+                "准备课堂展示",
+                "归档学习笔记"
+              ],
+              "pain_points": [
+                "课程文件分散",
+                "选购前不清楚常用软件是否适用"
+              ],
+              "buying_triggers": [
+                "开学准备",
+                "携带实际学习任务到店体验"
+              ],
+              "objections": [
+                "具体配置与预算待确认",
+                "常用软件兼容性待验证"
+              ],
+              "content_angle": "先列课程任务，再带着清单到店体验",
+              "evidence_ids": [],
+              "assumptions": [
+                "演示营销假设，不是调研统计或真实客户行为"
+              ],
+              "pending_checks": [
+                "软件、具体SKU与价格需按实际情况核验"
+              ]
+            },
+            {
+              "name": "移动办公型职场人",
+              "typical_tasks": [
+                "整理会议材料",
+                "准备演示文档",
+                "处理日常办公资料"
+              ],
+              "pain_points": [
+                "办公地点变化",
+                "设备选型与实际工作流匹配不清楚"
+              ],
+              "buying_triggers": [
+                "办公设备更新",
+                "需要现场测试常用工作流"
+              ],
+              "objections": [
+                "续航与接口不作无条件承诺",
+                "企业软件与具体版本需验证"
+              ],
+              "content_angle": "带一份会议材料，核对真实工作流程",
+              "evidence_ids": [],
+              "assumptions": [
+                "演示营销假设，不代表用户研究结论"
+              ],
+              "pending_checks": [
+                "工作软件、接口与设备协作条件待核验"
+              ]
+            },
+            {
+              "name": "内容表达型创作者",
+              "typical_tasks": [
+                "整理灵感素材",
+                "制作作品提案",
+                "展示个人作品"
+              ],
+              "pain_points": [
+                "创作流程与选购参数脱节",
+                "难以仅凭宣传判断具体软件适用性"
+              ],
+              "buying_triggers": [
+                "创作设备更新",
+                "希望用自己的素材做现场演示"
+              ],
+              "objections": [
+                "不把外观图片当性能证据",
+                "具体创作软件版本与负载待验证"
+              ],
+              "content_angle": "从一份自己的作品开始，现场验证再做选择",
+              "evidence_ids": [],
+              "assumptions": [
+                "演示营销假设，未开展真实市场调研"
+              ],
+              "pending_checks": [
+                "创作软件、素材规模和具体配置待核验"
+              ]
+            }
+          ],
+          "status": "draft",
+          "is_demo": true,
+          "data_origin": "seeded_demo"
+        },
+        "strategy": {
+          "id": "strategy_seed_demo_2",
+          "task_id": "task_seed_demo_2",
+          "main_conflict": "办公地点变化",
+          "primary_persona": "移动办公型职场人",
+          "key_message": "用自己的实际任务验证适用性，再选择具体配置",
+          "proof_points": [
+            "演示策略：暂不写未经证据验证的产品能力"
+          ],
+          "outline": [
+            "任务场景",
+            "待验证需求",
+            "到店演示",
+            "咨询与核验"
+          ],
+          "cta": "带上常用软件和任务清单，预约到店体验",
+          "risk_notes": [
+            "本方案是静态演示文案",
+            "不含已核验的价格、性能或兼容性承诺"
+          ],
+          "is_demo": true
+        },
+        "content": {
+          "id": "content_seed_demo_2",
+          "task_id": "task_seed_demo_2",
+          "platform": "wechat_official",
+          "version": 1,
+          "title_options": [
+            "移动办公型职场人：带着你的任务，到店体验",
+            "先列需求，再看配置",
+            "一份任务清单，开启到店体验"
+          ],
+          "selected_title": "移动办公型职场人：带着你的任务，到店体验",
+          "body": "## 场景问题\n移动办公型职场人在选购设备前，可以先梳理自己的会议与资料任务。\n\n## 产品证据\n本演示选择HUAWEI MateBook X Pro 微绒典藏版，展示对应官方产品图片，暂不提供未经核验的规格断言。\n\n## 适用边界\n软件、版本、接口、配置及价格需结合具体产品核验。\n\n## 行动建议\n带上一份工作材料，预约现场体验，把选择落在自己的实际流程上。",
+          "cta": "带上常用软件和任务清单，预约到店体验",
+          "image_plan": [],
+          "demo_image_url": "/demo-products/matebook-x-pro-blue.png",
+          "verification_status": "pending",
+          "is_demo": true,
+          "data_origin": "seeded_demo"
+        },
+        "verification": {
+          "task_id": "task_seed_demo_2",
+          "overall_status": "pending",
+          "checks": [
+            {
+              "type": "fact",
+              "item": "产品事实",
+              "status": "pending",
+              "reason": "演示数据尚未执行真实生成与事实审核",
+              "evidence_ids": []
+            },
+            {
+              "type": "image",
+              "item": "官方静态产品图片",
+              "status": "pending",
+              "reason": "演示数据尚未执行真实生成与事实审核",
+              "evidence_ids": []
+            },
+            {
+              "type": "compliance",
+              "item": "营销表达",
+              "status": "pending",
+              "reason": "演示数据尚未执行真实生成与事实审核",
+              "evidence_ids": []
+            }
+          ],
+          "manual_actions": [
+            "演示数据，仅供页面与流程展示",
+            "正式使用前重新取得IMA证据并执行核验"
+          ],
+          "is_demo": true
+        },
+        "evidence": []
+      }
+    },
+    {
+      "id": "task_seed_demo_3",
+      "product": {
+        "id": "sample-gt",
+        "name": "HUAWEI MateBook GT 14",
+        "category": "高性能轻薄本",
+        "image_url": "/demo-products/matebook-gt-14-silver.png",
+        "note": "官方产品图 · 演示内容不含性能、价格或配置承诺。"
+      },
+      "platform": "xiaohongshu",
+      "audience_hint": "内容表达型创作者",
+      "scenario": "整理灵感素材 / 制作作品提案",
+      "goal": "引导到店体验",
+      "artifacts": {
+        "personas": {
+          "id": "persona_seed_demo_3",
+          "task_id": "task_seed_demo_3",
+          "personas": [
+            {
+              "name": "开学资料管理型学生",
+              "typical_tasks": [
+                "整理课程资料",
+                "准备课堂展示",
+                "归档学习笔记"
+              ],
+              "pain_points": [
+                "课程文件分散",
+                "选购前不清楚常用软件是否适用"
+              ],
+              "buying_triggers": [
+                "开学准备",
+                "携带实际学习任务到店体验"
+              ],
+              "objections": [
+                "具体配置与预算待确认",
+                "常用软件兼容性待验证"
+              ],
+              "content_angle": "先列课程任务，再带着清单到店体验",
+              "evidence_ids": [],
+              "assumptions": [
+                "演示营销假设，不是调研统计或真实客户行为"
+              ],
+              "pending_checks": [
+                "软件、具体SKU与价格需按实际情况核验"
+              ]
+            },
+            {
+              "name": "移动办公型职场人",
+              "typical_tasks": [
+                "整理会议材料",
+                "准备演示文档",
+                "处理日常办公资料"
+              ],
+              "pain_points": [
+                "办公地点变化",
+                "设备选型与实际工作流匹配不清楚"
+              ],
+              "buying_triggers": [
+                "办公设备更新",
+                "需要现场测试常用工作流"
+              ],
+              "objections": [
+                "续航与接口不作无条件承诺",
+                "企业软件与具体版本需验证"
+              ],
+              "content_angle": "带一份会议材料，核对真实工作流程",
+              "evidence_ids": [],
+              "assumptions": [
+                "演示营销假设，不代表用户研究结论"
+              ],
+              "pending_checks": [
+                "工作软件、接口与设备协作条件待核验"
+              ]
+            },
+            {
+              "name": "内容表达型创作者",
+              "typical_tasks": [
+                "整理灵感素材",
+                "制作作品提案",
+                "展示个人作品"
+              ],
+              "pain_points": [
+                "创作流程与选购参数脱节",
+                "难以仅凭宣传判断具体软件适用性"
+              ],
+              "buying_triggers": [
+                "创作设备更新",
+                "希望用自己的素材做现场演示"
+              ],
+              "objections": [
+                "不把外观图片当性能证据",
+                "具体创作软件版本与负载待验证"
+              ],
+              "content_angle": "从一份自己的作品开始，现场验证再做选择",
+              "evidence_ids": [],
+              "assumptions": [
+                "演示营销假设，未开展真实市场调研"
+              ],
+              "pending_checks": [
+                "创作软件、素材规模和具体配置待核验"
+              ]
+            }
+          ],
+          "status": "draft",
+          "is_demo": true,
+          "data_origin": "seeded_demo"
+        },
+        "strategy": {
+          "id": "strategy_seed_demo_3",
+          "task_id": "task_seed_demo_3",
+          "main_conflict": "创作流程与选购参数脱节",
+          "primary_persona": "内容表达型创作者",
+          "key_message": "用自己的实际任务验证适用性，再选择具体配置",
+          "proof_points": [
+            "演示策略：暂不写未经证据验证的产品能力"
+          ],
+          "outline": [
+            "任务场景",
+            "待验证需求",
+            "到店演示",
+            "咨询与核验"
+          ],
+          "cta": "带上常用软件和任务清单，预约到店体验",
+          "risk_notes": [
+            "本方案是静态演示文案",
+            "不含已核验的价格、性能或兼容性承诺"
+          ],
+          "is_demo": true
+        },
+        "content": {
+          "id": "content_seed_demo_3",
+          "task_id": "task_seed_demo_3",
+          "platform": "xiaohongshu",
+          "version": 1,
+          "title_options": [
+            "内容表达型创作者：带着你的任务，到店体验",
+            "先列需求，再看配置",
+            "一份任务清单，开启到店体验"
+          ],
+          "selected_title": "内容表达型创作者：带着你的任务，到店体验",
+          "body": "### 卡片 1｜先从你的任务开始\nHUAWEI MateBook GT 14\n整理灵感素材、制作作品提案，先把日常需求列清楚。\n\n### 卡片 2｜带着清单来体验\n准备常用软件和一份真实材料，到店核对具体型号、配置与适用条件。\n\n### 卡片 3｜确认之后再选择\n价格、软件兼容性与服务内容待现场核验。本文为演示营销初稿。",
+          "cta": "带上常用软件和任务清单，预约到店体验",
+          "image_plan": [],
+          "demo_image_url": "/demo-products/matebook-gt-14-silver.png",
+          "verification_status": "pending",
+          "is_demo": true,
+          "data_origin": "seeded_demo"
+        },
+        "verification": {
+          "task_id": "task_seed_demo_3",
+          "overall_status": "pending",
+          "checks": [
+            {
+              "type": "fact",
+              "item": "产品事实",
+              "status": "pending",
+              "reason": "演示数据尚未执行真实生成与事实审核",
+              "evidence_ids": []
+            },
+            {
+              "type": "image",
+              "item": "官方静态产品图片",
+              "status": "pending",
+              "reason": "演示数据尚未执行真实生成与事实审核",
+              "evidence_ids": []
+            },
+            {
+              "type": "compliance",
+              "item": "营销表达",
+              "status": "pending",
+              "reason": "演示数据尚未执行真实生成与事实审核",
+              "evidence_ids": []
+            }
+          ],
+          "manual_actions": [
+            "演示数据，仅供页面与流程展示",
+            "正式使用前重新取得IMA证据并执行核验"
+          ],
+          "is_demo": true
+        },
+        "evidence": []
+      }
+    }
+  ],
+  "customers": [
+    {
+      "id": "customer_seed_demo_1",
+      "name": "虚构客户·小林",
+      "needs": "课堂笔记、课程资料整理、软件适用性",
+      "stage": "有兴趣",
+      "next": "确认常用软件清单，邀请到店测试",
+      "time": "",
+      "timeline": [
+        {
+          "id": "followup_seed_demo_1",
+          "note": "演示跟进记录：需求有待进一步确认；不代表真实联系行为。",
+          "created_at": "2026-10-18T08:00:00.000Z"
+        }
+      ],
+      "content": [
+        {
+          "task_id": "task_seed_demo_1"
+        }
+      ],
+      "is_demo": true
+    },
+    {
+      "id": "customer_seed_demo_2",
+      "name": "虚构客户·陈先生",
+      "needs": "移动办公、会议演示、日常文档",
+      "stage": "比较中",
+      "next": "用实际会议材料核对工作流程",
+      "time": "",
+      "timeline": [
+        {
+          "id": "followup_seed_demo_2",
+          "note": "演示跟进记录：需求有待进一步确认；不代表真实联系行为。",
+          "created_at": "2026-10-18T08:00:00.000Z"
+        }
+      ],
+      "content": [
+        {
+          "task_id": "task_seed_demo_2"
+        }
+      ],
+      "is_demo": true
+    },
+    {
+      "id": "customer_seed_demo_3",
+      "name": "虚构客户·阿晴",
+      "needs": "素材整理、作品演示、创作软件",
+      "stage": "待跟进",
+      "next": "了解软件版本与创作材料规模，安排体验",
+      "time": "",
+      "timeline": [
+        {
+          "id": "followup_seed_demo_3",
+          "note": "演示跟进记录：需求有待进一步确认；不代表真实联系行为。",
+          "created_at": "2026-10-18T08:00:00.000Z"
+        }
+      ],
+      "content": [
+        {
+          "task_id": "task_seed_demo_3"
+        }
+      ],
+      "is_demo": true
+    }
+  ]
+}
