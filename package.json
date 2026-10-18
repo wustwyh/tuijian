@@ -8,6 +8,9 @@
     "packages/*"
   ],
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
+  },
+  "scripts": {
+    "test:ima": "node --test packages/ima/test/client.test.mjs"
   }
 }
