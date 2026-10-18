@@ -1,38 +1,30 @@
 # Agent 进度看板
 
-由 Coordinator 维护；各角色写自己的交接，通过共享信箱直接协作。
+由 Coordinator 更新。职责基线 roles-v2-20261018；协作职责提交 ea126ce。实测标签实际指向 e69e484（ea126ce 的祖先）；保留原标签，不移动历史引用。
 
 ## 全局事实
 
-- 主目录 `E:\codes\创业\10.18黑客松`，主分支 integration。
-- 职责基线标签 `roles-v2-20261018`：Coordinator 兼 IMA、Workflow、Backend、Frontend 四个角色；独立 QA 暂停，用户最终验收。
-- 旧结构基线 `1631a12`，本次调整前 integration 为 `ac4aa35`。五个旧角色工作树保留，使用方式见 `parallel-work-tree.md`。
-- 2026-10-18 切换前检查：Frontend、Backend、Workflow 已有业务提交；Frontend 另有未提交联调修改；旧 ima 已暂存 I1 实现与交接但尚未提交。不能继续按“全部待启动”调度。
-- 本批职责变更只修改文档，不把分支业务代码顺带合入 integration，不重新运行其业务测试，不宣称线上服务已验证。
-- 角色历史交接中的测试结果是该角色报告；下表不是本批重新实测结果。真实 IMA/LLM、前后端集成与 G0—G3 通过情况仍需实际验证。
-- 正式事实/图片只来自线上 IMA，凭证不入源码/日志/信箱，测试夹具不冒充线上结果。
+- 主目录 E:\codes\创业\10.18黑客松，主分支 integration。五个角色 worktree 保留，IMA 已合并进 Coordinator，QA 暂停；不 reset/clean 或覆盖在途工作。
+- 已收到旧 IMA 消息 `20261018T073921Z_4b71_ima-stop-writing-handoff`，明确“已停止写入，可以接管”。审核原 8 个暂存文件后提交并快进合入 `8f62c32`；其他角色工作树未被此次接收修改。
+- IMA 模块离线测试本次 18/18 通过。历史真实 smoke 时间 2026-10-18T07:19:29.636Z：6919-byte Markdown、800×800 PNG/225613 bytes、图片刷新哈希一致、未确认型号返回两候选。历史线上结果与本次离线重验分开记录。
+- 真实资料为产品发现卡；完整规格/兼容性/动态价格等仍待核验。图片 source_url:null，后端按 media_id 刷新鉴权代理，临时签名不入库或前端。
+- 本批已冻结 API §8 的 B1 身份/任务、IMA 内部调用和 LLMAdapter；共享类型 `packages/contracts/index.d.ts`。未冻结的确认/失效/修订/导出规则等待 Workflow W0。
+- Frontend、Backend、Workflow 业务实现仍在各自分支；主工作树未合入三者。已有自测/浏览器结果为角色历史报告，本批未重跑其全部业务测试。真实 LLM、持久化生成结果及完整闭环未通过。
+- 仅本地 Git，无 remote/推送；业务数据不使用假持久化，事实/图片不使用本地知识库或测试夹具。
 
 ## 当前批次
 
-切换职责并同步基线；各会话读取新任务包，在信箱回执职责、旧任务继续/移交、下一交付、阻塞。Coordinator 接收 IMA 停写交接后接管。
-本文件记录切换前成果与下一任务；实际同步结果以执行回执为准。检查本工作树是否含基线：`git merge-base --is-ancestor roles-v2-20261018 HEAD`。
+| 角色 | 已有成果/状态 | 下一交付 |
+|---|---|---|
+| Coordinator + IMA | I1 8f62c32 已接收；公共最小契约已发布 | 响应 W0/B4/B5，收口下一接口并逐模块集成 |
+| Workflow | 953572c / 63b470f，19 项测试为模块报告；W0 在途 | 确认/失效/修订/导出提案，修复 source_url:null 真实证据接入并自验 |
+| Backend | f520e47 / 17b2e2a，B1 本地账号/SQLite；B4 在途 | 服务端真实 LLM 适配器和自测；缺 key 时保持明确未配置；B5 图片代理草案 |
+| Frontend | d3575f7，登录/任务及 Vite 已启动；构建/10 测试/匿名浏览器为角色报告 | 同步冻结 B1，现有内容预览自验；接收下一确认/生成/图片接口 |
 
-| 角色 | 已有成果/状态 | 分支 / worktree 后缀 | 下一交付 |
-|---|---|---|---|
-| Coordinator + IMA | C0 结构已建，接缝待收口；原 I1 在途代码及交接报告已见，待接收 | integration / 主目录；旧 feat/ima 仅接续 | 接收旧 IMA，核对其线上验证记录，收口鉴权/响应/LLM/业务接口 |
-| Workflow | `953572c` 已提交 W1—W3 模块；交接报告 19 个测试通过，真实 LLM 未验证 | feat/workflow / workflow | W0 业务规则与接口差异；接续 W1—W3 真实联调，规划 W4 修订/W5 跟进建议 |
-| Backend | `f520e47` 已提交 B1 本地身份/SQLite；交接报告 6 个测试通过，云与线上服务未验证 | feat/backend / backend | 鉴权/响应草案、B4 LLM 适配器；推进 B2/B3/B5 |
-| Frontend | `e1cde7c` 已提交页面/工作台；交接报告 10 个测试通过，Vite 未安装、真实 API 未接通 | feat/frontend / frontend | 依赖/代理与鉴权响应接通；继续 F2/F3，配合修订交互 F4 |
+## 门禁与下一批
 
-## 保留但不独立调度
-
-- IMA：feat/ima / `E:\codes\创业\10.18黑客松-worktrees\ima`。切换前 `packages/ima` 与 `docs/handoffs/ima.md` 已暂存，保留原样；其交接报告离线 18 项通过、真实 Markdown/图片及刷新调用成功，本批未重跑；原会话完成停写交接后由 Coordinator 接管 I1/I2。
-- QA：test/demo / `E:\codes\创业\10.18黑客松-worktrees\qa`。暂停、不创建 Agent；检查要求转入 `demo/acceptance.md`。
-
-## 待决与主责
-
-- 鉴权/存储提供方、身份与成功响应：Backend 提案，Coordinator 收口；产品选择交用户。
-- LLM 调用适配器：Backend 实现，Workflow 提需求，Coordinator 冻结接缝。
-- 图片访问/有效期：Coordinator 查明，Backend 实现访问，Frontend 展示。
-- 业务确认/修订/失效/核验导出：Workflow 提案，Backend/Frontend 执行，Coordinator 收口。
-- 额外平台与可下载海报/卡片成品的范围/格式：用户决定；本次不擅自扩充或删减产品范围。
+- I1 真实依赖子项有实测记录；不能据此宣布 G1 用户隔离、G2 或 G3 通过。
+- G0 待三个业务模块集成、根锁文件与统一启动/检查。
+- G1 业务隔离由 Backend 测试与前端真实账号流程复验；IMA 图片 HTTP 代理尚未验证。
+- G2 待真实 LLM 和登录到导出闭环；G3 交用户最终验收。
+- 信箱回执与调度见 `communication.md`；具体依赖和阅读入口见 `next-batch.md`。

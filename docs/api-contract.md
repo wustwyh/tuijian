@@ -168,7 +168,7 @@
 - `POST /api/tasks`：创建任务。
 - `GET /api/tasks`：列出当前用户任务。
 - `GET /api/tasks/:taskId`：读取任务详情、画像、策略、内容和核验状态。
-- `PATCH /api/tasks/:taskId`：修改任务输入或状态。
+- `PATCH /api/tasks/:taskId`：修改任务输入白名单；状态由服务端流程维护。
 
 ### ima 检索与证据
 
@@ -243,6 +243,73 @@
 | 成稿内容/配图语义与排版预览 | Workflow / Frontend 各负责其部分 | Backend 提供数据；成品导出格式另行收口 |
 | 核验结果与导出限制 | Workflow 提业务规则，Backend 强制执行 | Frontend 展示；产品取舍交用户 |
 
-本节不新增或批准具体 API 字段。生成接口完整请求响应、型号/画像/策略确认、证据版本、LLM 函数签名、修订/跟进建议端点、pending/rejected 导出策略仍需提出草案并冻结。
+本节不新增或批准具体 API 字段。B1、IMA 和 LLM 函数接缝已在 §8 冻结；生成接口完整请求响应、型号/画像/策略确认、证据版本、修订/跟进建议端点、pending/rejected 导出策略仍需提出草案并冻结。
 身份隔离由 Backend 服务端检查，不能以 LLM 自评替代；Workflow 仅报告已获得的证据与自身规则检查结果。
 协商使用 `communication.md` 的共享信箱，正式变更必须提交本契约和相关共享类型后通知消费者。
+
+## 8. 最小接缝冻结：seams-v1-20261018
+
+本节冻结已由实现方和消费方确认的 B1、IMA 和 LLM 适配器接缝。它表示接口决定，**不表示接口已全部合入或线上闭环已通过**。B1 依据 Backend `f520e47` 及 Frontend `d3575f7`；IMA 交付 `8f62c32`；LLM 依据 Workflow 当前声明及双方信箱回执。共享声明入口：`packages/contracts/index.d.ts`。
+
+### 8.1 身份与任务 B1
+
+| 请求 | 成功响应 | 约束 |
+|---|---|---|
+| `POST /api/auth/register` | 201 `{user}` | 请求 `{email,password}`；注册成功设置会话 Cookie |
+| `POST /api/auth/login` | 200 `{user}` | 同一请求结构；错误邮箱/密码返回 401 |
+| `GET /api/auth/me` | 200 `{user}` | 未登录/会话失效返回 401 |
+| `POST /api/auth/logout` | 204，无响应体 | 撤销当前服务端会话并清 Cookie；不要求 JSON 请求体 |
+| `POST /api/tasks` | 201 `{task}` | 创建当前用户任务 |
+| `GET /api/tasks` | 200 `{tasks:[]}` | 只返回当前用户任务 |
+| `GET /api/tasks/:taskId` | 200 `{task}` | B1 只提供 task；聚合生成结果的字段待下一次冻结 |
+| `PATCH /api/tasks/:taskId` | 200 `{task}` | 仅修改输入白名单；无修改字段或未知字段返回校验错误 |
+
+`user = {id,email,created_at}`，不返回密码、哈希或会话令牌。邮箱规范化为小写；密码 12—128 个字符。Cookie 为 HttpOnly、SameSite=Lax；HTTPS 环境使用 Secure。前端通过同源 `/api` 代理或明确允许的 Origin，携带 `credentials:'include'`；不把 IMA/LLM 凭证作为浏览器鉴权方式。
+
+任务输入白名单为 `product_query,platform,audience_hint,scenario,goal`。创建必填非空 `product_query`（最多 200 字符）和有效 `platform`；其他三项可省略并存为空字符串，每项最多 2000 字符。生成前的必填业务确认由 Workflow 规则另行约束。任务未解析时 `resolved_product_name:null`。客户端不能直接写 `user_id`、`resolved_product_name`、任务状态或核验状态。B1 输入实际变化后清除已解析产品、回到 draft；后续生成结果的完整失效矩阵由 W0 提案后冻结。
+
+所有业务 ID 的读取/修改必须在服务端检查当前用户归属；不存在或属于其他用户的任务均返回 404。业务所有权检查同样适用于后续图片、证据、生成、导出、客户和跟进接口。当前本地实现是真实 SQLite 和本地账号，不能宣称已接入云 Auth/Database。
+
+错误继续使用 §1 的 `{error:{code,message,details:[]}}`，新增 `RATE_LIMITED`（429）和 `INTERNAL_ERROR`（500）。413/415 可使用 `VALIDATION_ERROR`；不得把内部异常、SQL、Cookie、凭证或供应商原始响应透传。
+
+### 8.2 IMA 服务端证据与图片
+
+入口 `packages/ima/index.mjs`，完整声明 `packages/ima/index.d.ts`：
+
+```js
+retrieveProductEvidence({query, needImages = true, confirmedProduct?, knowledgeBaseId?})
+// resolved: {status:'resolved', product, knowledgeBaseId, evidence, warnings}
+// ambiguous: {status:'ambiguous', knowledgeBaseId, candidates:[{product,reason}], warnings}
+fetchProductImage({knowledgeBaseId?, mediaId, confirmedProduct})
+// {bytes, contentType, imageMetadata, fetchedAt}
+```
+
+以上为**内部模块调用**，不是新增 HTTP 请求体。Backend 分配证据 `id/task_id`、校验用户/任务归属并保存。证据增加原始 `query`、`applicable_version`、`source_metadata`；保留真实线上 `knowledge_base_id/media_id/title/fetched_at`。IMA 初始 `verification_status` 一律 pending，来源成功不表示营销事实已核验。
+
+`source_url` 类型为 `string | null`。真实 IMG 可以没有长期公开 URL，此时必须保留 `source_metadata.retrieval='ima_openapi'`、`requires_refresh=true` 及真实来源标识；Workflow 不得仅因缺少公网 URL 拒绝这种证据，也不得为通过校验拼造 URL。Markdown 若有 source_url，是原文标注的官方入口，未单独抓取核验。
+
+Backend 在验证用户、任务、证据、IMG 类型和已确认型号后，按**保存的真实 media_id**调用图片函数，提供同源鉴权代理。图片 HTTP 路由/响应由 Backend 提案后另行冻结，当前不虚构已实现的路径。前端通过代理显示原图。IMA 临时下载 URL、素材签名 headers 和 OpenAPI 凭证不得进入业务持久化、前端、导出、Git 或信箱；图片签名有效期未验证，访问时重新获取。不得用代理地址替换来源 URL 冒充上游事实来源。
+
+`ImaError` 的内部 `details` 是对象；适配公共 HTTP 错误时转换为数组（有内容时 `[details]`，否则 `[]`），仅传递脱敏字段。来源库不匹配、型号歧义、空结果或读取失败不可降级为本地文件/测试夹具。
+
+I1 当前只支持 MateBook 14 候选解析和已确认的鸿蒙版读取。文档是产品发现卡，不支持补齐精确规格、价格、补贴、库存或兼容性；`warnings` 和原文边界必须随证据传给 Workflow。
+
+### 8.3 Workflow 与真实 LLM 适配器
+
+```ts
+type LLMRequest = {
+  stage: 'personas' | 'strategy' | 'content' | 'verify';
+  system: string;
+  prompt: string;
+  response_schema: Record<string, unknown>;
+};
+type LLMAdapter = (request: LLMRequest) => Promise<Record<string, unknown> | string>;
+```
+
+Workflow 通过 `createWorkflow({llm})` 消费适配器；适配器仅返回业务 JSON 对象或纯 JSON 字符串，不能返回供应商 envelope、Markdown 代码围栏或假文案。Workflow 每次提供完整当前证据和业务提示词；Backend 只负责真实网络调用、供应商格式提取、严格 JSON 解析、超时、有界传输重试和脱敏错误。响应 Schema 的供应商原生支持情况必须实测；不支持时不得声称已启用原生结构约束。
+
+Workflow 继续执行结构/引用/业务校验；模型自评不能覆盖确定性拒绝。输出修复由 Workflow 定义，与 Backend 传输重试共同设置外呼上限；精确次数及修订策略待提案，不由两层各自无限重试。缺配置、401 或调用失败保持明确 `LLM_FAILED`，不使用夹具回退。
+
+### 8.4 下一冻结点
+
+W0 主责：型号/画像/策略确认、主画像选择、输入/证据变更失效、修订与版本、pending/rejected 导出、跟进建议。Backend 据此提供请求响应及竞态保存草案，Frontend 提供交互所需字段；Coordinator 收口后发布下一契约提交。本节不自行决定这些产品规则，也不把待提案端点交给前端猜测实现。
