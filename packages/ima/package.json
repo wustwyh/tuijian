@@ -1,6 +1,9 @@
 {
   "name": "@huawei-demo/ima",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "exports": { ".": { "types": "./index.d.ts", "import": "./index.mjs" } },
+  "scripts": { "test": "node --test test/client.test.mjs", "smoke": "node smoke.mjs --live" },
+  "engines": { "node": ">=24" }
 }

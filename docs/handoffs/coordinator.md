@@ -1,3 +1,15 @@
+# Coordinator + IMA 接续 — C1 / seams-v1-20261018
+
+- 已读新版入口、角色、看板、职责切换与通信规则；本会话为唯一合并角色，不新建 IMA/QA。
+- 已接收旧 IMA 停写消息，保留 8 个暂存文件原内容并审核提交 `8f62c32`，ff 合入 integration。18 项离线测试本次全通过；此前真实文档/图片/刷新/歧义记录见 IMA 交接和最小脱敏摘要。
+- 已发布 API §8 和共享类型，冻结 B1 身份/任务、IMA 模块与 LLMAdapter；根 Node 要求对齐 >=24。角色回执及双方接缝意见经共享信箱接收。
+- 发现并通知 Workflow：真实 IMG source_url:null 会被旧 remoteUrl 校验拒绝；由 Workflow 自己修复，Coordinator 不代改。
+- 尚未合入 Frontend/Backend/Workflow 业务分支；未生成公共锁文件；缺服务端 LLM key，真实 LLM/完整生成闭环尚未验证。Backend 接续 B4/B5，Workflow 接续 W0，Frontend 可继续既有结构预览。
+- 下一可验收动作：接收 W0 和各模块具体交付，冻结确认/失效/导出和图片 HTTP，再逐提交集成并执行所需检查。见 `docs/next-batch.md`。
+- 原子信箱消息及回执见 `E:\Codex\workspace\hackathon-agent-mailbox`；仅讨论不等于正式契约。旧记录保留在下方。
+
+---
+
 # Coordinator 最近交接
 
 ## 职责切换 v2

@@ -1,28 +1,18 @@
 # 华为 PC 营销智能体 Demo
 
-新 Agent 从 `AGENTS.md` 开始，只读分配角色所需上下文。
+新 Agent 从 `AGENTS.md` 按角色读取，职责基线为 roles-v2-20261018；Coordinator 兼 IMA，不设独立 QA。
 
-## 当前基线
-
-这是共享结构与协作基线，业务应用尚未实现，尚无前后端启动命令。
-Node.js 要求 >=22，当前机器已验证 Node.js 24 与 npm 11 可用。
-本批未安装任何第三方依赖。根依赖与锁文件由 Coordinator 统一维护。
+主工作树 `integration` 已接收真实线上 IMA 客户端和最小公共契约。Node.js >=24。运行 `npm.cmd run test:ima` 验证模块；真实线上调用及凭证说明见 `packages/ima/README.md`。
+Frontend、Backend、Workflow 已有独立分支成果，尚未合入本主工作树；前端现有本地入口为 http://127.0.0.1:5173/，不代表生成闭环已通过。详细提交、验证范围与下一交付见 `docs/agent-status.md`、`docs/next-batch.md`。
 
 | 路径 | 所有者 |
 |---|---|
-| `apps/web/` | Frontend |
-| `apps/api/` | Backend |
-| `packages/ima/` | IMA |
-| `packages/workflow/` | Workflow |
-| `packages/contracts/` | Coordinator |
-| `tests/e2e/` | QA |
+| apps/web | Frontend |
+| apps/api | Backend |
+| packages/workflow | Workflow |
+| packages/ima、packages/contracts、根配置/锁文件、tests/e2e | Coordinator |
 
-角色分支和绝对 worktree 路径见 `docs/agent-status.md`。
-这里只在本地创建 Git 仓库和分支；没有添加远程仓库或推送。
+公共接口以 `docs/api-contract.md` 为准，类型在 `packages/contracts/index.d.ts`。Frontend 的既有 React/Vite 依赖将在接收该分支时统一生成根锁文件，当前主工作树不声称完成依赖安装。
+共享通信协议见 `docs/communication.md`；信箱不自动推送。Git 仅本地使用，无 remote 或推送。
 
-## 本地参考与运行时边界
-
-原主目录的两个知识库、压缩包、PDF、ima 技能分发包和个人工具记忆不进入 Git。
-IMA Agent 通过任务包中的主目录绝对路径读取外部技能文档，不依赖把资料复制到各 worktree。
-正式运行从线上 ima 获取事实/图片；证据和诊断产物存入忽略的 `.runtime/`，不能把本地材料充当线上来源。
-凭证由后端环境变量提供，`.env.example` 仅列变量名，不含任何值。
+事实/图片只从线上共享 IMA 获取。本地知识库、外部技能分发包、PDF/ZIP、个人记忆、凭证、原始响应和临时素材不进入 Git；`.runtime/` 只用于忽略的运行产物，不能作为线上来源。凭证仅在服务端使用。
