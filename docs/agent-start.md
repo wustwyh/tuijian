@@ -1,5 +1,9 @@
 # 新 Agent 最小阅读路由
 
+## 本批优先阅读
+
+用户最新执行要求 PR2：`requirements/frontend-first-pipeline.md`，先完整前端框架，再逐段接通后端。任务见 `next-batch.md`。所有角色先读该文的业务表、M0—M2 与自己本批任务；原“完整契约冻结后再写 UI”的调度不再适用。
+
 ## 当前基线与目的
 
 职责基线 `roles-v2-20261018`：Coordinator 兼任 IMA，Workflow 主导营销业务实现，Backend/Frontend 各自实现服务和交互，不设置独立 QA。用户负责最终验收。
