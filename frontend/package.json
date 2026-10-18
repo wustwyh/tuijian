@@ -1,0 +1,16 @@
+{
+  "name": "huawei-pc-marketing-demo",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test:ima": "node --test packages/ima/test/client.test.mjs"
+  }
+}

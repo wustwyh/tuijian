@@ -1,0 +1,92 @@
+{
+  "status": "passed",
+  "live": true,
+  "fetched_at": "2026-10-18T07:19:29.636Z",
+  "product": "HUAWEI MateBook 14（鸿蒙版）",
+  "knowledge_base_id": "rlFXVWSgzzyllb8nKnATSvMBxVJGQ1-CwarZdVMKhMI=",
+  "evidence": [
+    {
+      "knowledge_base_id": "rlFXVWSgzzyllb8nKnATSvMBxVJGQ1-CwarZdVMKhMI=",
+      "query": "MateBook 14",
+      "fetched_at": "2026-10-18T07:19:06.599Z",
+      "applicable_model": "HUAWEI MateBook 14（鸿蒙版）",
+      "applicable_version": "鸿蒙版；具体 SKU/系统版本待核验",
+      "verification_status": "pending",
+      "media_id": "markdown_cls1_71e8ad4dc7517dbbc07ecf776913d64a_7277625ae771c7b415d9b2c889c7228f7514565705233223",
+      "media_type": "MARKDOWN",
+      "title": "02-HUAWEI MateBook 14（鸿蒙版）.md",
+      "source_url": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-14-harmonyos-version/",
+      "source_metadata": {
+        "retrieval": "ima_openapi",
+        "content_type": "text/markdown; charset=utf-8",
+        "byte_length": 6919,
+        "sha256": "f00c695c266e6fffb3f2156271491326c27331829946ae9cddc45f5baa364339",
+        "download_origin": "https://skb.ima.myqcloud.com",
+        "requires_refresh": true,
+        "source_url_note": "source_url 为原文标注的官方入口；未独立抓取核验。ima 临时下载 URL 不持久化。",
+        "checks": [
+          "online_read",
+          "utf8",
+          "model_in_document"
+        ],
+        "scope": "产品发现卡；不是完整规格档案"
+      },
+      "fact_excerpt": "# HUAWEI MateBook 14（鸿蒙版）\n\n- 产品类别：鸿蒙主流笔记本\n- 所属目录：消费级 PC\n- 官方页面：https://consumer.huawei.com/cn/harmonyos-computer/matebook-14-harmonyos-version/\n- 抓取日期：2026-10-17\n\n## 官网公开定位摘要\n\n2.8K OLED 云晰柔光屏、鸿蒙 AI、长续航、全场景连接\n\n## 建库状态\n\n本条用于产品发现与检索，不替代规格页。生成参数、配置、兼容性或服务承诺前，应继续抓取该产品的规格页、支持页和具体销售SKU；同系列不同处理器、颜色、屏幕、支架、内存或存储不得互相继承。\n\n## 动态信息边界\n\n价格、补贴、赠品、库存、交期和套餐需从当日官方商城另行核验，不写入本条长期事实。\n\n## 完整档案补抓与内容应用\n\n### 本卡能确认什么\n\n截至 2026-10-17，官方页面以“鸿蒙主流笔记本”相关定位呈现 **HUAWEI MateBook 14（鸿蒙版）**，本卡只确认产品名称、分类、上述公开摘要和来源页面存在。它是一张发现卡：适合检索产品、寻找原页、形成补抓任务，不应冒充完整规格档案。\n\n- “2.8K OLED 云晰柔光屏”属于显示相关线索。完整档案需补屏幕款式、模式、测试条件和接口链路，不能自动转写成绝对护眼或专业适用结论。\n- “鸿蒙 AI”适合通过具体任务演示，但要标出HUAWEI MateBook 14（鸿蒙版）、系统版本、账号、网络和支持设备条件，避免把生态名称写成无条件能力。\n- “长续航”必须连同官方测试条件、适配器、负载与环境记录；它不能直接承诺每位用户的实际使用时间或充电速度。\n- “全场景连接”适合通过具体任务"
+    },
+    {
+      "knowledge_base_id": "rlFXVWSgzzyllb8nKnATSvMBxVJGQ1-CwarZdVMKhMI=",
+      "query": "MateBook 14",
+      "fetched_at": "2026-10-18T07:19:12.358Z",
+      "applicable_model": "HUAWEI MateBook 14（鸿蒙版）",
+      "applicable_version": "鸿蒙版；具体 SKU/系统版本待核验",
+      "verification_status": "pending",
+      "media_id": "img_cls1_71e8ad4dc7517dbbc07ecf776913d64a_60d59ae2c2a7e4283ca02152e416626d7514565705233223",
+      "media_type": "IMG",
+      "title": "vmall_matebook-14-harmonyos_原野绿正面产品展示_09.png",
+      "source_url": null,
+      "image_metadata": {
+        "width": 800,
+        "height": 800,
+        "format": "png",
+        "content_type": "image/png",
+        "byte_length": 225613,
+        "sha256": "793fe65d16b209f47f162537955c4c288be35000916105038b40cf4ebb81ce7d",
+        "usage": "产品外观（发布前核验具体颜色与素材权限）"
+      },
+      "source_metadata": {
+        "retrieval": "ima_openapi",
+        "download_origin": "https://skb.ima.myqcloud.com",
+        "requires_refresh": true,
+        "source_url_note": "无稳定素材 URL；以 media_id 重新获取链接及来源签名 headers，由后端代理。",
+        "checks": [
+          "online_read",
+          "content_type",
+          "magic_bytes",
+          "dimensions",
+          "model_in_title"
+        ],
+        "model_match_basis": "线上素材标题含 matebook-14-harmonyos；发布前仍需人工检查颜色与具体 SKU"
+      }
+    }
+  ],
+  "ambiguous_candidates": [
+    {
+      "product": "HUAWEI MateBook 14（鸿蒙版）",
+      "reason": "线上条目明确标注鸿蒙版或 harmonyos"
+    },
+    {
+      "product": "HUAWEI MateBook 14 酷睿 Ultra",
+      "reason": "线上条目包含其他处理器/年份版本"
+    }
+  ],
+  "image_refresh_proxy": {
+    "status": "passed",
+    "sha256_matches_first_read": true,
+    "content_type": "image/png"
+  },
+  "warnings": [
+    "来源/文件类型/型号关联已检查；最终营销事实核验待完成。",
+    "原文为产品发现卡；参数、兼容性、价格、补贴、库存不可据此补齐。",
+    "产品图需后端按 media_id 刷新并代理，临时 URL 和来源签名 headers 不进入业务持久化。"
+  ]
+}
