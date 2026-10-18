@@ -20,6 +20,19 @@ function remoteUrl(value) {
   } catch { return false; }
 }
 
+// Trusted server-side IMA adapter records may have no durable public URL.
+// This checks provenance shape only; Backend must obtain the record from IMA,
+// never accept a client assertion of retrieval='ima_openapi' as proof.
+function traceableSource(item) {
+  if (item.source_url === null) {
+    const meta = item.source_metadata;
+    return meta?.retrieval === 'ima_openapi' && meta.requires_refresh === true &&
+      remoteUrl(meta.download_origin) && isText(meta.source_url_note) &&
+      Array.isArray(meta.checks) && meta.checks.length > 0 && meta.checks.every(isText);
+  }
+  return remoteUrl(item.source_url);
+}
+
 export function context(task, evidence) {
   if (!task || !['id', 'product_query', 'audience_hint', 'scenario', 'goal'].every((key) => isText(task[key]))) fail('任务缺少必填字段');
   if (!['xiaohongshu', 'wechat_official', 'wechat_moments', 'store_poster'].includes(task.platform)) fail('未知平台');
@@ -33,7 +46,7 @@ export function context(task, evidence) {
     if (ids.has(item.id)) fail('证据 ID 重复');
     ids.add(item.id);
     if (!['knowledge_base_id', 'media_id', 'media_type', 'title', 'applicable_model'].every((key) => isText(item[key])) ||
-        !remoteUrl(item.source_url) || !isText(item.fetched_at) || !Number.isFinite(Date.parse(item.fetched_at)) ||
+        !traceableSource(item) || !isText(item.fetched_at) || !Number.isFinite(Date.parse(item.fetched_at)) ||
         !['passed', 'pending', 'rejected'].includes(item.verification_status)) fail('证据溯源字段不完整或来源地址无效', [{ evidence_id: item.id }]);
   }
   const eligible = evidence.filter((item) => normalize(item.applicable_model) === normalize(task.resolved_product_name) && item.verification_status !== 'rejected');

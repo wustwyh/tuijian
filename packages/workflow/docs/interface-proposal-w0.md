@@ -21,7 +21,7 @@ stage 为 personas|strategy|content|verify；模块不读取 key，不接收供�
 
 | 编号 | 缺口 | 草案 | 负责 |
 |---|---|---|---|
-| D1 | resolved_product_name 文本不能证明选型确认 | 返回候选 ID/完整名称/证据引用；后端保存用户选型和输入版本 | Coordinator 候选/契约；Backend 保存；Frontend 选择 |
+| D1 | resolved_product_name 文本不能证明选型确认 | 返回候选 ID/完整名称/歧义原因；后端保存用户选型和检索版本，下载入库后才有证据 ID | Coordinator 候选/契约；Backend 保存；Frontend 选择 |
 | D2 | PersonaReport 只有 confirmed，无主画像/版本 | 确认请求携带 report ID、选择名称、expected_revision；持久化确认元数据 | Backend；Workflow 规则 |
 | D3 | Strategy 无确认字段 | 以任务详情外层 confirmations 绑定策略 ID + 版本，不擅加 Strategy.status | Backend + Coordinator |
 | D4 | MarketingTask.status 不能表达 stale/running/confirmation | 详情外层提供执行与新鲜度；复用 Backend 执行状态，不由 Workflow 存状态 | Backend 提具体执行结构 |
@@ -38,7 +38,7 @@ stage 为 personas|strategy|content|verify；模块不读取 key，不接收供�
 ```json
 {
   "model_candidates": [
-    {"candidate_id":"candidate_demo_1","product_name":"HUAWEI MateBook 14（鸿蒙版）","evidence_ids":["ev_demo_fact"]}
+    {"candidate_id":"candidate_demo_1","product_name":"HUAWEI MateBook 14（鸿蒙版）","reason":"线上候选明确标注鸿蒙版"}
   ],
   "required_inputs": [
     {"field":"scenario","reason":"需要具体使用场景以形成营销切入点"}
@@ -46,7 +46,7 @@ stage 为 personas|strategy|content|verify；模块不读取 key，不接收供�
 }
 ```
 
-候选 ID、证据归属、读取时间和准确型号由 Coordinator/Backend 定义，不能让 LLM 或前端手拼。候选不可用时展示原因，不自动选择。
+依据 seams-v1-20261018：IMA ambiguous 仅返回 product/reason，尚未下载证据，不能附虚构 evidence_ids。Backend 在保存本次真实 candidates 时分配 candidate_id，绑定本任务与检索修订；用户确认后按完整型号重新读取，Backend 才为真实证据分配 id/task_id。检索变更后旧候选不能再确认。候选不可用时展示原因，不自动选择；不能让 LLM 或前端手拼候选或来源。
 
 建议沿既有任务 PATCH 增加受控字段更新并冻结确认动作，路径可由 Coordinator 合并简化。以下请求是提议，禁止消费者按此直接上线：
 
@@ -94,7 +94,7 @@ stage 为 personas|strategy|content|verify；模块不读取 key，不接收供�
 
 ## 5. IMA 图片与审核接缝
 
-Coordinator 已报告真实图片 source_url:null，source_metadata.retrieval='ima_openapi' 且 requires_refresh=true。建议 EvidenceItem 将 source_url 扩展为 string|null，并收口 source_metadata 的准确结构（目前待最小样例）。不能以构造 https://example... 等 URL 绕过 guards。
+此处来源类型已由 39d15df（seams-v1-20261018，契约 §8.2 与 packages/contracts/index.d.ts）冻结：MARKDOWN/IMG 的 source_url 均允许 null，source_metadata 为准确 IMA 声明。其余图片审核/确认字段仍是提案。已定向读取真实最小摘要和 IMA 声明；摘要仅为历史读取证明，不作为生产输入。不得为绕过 guards 构造 https://example... URL。
 
 Workflow 仅在可信 Backend 入参中接受可追溯的线上来源元数据与非空知识库/media_id；客户端不能自行添加 retrieval='ima_openapi' 充当线上证据。Backend 用 (knowledge_base_id,media_id) 代理/刷新、鉴权并防跨用户读取。源身份和图片访问 URL 分开；prompt 不需要密钥或临时签名 URL。
 
@@ -165,7 +165,7 @@ FollowUpSuggestion 结构示例：
 
 ## 8. 请求反馈与下一实施项
 
-1. Coordinator：冻结 D1—D7 中最小确认/版本与证据接缝；给准确 IMA MARKDOWN/IMG 最小脱敏样例；导出产品选择由用户决定。
+1. Coordinator：冻结 D1—D7 中最小确认/版本与证据接缝；来源最小摘要和声明已收到并完成适配；导出产品选择由用户决定。
 2. Backend：回传现有任务详情/执行状态、版本/保存接缝与真实 LLM 适配器导出路径，不重做业务提示词；评估本提案与 B1 实现差异。
 3. Frontend：按既有 body/image_plan 做展示；反馈所需确认文案和表单缺口，字段待公共契约通知后实施。
 4. Workflow：W0 提交后先修复可信 IMA 空 URL 接缝并自测；得到真实适配器/证据后联调 W1—W3，按冻结签名推进 W4/W5。

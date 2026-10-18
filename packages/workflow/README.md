@@ -39,13 +39,13 @@ LLM 适配器接收 `{ stage, system, prompt, response_schema }`，stage 为 `pe
 ## 生成和核验规则
 
 - 已确认的完整 `resolved_product_name` 必填；缺失抛出 `VALIDATION_ERROR` 并在 `details[0].candidates` 提供证据中的候选型号。不自行猜测或模糊匹配版本；仅做大小写、空白和 Unicode 兼容归一化。
-- 所有传入证据必须属于当前任务，具有知识库 ID、media_id、标题、读取时间、完整型号、核验状态和 HTTP(S) 来源。文件路径和 localhost 不能作为来源。验证格式不能证明服务真实调用过 ima，后端只能传入 IMA 模块检索并保存的记录。
+- 所有传入证据必须属于当前任务，具有知识库 ID、media_id、标题、读取时间、完整型号与核验状态。`source_url` 为 HTTP(S)，或严格为 `null` 且可信后端 IMA 记录具有 `source_metadata.retrieval='ima_openapi'`、`requires_refresh=true`，并含有效 download_origin、source_url_note 和非空 checks。真实 IMA 事实/图片无持久公开 URL 时以知识库/media_id 追溯，Backend 负责鉴权代理；不伪造 URL。文件路径、空字符串、缺失 URL、localhost 仍拒绝，不能用 metadata 绕过无效非空地址。格式检查不能证明服务真实调用过 ima；后端只能传入 IMA 模块保存的记录，不能把客户端提交的 retrieval 标记当证明。metadata 的 scope/source_url_note/checks/model_match_basis 及 applicable_version/query 会进入生成上下文保留原文使用边界，下载地址、headers 和其他字段不转给 LLM。
 - 只向 LLM 提供当前型号且未被拒绝的证据；无可用事实抛出 `IMA_NO_RESULT`。pending 证据可以生成草稿，但引用核验仍为 pending。每次调用都传当前证据，不依赖历史会话。
 - 2—3 个画像必须包含证据引用、营销假设和待确认项。策略要求显式选择一个已确认画像；`proof_points` 保持契约的 `string[]`，每项以 `[evidence_id]` 引用事实，无需增加共享字段。
 - 小红书正文采用 3—6 个 `### 卡片 1｜…` 段落，默认使用最多 6 张不同图片；公众号使用 `## 场景问题`、`## 产品证据`、`## 适用边界`、`## 行动建议`，默认使用 2 张不同图片。正文和每张图图注保留完整型号。只实现这两个平台的内容生成。
 - 图片数为 `min(目标数量, 当前不同素材数)`；小红书不足 3 张、公众号不足 2 张会在核验中报告 pending。按知识库 ID + media_id 去重，不能用不同 evidence_id 重复同一素材。素材不足时保留实际数量，不能伪造凑数。
 - 核验合并代码规则和独立 LLM 语义审核。代码检查引用/型号/平台结构/图片去重/敏感数字与绝对化话术；语义审核检查否定改肯定、事实含义、兼容性、虚假亲测、场景推断等。最终按 rejected > pending > passed 汇总，模型“全通过”不能覆盖代码拒绝。语义审核调用失败、漏类别、虚构引用时为 pending。
-- 图片来源和尺寸检查不代表已经看到原图。模块不下载、渲染或查看图片，实际外观、参数脚注、访问有效性保留 pending 和人工动作；因此含图的正常示例整体为 pending。后续需要 IMA/QA 完成实际图片核验，不能直接把该项改为 passed。
+- 图片来源和尺寸检查不代表已经看到原图。模块不下载、渲染或查看图片，实际外观、参数脚注、访问有效性保留 pending 和人工动作；因此含图的正常示例整体为 pending。后续由 Coordinator（兼 IMA）/Frontend 完成访问验证，用户完成人工图片核验，不能直接把该项改为 passed。
 - 本模块不替后端执行或宣称通过身份审核。后端在调用前检查用户所有权；输入变化、证据更新、画像/策略修改后，应清除下游结果并重算。共享契约尚无输入快照版本字段，模块不能独立识别所有历史结果失效。
 
 错误为 `WorkflowError`，提供 `.code`、`.message`、`.details`。主要 code：`VALIDATION_ERROR`（确认/字段/引用不合法或生成断言触发规则）、`IMA_NO_RESULT`（当前型号无可用事实）、`LLM_FAILED`（调用或模型结构失败）。供应商异常原文不会返回，避免携带凭证。核验中的确定性拒绝以结构化 check 返回，LLM 语义不可用不会误报通过。

@@ -2,13 +2,17 @@
 
 ## 当前交接：W0 / 职责 v2
 
+- W0 已提交 `ab7e3a2`，信箱交付 `20261018T074511Z_a72e_workflow_w0-handoff`。紧接修复 Coordinator 指出的 IMA null URL 接入问题：`guards.js` 允许可信服务器记录的 null URL + `source_metadata.retrieval='ima_openapi'` + `requires_refresh=true`，仍要求知识库/media_id/时间/任务归属；无效非空地址不能借标记绕过。`index.d.ts` 局部声明适配 IMA 实际结构，不改公共类型；`prompts.js` 仅转发来源范围/检查信息，不转发下载地址、headers 等上游字段。
+- 新修复验证：在 Node v24.13.0 执行 `npm test`，22 项通过；新增真实 IMA 结构形态的合成回归用例，覆盖事实/图片 null URL、缺失/错误元数据、来源标识缺失、文件路径绕过与上游额外字段不转发。仍未使用真实 LLM；来源形态测试不证明联网成功，图片实际访问/视觉检查继续 pending。依据为 Coordinator 消息 `20261018T074700Z_c2-seams-v1-published`、seams-v1 共享类型与 IMA `packages/ima/index.d.ts` 的 `UnpersistedEvidence` 准确声明。
+
 - 分支/worktree：`feat/workflow` / `E:\codes\创业\10.18黑客松-worktrees\workflow`。职责基线 `roles-v2-20261018`（`ea126ce`）已在 `63b470f` 合入，原业务提交 `953572c` 保留。下方旧交接仅保留历史验证，旧独立 QA 安排已停用。
 - 已交付：`packages/workflow/docs/business-rules-w0.md` 与 `interface-proposal-w0.md`。包含简报缺失/型号歧义、型号/主画像/策略确认、依赖与失效矩阵、版本并发责任、导出限制提案、W4 修订/W5 跟进建议的最小签名与 JSON 样例。未修改公共契约、已导出函数或 Backend/Frontend 实现，所有新字段/路径均标明待冻结。
 - 自验：职责基线与 `953572c` 均为 HEAD 祖先；在既有工作树运行 `npm test --workspace @huawei-demo/workflow`，19 项通过。文档交叉检查现有四函数/类型/Schema/API 契约，未将合成测试称为真实模型质量验收。
 - 信箱：接续回执 `20261018T073911Z_c51a_workflow_role-ack`；LLM 签名回复 `20261018T073911Z_6e2f_workflow_llm-contract-reply`；接缝/Frontend 回复在 `20261018T074200Z_1b2f_workflow_w0-checkpoint`，均位于共享信箱 messages/workflow。
-- 待收口：确认/版本/图片来源接缝由 Coordinator 冻结，Backend/Frontend 提实现差异。pending/rejected 的内部草稿与可发布导出规则为产品提案，需用户取舍。真实 LLM/线上证据联调尚未执行。
-- 新接入问题：Coordinator 报告真实 IMA IMG `source_url:null`、可信 `source_metadata`；现 guards 会拒绝。已索取最小 MARKDOWN/IMG 样例，下一实现是适配可信线上来源、添加回归测试，不伪造 URL，不改图片默认待核验结论。
-- 下一可验收动作：Coordinator 接收 W0 草案收口最小接缝；Workflow 修复空来源 URL 的线上证据适配并自验，取得 Backend 适配器和真实证据后继续现有 W1—W3；W4/W5 按冻结签名推进。
+- 待收口：确认/版本/图片审核接缝由 Coordinator 冻结，Backend/Frontend 提实现差异。pending/rejected 的内部草稿与可发布导出规则为产品提案，需用户取舍。真实 LLM/线上证据联调尚未执行。
+- 接入问题已局部修复：Coordinator 报告的 IMA null URL 结构已适配；公共来源类型已在 39d15df 冻结，真实最小摘要已定向读取；仍待真实证据/适配器做运行集成验证。不能把来源标记当客户端自证或图片审核通过。
+- 已对齐 seams-v1 `39d15df`；W0 候选示例不再附下载前 evidence_ids；事实/图片的来源范围、版本和型号匹配限制均传入 LLM。真实可信性由 Backend IMA 调用与入库提供，格式测试不识别完整伪造的客户端记录。
+- 下一可验收动作：Backend 回 W0 最小 HTTP/版本方案；Coordinator 冻结确认/修订接缝后继续 W4/W5。LLM 联合预算提案已发信箱 `20261018T075130Z_d19b_workflow_budget-proposal`，当前无输出自动修复，每阶段一次适配器调用（按 B4 默认最多两次外呼）；提案不是已实施预算。缺 key 不询问聊天凭证，不伪造真实模型验证。
 
 ## 历史交接：953572c / W1—W3
 

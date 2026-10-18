@@ -20,9 +20,20 @@ export function requestFor(stage, ctx, extra = {}) {
   const task = Object.fromEntries(['id', 'product_query', 'resolved_product_name', 'platform', 'audience_hint', 'scenario', 'goal'].map((key) => [key, ctx.task[key]]));
   const dataEvidence = ctx.evidence.filter((item) => item.media_type !== 'IMG' || ctx.images.includes(item));
   const evidence = dataEvidence.map((item) => Object.fromEntries([
-    'id', 'task_id', 'knowledge_base_id', 'media_id', 'media_type', 'title', 'source_url', 'fetched_at',
+    'id', 'task_id', 'knowledge_base_id', 'media_id', 'media_type', 'title', 'source_url', 'fetched_at', 'query', 'applicable_version',
     'fact_excerpt', 'image_metadata', 'applicable_model', 'verification_status',
   ].filter((key) => item[key] !== undefined).map((key) => [key, item[key]])));
+  // Carry source boundaries and warnings without forwarding download URLs/headers.
+  evidence.forEach((item, index) => {
+    const original = dataEvidence[index];
+    if (original.source_metadata?.retrieval === 'ima_openapi') {
+      item.source_metadata = { retrieval: 'ima_openapi', requires_refresh: original.source_metadata.requires_refresh === true };
+      for (const key of ['source_url_note', 'scope', 'model_match_basis']) {
+        if (typeof original.source_metadata[key] === 'string') item.source_metadata[key] = original.source_metadata[key];
+      }
+      if (Array.isArray(original.source_metadata.checks)) item.source_metadata.checks = original.source_metadata.checks.filter((v) => typeof v === 'string');
+    }
+  });
   let instruction = instructions[stage];
   if (stage === 'content') instruction += ctx.task.platform === 'xiaohongshu'
     ? ` 小红书：以轻量、场景化表达写 3—6 个卡片段落，每段以“### 卡片 1｜标题”等顺序标题起始。配图恰好 ${desiredImages(ctx)} 张（目标 3—6 张，不足照实返回）；CTA 邀请结合自己的场景到店体验，不能假称博主亲测。`

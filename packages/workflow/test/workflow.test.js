@@ -223,3 +223,48 @@ test('malformed persisted reports produce rejected verification instead of succe
     assert.equal(report.overall_status, 'rejected');
   }
 });
+
+test('IMA null source URLs are traceable by source identity and remain pending without image inspection', async () => {
+  const items = evidence(1).map((item) => ({ ...item, source_url: null, verification_status: 'pending', applicable_version: '合成版本待核验', query: '合成检索词',
+    source_metadata: { retrieval: 'ima_openapi', requires_refresh: true,
+      download_origin: 'https://example.invalid/private-download',
+      source_url_note: '无持久公开 URL，按 media_id 追溯',
+      scope: '仅产品发现摘要，不支持具体规格与价格', checks: ['型号相同'], model_match_basis: '合成标题匹配，具体颜色仍需核验',
+      headers: { authorization: 'DO_NOT_FORWARD' }, signed_url: 'DO_NOT_FORWARD',
+    } }));
+  const state = await ready(setup({}, { evidence: items }));
+  const draft = await state.workflow.generateContent(state);
+  assert.equal(draft.image_plan.length, 1);
+  const report = await state.workflow.verifyContent({ ...state, draft });
+  assert.equal(report.overall_status, 'pending');
+  assert.ok(report.checks.some((check) => check.item === '实际图片与访问有效性' && check.status === 'pending'));
+  assert.match(state.requests[0].prompt, /仅产品发现摘要/u);
+  assert.match(state.requests[0].prompt, /ima_openapi/u);
+  assert.match(state.requests[0].prompt, /合成版本待核验/u);
+  assert.match(state.requests[0].prompt, /具体颜色仍需核验/u);
+  assert.doesNotMatch(state.requests[0].prompt, /DO_NOT_FORWARD|private-download/u);
+  assert.ok(state.requests[0].prompt.includes('"source_url":null'));
+});
+
+test('null URL without exact IMA provenance or refresh marker is rejected before LLM', async () => {
+  for (const source_metadata of [undefined, {}, { retrieval: 'local', requires_refresh: true },
+    { retrieval: 'ima_openapi' }, { retrieval: 'ima_openapi', requires_refresh: false },
+    { retrieval: 'ima_openapi', requires_refresh: true },
+    { retrieval: 'ima_openapi', requires_refresh: true, download_origin: 'file:///E:/local', source_url_note: '本地不合格', checks: ['online_read'] }]) {
+    const state = setup({}, { evidence: evidence().map((item) => ({ ...item, source_url: null, source_metadata })) });
+    await assert.rejects(state.workflow.generatePersonas(state), validationError);
+    assert.equal(state.requests.length, 0);
+  }
+});
+
+test('IMA marker cannot bypass invalid non-null URLs or missing source identifiers', async () => {
+  const metadata = { retrieval: 'ima_openapi', requires_refresh: true, download_origin: 'https://example.invalid', source_url_note: '合成来源', checks: ['online_read'] };
+  for (const source_url of ['E:\\local\\image.png', 'file:///E:/image.png', '', undefined]) {
+    const state = setup({}, { evidence: evidence().map((item) => ({ ...item, source_url, source_metadata: metadata })) });
+    await assert.rejects(state.workflow.generatePersonas(state), validationError);
+  }
+  for (const key of ['knowledge_base_id', 'media_id']) {
+    const state = setup({}, { evidence: evidence().map((item) => ({ ...item, source_url: null, source_metadata: metadata, [key]: '' })) });
+    await assert.rejects(state.workflow.generatePersonas(state), validationError);
+  }
+});

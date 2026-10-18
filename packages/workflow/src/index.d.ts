@@ -5,7 +5,7 @@ export interface MarketingTask {
   id: string;
   user_id: string;
   product_query: string;
-  resolved_product_name?: string;
+  resolved_product_name?: string | null;
   platform: Platform;
   audience_hint: string;
   scenario: string;
@@ -21,7 +21,22 @@ export interface EvidenceItem {
   media_id: string;
   media_type: string;
   title: string;
-  source_url: string;
+  source_url: string | null;
+  /** Null URLs require provenance supplied by the trusted server-side IMA adapter. */
+  source_metadata?: {
+    retrieval: 'ima_openapi';
+    requires_refresh: true;
+    download_origin: string;
+    source_url_note: string;
+    checks: string[];
+    scope?: string;
+    content_type?: string;
+    byte_length?: number;
+    sha256?: string;
+    model_match_basis?: string;
+  };
+  query?: string;
+  applicable_version?: string;
   fetched_at: string;
   fact_excerpt?: string;
   image_metadata?: { width?: number; height?: number; format?: string; usage?: string };
