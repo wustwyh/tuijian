@@ -2,5 +2,11 @@
   "name": "@huawei-demo/api",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "engines": { "node": ">=22.13.0" },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node --test test/*.test.mjs",
+    "llm:check": "node src/check-llm.mjs"
+  }
 }
