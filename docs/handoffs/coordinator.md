@@ -4,10 +4,15 @@
 - 已接收旧 IMA 停写消息，保留 8 个暂存文件原内容并审核提交 `8f62c32`，ff 合入 integration。18 项离线测试本次全通过；此前真实文档/图片/刷新/歧义记录见 IMA 交接和最小脱敏摘要。
 - 已发布 API §8 和共享类型，冻结 B1 身份/任务、IMA 模块与 LLMAdapter；根 Node 要求对齐 >=24。角色回执及双方接缝意见经共享信箱接收。
 - 发现并通知 Workflow：真实 IMG source_url:null 会被旧 remoteUrl 校验拒绝；由 Workflow 自己修复，Coordinator 不代改。
-- 尚未合入 Frontend/Backend/Workflow 业务分支；未生成公共锁文件；缺服务端 LLM key，真实 LLM/完整生成闭环尚未验证。Backend 接续 B4/B5，Workflow 接续 W0，Frontend 可继续既有结构预览。
+- 已合入 Backend B1/B4（907094d，主树16/16通过）；尚未合入 Frontend/Workflow 业务分支；未生成公共锁文件；缺服务端 LLM key，真实 LLM/完整生成闭环尚未验证。Backend 接续操作级预算与B2/B3/B5，Workflow 接续 W0，Frontend 可继续既有结构预览。
 - 已收到并定向评估 W0 草案 ab7e3a2；已发正式契约提交 39d15df 通知、IMA 精确类型/真实摘要路径、Backend 图片/确认接口请求并填写回执。消息 `20261018T074700Z_c2-seams-v1-published`。
 - 下一可验收动作：Backend 回 D1—D7 与图片 HTTP 草案，Workflow 自验真实来源格式修复；收口确认/失效接口后逐提交集成。导出产品取舍仍待决定。见 `docs/next-batch.md`。
 - 原子信箱消息及回执见 `E:\Codex\workspace\hackathon-agent-mailbox`；仅讨论不等于正式契约。旧记录保留在下方。
+
+## Backend 集成检查点
+
+- 接收0a90ace，合并907094d；未代改Backend源码。主树16项测试全过，真实LLM未验证；未复制.env或重启服务。
+- 已回执B4并回复预算提案：`20261018T075355Z_c3-backend-integrated`；等待Backend精确取消/计数与HTTP草案、Workflow null来源修复。操作级预算仍是提案，未修改公共LLMRequest。
 
 ---
 
