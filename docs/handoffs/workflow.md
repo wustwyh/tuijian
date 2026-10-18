@@ -1,5 +1,17 @@
 # Workflow 交接
 
+## 当前交接：W0 / 职责 v2
+
+- 分支/worktree：`feat/workflow` / `E:\codes\创业\10.18黑客松-worktrees\workflow`。职责基线 `roles-v2-20261018`（`ea126ce`）已在 `63b470f` 合入，原业务提交 `953572c` 保留。下方旧交接仅保留历史验证，旧独立 QA 安排已停用。
+- 已交付：`packages/workflow/docs/business-rules-w0.md` 与 `interface-proposal-w0.md`。包含简报缺失/型号歧义、型号/主画像/策略确认、依赖与失效矩阵、版本并发责任、导出限制提案、W4 修订/W5 跟进建议的最小签名与 JSON 样例。未修改公共契约、已导出函数或 Backend/Frontend 实现，所有新字段/路径均标明待冻结。
+- 自验：职责基线与 `953572c` 均为 HEAD 祖先；在既有工作树运行 `npm test --workspace @huawei-demo/workflow`，19 项通过。文档交叉检查现有四函数/类型/Schema/API 契约，未将合成测试称为真实模型质量验收。
+- 信箱：接续回执 `20261018T073911Z_c51a_workflow_role-ack`；LLM 签名回复 `20261018T073911Z_6e2f_workflow_llm-contract-reply`；接缝/Frontend 回复在 `20261018T074200Z_1b2f_workflow_w0-checkpoint`，均位于共享信箱 messages/workflow。
+- 待收口：确认/版本/图片来源接缝由 Coordinator 冻结，Backend/Frontend 提实现差异。pending/rejected 的内部草稿与可发布导出规则为产品提案，需用户取舍。真实 LLM/线上证据联调尚未执行。
+- 新接入问题：Coordinator 报告真实 IMA IMG `source_url:null`、可信 `source_metadata`；现 guards 会拒绝。已索取最小 MARKDOWN/IMG 样例，下一实现是适配可信线上来源、添加回归测试，不伪造 URL，不改图片默认待核验结论。
+- 下一可验收动作：Coordinator 接收 W0 草案收口最小接缝；Workflow 修复空来源 URL 的线上证据适配并自验，取得 Backend 适配器和真实证据后继续现有 W1—W3；W4/W5 按冻结签名推进。
+
+## 历史交接：953572c / W1—W3
+
 - 角色 / 分支 / worktree：Workflow / `feat/workflow` / `E:\codes\创业\10.18黑客松-worktrees\workflow`。
 - 本次任务：W1 画像/策略；同时实现 W2 两平台内容与 W3 核验。契约基线 `ac4aa35` 的 `docs/api-contract.md`，未修改公共契约、根配置或其他角色代码。
 - 已交付：`packages/workflow/src/index.js` 导出 `createWorkflow`、`WorkflowError`；实例提供 `generatePersonas`、`generateStrategy`、`generateContent`、`verifyContent`。`src/index.d.ts` 为本地声明；提示词 `src/prompts.js`；JSON Schema `src/schema.js`；确定性规则 `src/guards.js`；完整接入说明 `packages/workflow/README.md`。
