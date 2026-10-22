@@ -1,0 +1,40 @@
+.product-wrap { position: relative; display: flex; flex-direction: column; min-width: 0; }
+.product-wrap > .product { flex: 1; }
+.product-cover-button { display: flex; align-items: center; justify-content: center; gap: 7px; width: 100%; min-height: 38px; margin-top: 8px; border: 1px solid #e8cdd8; border-radius: 9px; background: linear-gradient(110deg, #fff8fa, #f5f1fc); color: #a72b50; font-size: 14px; cursor: pointer; transition: border-color .2s, box-shadow .2s; }
+.product-cover-button:hover { border-color: #d9567b; box-shadow: 0 4px 14px #cf0a2c14; }
+.product-notice { margin-bottom: 16px; padding: 10px 14px; border: 1px solid #cce5d7; border-radius: 10px; background: #f1fbf5; color: #236e47; font-size: 14px; }
+.product-error { color: #a8081f; }
+.products-page { max-width: 1440px; }
+.product-no-image { position: relative; background: radial-gradient(ellipse at 20% 20%, #fce7ef, transparent 65%), linear-gradient(130deg, #f4f1f8, #e8edf9); }
+.product-no-image > span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px; color: #947b92; font-size: 14px; }
+.manager-card { cursor: default; }
+.manager-card .product-body { flex: 1; }
+.manager-card .product-name { font-size: 22px; line-height: 1.35; }
+.manager-meta { margin: 14px 0; color: var(--ink-2); font-size: 13px; }
+.manager-card .product-cover-button { margin-top: auto; }
+.product-cover-button:disabled { color: #96909d; border-color: #e5e2e8; background: #f6f5f8; cursor: not-allowed; box-shadow: none; }
+.gallery { width: 800px; max-width: calc(100vw - 80px); max-height: calc(100vh - 64px); padding: 0; border: 1px solid #fff; border-radius: 22px; background: linear-gradient(135deg, #fff, #fff8fb 75%, #f4f1fc); color: var(--ink); box-shadow: 0 28px 100px #431c4c40; }
+.gallery::backdrop { background: #27202f70; backdrop-filter: blur(7px); }
+.gallery-head { display: flex; justify-content: space-between; align-items: center; padding: 22px 28px; border-bottom: 1px solid #efdee7; background: linear-gradient(110deg, #fff2f7, #f0edfc); }
+.gallery-head p { color: #a63c61; font-size: 14px; margin-bottom: 4px; }
+.gallery-head h2 { font-size: 24px; line-height: 1.4; font-weight: 650; }
+.gallery-close { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border: 1px solid #e8d9e5; border-radius: 50%; background: #ffffffb0; cursor: pointer; }
+.gallery-close:hover { color: var(--red); border-color: #e8a3b5; }
+.gallery-content { padding: 20px 28px; max-height: calc(100vh - 310px); overflow-y: auto; }
+.gallery-preview { position: relative; height: 250px; border: 1px solid #eee7f0; border-radius: 14px; background: #f0f1f6; overflow: hidden; }
+.gallery-preview img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.gallery-caption { margin: 10px 0 18px; color: var(--ink-2); font-size: 13px; overflow-wrap: anywhere; }
+.gallery-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.gallery-image { position: relative; display: block; aspect-ratio: 4 / 3; padding: 3px; border: 2px solid transparent; border-radius: 10px; background: #eef0f5; overflow: hidden; cursor: pointer; }
+.gallery-image img { width: 100%; height: 100%; border-radius: 6px; object-fit: contain; }
+.gallery-image:hover { border-color: #ee9cb1; }
+.gallery-image.is-selected { border-color: var(--red); box-shadow: 0 4px 12px #cf0a2c20; }
+.gallery-current { position: absolute; left: 5px; bottom: 5px; padding: 2px 6px; border-radius: 4px; background: #25232bcc; color: white; font-size: 12px; }
+.gallery-check { position: absolute; right: 5px; top: 5px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--red); color: white; }
+.gallery-foot { padding: 16px 28px 22px; border-top: 1px solid #eedfe8; }
+.gallery-foot p { font-size: 14px; color: var(--ink-2); margin-bottom: 12px; }
+.gallery-foot .gallery-error { color: #b20c30; }
+.gallery-foot > div { display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
+.gallery-foot .btn-ghost { height: 44px; }
+.gallery-foot .btn-primary { height: 44px; }
+.gallery button:disabled { cursor: not-allowed; }

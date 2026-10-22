@@ -1,0 +1,127 @@
+/* 结果页预览：按平台版式呈现，观感差异与导出 HTML 一致。
+   同时选不同平台时，页面里能直接看出结构变化，而不是只有正文字数变化。 */
+
+/* 小红书：竖版卡片，单列大图，标签做成 pill */
+.generated-article.layout-card{max-width:460px;margin:0 auto}
+.generated-article.layout-card>h2{font-size:22px;line-height:1.4;text-align:left;font-weight:800}
+.generated-article.layout-card .article-lead{border-left:0;padding:0;background:none;font-size:14px;color:#444}
+.generated-article.layout-card .result-images{grid-template-columns:1fr;gap:10px}
+.generated-article.layout-card .result-images img{height:auto;border-radius:16px}
+.generated-article.layout-card .article-tags span{background:#fdecef;color:#c2185b;border-radius:999px;padding:4px 10px}
+
+/* 销售朋友圈：窄卡、无标签、缩略图小网格 */
+.generated-article.layout-moment{max-width:420px;margin:0 auto;background:#f5f6f7;padding:18px;border-radius:14px}
+.generated-article.layout-moment>h2{font-size:16px;font-weight:600;margin:0 0 10px}
+.generated-article.layout-moment .article-lead{border-left:0;padding:0;background:none}
+.generated-article.layout-moment .result-images{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:14px}
+.generated-article.layout-moment .result-images img{height:90px;object-fit:cover}
+.generated-article.layout-moment .result-images figcaption{font-size:10px;padding:6px;line-height:1.5}
+.generated-article.layout-moment .article-tags{display:none}
+
+/* 门店海报：主标题巨大、单张主视觉 */
+.generated-article.layout-poster{max-width:720px}
+.generated-article.layout-poster>h2{font-size:38px;font-weight:800;line-height:1.2;letter-spacing:.02em}
+.generated-article.layout-poster .article-lead{border-left:0;padding:0;background:none;font-size:18px;color:#555}
+.generated-article.layout-poster .result-images{grid-template-columns:1fr}
+.generated-article.layout-poster .result-images img{height:auto}
+
+/* 新闻稿：报头式分割线、导语加粗 */
+.generated-article.layout-news>h2{text-align:left;font-weight:700;border-bottom:2px solid #8a6d3b;padding-bottom:10px}
+.generated-article.layout-news .article-lead{border-left:0;padding:10px 0 0;border-top:1px solid #e7e0d2;font-weight:600;background:none}
+
+/* 知乎：问题式标题、蓝色引用带 */
+.generated-article.layout-qa>h2{border-left:4px solid #0084ff;padding-left:12px}
+.generated-article.layout-qa .article-lead{border-left:0;background:#f3f8ff;border-radius:8px;padding:10px 14px}
+
+/* 微博：窄栏、双列缩略图、橙色标签 */
+.generated-article.layout-feed{max-width:560px}
+.generated-article.layout-feed .article-tags{color:#eb7350}
+.generated-article.layout-feed .result-images{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.generated-article.layout-feed .result-images img{height:150px;object-fit:cover}
+
+/* 企业采购方案：文档式分节 */
+.generated-article.layout-doc{max-width:760px}
+.generated-article.layout-doc>h2{border-bottom:2px solid #1a1a1a;padding-bottom:10px}
+.generated-article.layout-doc .article-lead{background:#f4f6f8;border-left:0;padding:14px 16px;border-radius:6px}
+.generated-article.layout-doc .result-images{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+/* 图文穿插：图片跟随 position 插进对应段落，而不是全部堆在文末 */
+.article-flow .article-para{margin:0 0 14px;line-height:1.9}
+/* 成稿里的「## 一、…」是分节小标题，预览与导出都渲染成标题，井号不上屏 */
+.article-flow .article-heading{margin:26px 0 10px;font-size:18px;line-height:1.5;font-weight:750;color:#1b2330}
+.generated-article.layout-qa .article-flow .article-heading{border-left:3px solid #0084ff;padding-left:10px}
+.generated-article.layout-news .article-flow .article-heading{font-size:17px}
+.generated-article.layout-doc .article-flow .article-heading{font-size:16px;color:#0b4f8a}
+.article-flow .article-figure{margin:18px 0;border:1px solid #ece3eb;border-radius:16px;overflow:hidden;background:#fff}
+.article-flow .article-figure img{display:block;width:100%;height:auto;background:linear-gradient(135deg,#f9f6fa,#fff)}
+.article-flow .article-figure figcaption{padding:15px;font-size:13px;line-height:1.8}
+.article-flow .article-figure figcaption strong{display:block;font-size:14px}
+.article-flow .article-figure figcaption>span{display:block;font-size:12px;color:var(--ink-2);margin:5px 0}
+.article-flow .article-figure details{font-size:11px;overflow-wrap:anywhere}
+.article-flow .article-figure a{display:inline-block;color:var(--red);margin-right:15px}
+
+/* 图文穿插后的平台微调：朋友圈缩略图九宫格、海报限制主视觉高度 */
+.generated-article.layout-moment .article-flow .article-figure{width:31%;display:inline-block;vertical-align:top;margin:1%;border-radius:8px;border:1px solid #f0f0f0}
+.generated-article.layout-moment .article-flow .article-figure img{height:86px;object-fit:cover}
+.generated-article.layout-moment .article-flow .article-figure figcaption{padding:4px 6px;font-size:10px;line-height:1.4}
+.generated-article.layout-moment .article-flow .article-figure figcaption strong{display:none}
+.generated-article.layout-moment .article-flow .article-figure figcaption>span{display:none}
+.generated-article.layout-poster .article-flow .article-figure img{max-height:320px;object-fit:cover}
+.generated-article.layout-poster .article-flow .article-para:first-child{font-size:18px;color:#555}
+
+/* 小红书卡片流：一屏一卡、左右翻页。预览与导出 HTML 结构一致。 */
+.xhs-hint{padding:4px 0 10px;font-size:12px;color:#9a9a9a;letter-spacing:.03em}
+.xhs-deck{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:2px 2px 16px}
+.xhs-deck::-webkit-scrollbar{height:6px}
+.xhs-deck::-webkit-scrollbar-thumb{background:#ddd;border-radius:99px}
+.xhs-card{flex:0 0 auto;width:340px;height:453px;scroll-snap-align:center;border-radius:18px;overflow:hidden;position:relative;background:#fff;box-shadow:0 6px 20px rgba(0,0,0,.09);display:flex;flex-direction:column;margin:0}
+.xhs-idx{position:absolute;right:10px;bottom:8px;font-size:11px;color:rgba(0,0,0,.32);z-index:3}
+.xhs-card.cover .xhs-cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.xhs-card.cover .xhs-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 38%,rgba(0,0,0,.78))}
+.xhs-card.cover .xhs-cover-text{position:relative;margin-top:auto;padding:22px;color:#fff;font-size:23px;font-weight:800;line-height:1.34;z-index:2}
+.xhs-card.cover.noimg{background:linear-gradient(150deg,#ffe8ef,#ffe0e8 45%,#f7d9ff)}
+.xhs-card.cover.noimg .xhs-shade{display:none}
+.xhs-card.cover.noimg .xhs-cover-text{color:#2b2b2b;margin:auto 0;padding:28px}
+.xhs-card.media .xhs-shot{width:100%;flex:1;min-height:0;object-fit:cover;display:block;background:#fafafa}
+.xhs-card.media .xhs-cap{padding:10px 15px;font-size:12px;color:#8a8a8a;line-height:1.55}
+.xhs-card.media .xhs-cap strong{display:block;font-size:13px;color:#333;margin-bottom:2px}
+.xhs-card.media .xhs-cap details{font-size:11px;margin-top:4px}
+.xhs-card.text .xhs-body{padding:28px 22px;font-size:15px;line-height:1.9;overflow:hidden;color:#2b2b2b}
+/* SourceText 的外层 div 自带 16px 上下外边距，会把卡内可用高度吃掉 32px，
+   与导出卡面容量不一致；卡内抹平，保证两边分页结果相同。 */
+.xhs-card.text .xhs-body .source-text>div{margin:0}
+.xhs-card.text .xhs-body p{margin:0 0 10px}
+.xhs-card.text .xhs-body p:last-child{margin-bottom:0}
+.xhs-card.end{background:linear-gradient(155deg,#fff6f8,#ffeaf0);justify-content:center;gap:16px;padding:28px 24px}
+.xhs-card.end .xhs-cta{font-size:16px;font-weight:700;line-height:1.7;color:#a3244b}
+.xhs-card.end .xhs-pills{display:flex;flex-wrap:wrap;gap:8px}
+.xhs-card.end .xhs-pills span{background:#fff;color:#c2185b;font-size:13px;padding:5px 11px;border-radius:999px}
+/* 从正文里摘出来的「事实来源」清单：放在卡片外，不上帖面也不丢信息。 */
+.xhs-src{max-width:620px;margin:12px 0 0;font-size:11px;color:#9a9a9a;line-height:1.7}
+.xhs-src b{display:block;font-weight:600;margin-bottom:2px}
+.xhs-src p{margin:0}
+
+/* 销售朋友圈：白卡 + 前 150 字 + 「展开全文」+ 九宫格，与导出 HTML 结构一致。
+   折叠态摘要里是「前 150 字 + 展开全文」；展开态正文在上、收起按钮排到最后，
+   这样展开后不会重复一遍截断文本，收起按钮也总在文字最下面。 */
+.moment-wrap{max-width:420px}
+.moment-post{max-width:380px;background:#fff;border-radius:12px;border:1px solid #ececef;padding:16px 16px 14px}
+.moment-text{display:block;font-size:15px;line-height:1.75;white-space:pre-wrap;word-break:break-word;color:#191919}
+.moment-more{display:flex;flex-direction:column;margin:0}
+.moment-more summary{order:2;list-style:none;cursor:pointer}
+.moment-more summary::-webkit-details-marker{display:none}
+.moment-more .moment-full{order:1;margin:0 0 8px}
+.moment-full{font-size:15px;line-height:1.75;white-space:pre-wrap;word-break:break-word;color:#191919}
+.moment-lbl-open{display:block;margin-top:6px;font-size:14px;color:#576b95}
+.moment-lbl-close{display:none;margin-top:8px;font-size:14px;color:#576b95}
+.moment-more[open] .moment-text{display:none}
+.moment-more[open] .moment-lbl-open{display:none}
+.moment-more[open] .moment-lbl-close{display:block}
+.moment-grid{display:grid;gap:4px;margin-top:12px}
+.moment-grid.n1{grid-template-columns:1fr}
+.moment-grid.n1 img{aspect-ratio:4/3}
+.moment-grid.n2{grid-template-columns:1fr 1fr}
+.moment-grid.n3{grid-template-columns:repeat(3,1fr)}
+.moment-grid.n4{grid-template-columns:1fr 1fr}
+.moment-grid img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;border-radius:4px;background:#f4f4f6}
+.moment-note{margin:10px 0 0;font-size:11px;color:#9a9a9a;line-height:1.7}

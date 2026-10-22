@@ -1,0 +1,26 @@
+/* 发布稿预览弹窗：整页 HTML 在 iframe 里按真实版式渲染 */
+.pp-backdrop{position:fixed;inset:0;z-index:60;background:rgba(17,20,28,.55);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:24px}
+.pp-dialog{width:min(1040px,94vw);height:min(960px,90vh);background:#fff;border-radius:14px;box-shadow:0 24px 64px rgba(0,0,0,.28);display:flex;flex-direction:column;overflow:hidden}
+.pp-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;border-bottom:1px solid #ecedf1;background:#fff}
+.pp-title{display:flex;flex-direction:column;gap:2px;min-width:0}
+.pp-title strong{font-size:15px;color:#191919}
+.pp-title span{font-size:12px;color:#8a8f99;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pp-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.pp-close{width:32px;height:32px;border:1px solid #e6e7eb;border-radius:8px;background:#fff;color:#5a5f6a;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.pp-close:hover{background:#f5f6f8;color:#191919}
+.pp-body{flex:1;min-height:0;background:#f3f4f6;display:flex;align-items:stretch;justify-content:center;padding:0}
+.pp-frame{width:100%;height:100%;border:0;background:#fff;display:block}
+.pp-state{margin:auto;font-size:13px;color:#6b7280;padding:24px;text-align:center;line-height:1.8}
+.pp-error{color:#c0392b}
+.pp-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;border-top:1px solid #ecedf1;background:#fafbfc;font-size:12px;color:#8a8f99}
+.pp-foot-tip{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+@media (max-width:720px){
+  .pp-backdrop{padding:0}
+  .pp-dialog{width:100vw;height:100vh;border-radius:0}
+  .pp-foot{display:none}
+}
+
+/* 分段标题栏里的「预览发布稿」小按钮（03 图文软文） */
+.result-section-action{margin-left:auto;display:flex;align-items:center;gap:8px}
+.section-action-btn{height:34px;padding:0 12px;font-size:12px;white-space:nowrap}
+@media (max-width:680px){.section-action-btn{height:28px;padding:0 8px;font-size:11px;gap:4px}.result-section-title{gap:8px}}
