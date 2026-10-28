@@ -1,0 +1,23 @@
+{
+  "name": "tuijian-web",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "start": "vite preview --host 0.0.0.0 --port 7860 --strictPort",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "seed:export": "node scripts/export-generations.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "1.60.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-router-dom": "7.6.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "4.4.1",
+    "vite": "6.3.5"
+  }
+}

@@ -1,0 +1,5 @@
+        <Section id="r-article" no="03" title="图文软文" action={!blocked?<button type="button" className="btn-primary section-action-btn" onClick={()=>{setFixRequest(null);setWorkbenchOpen(true);}}><LayoutTemplate size={14}/>打开工作台</button>:null}>
+        {blocked&&<p className="result-error">草稿未通过核验：正文暂不展示，避免误用。进工作台可以逐段修，改完会自动重新核验。</p>}
+        <div className="article-edit-entry"><button type="button" className="btn-ghost" onClick={()=>{setFixRequest(null);setWorkbenchOpen(true);}}><LayoutTemplate size={16}/>图文工作台</button><span className="article-edit-hint">预览、改稿、下载 HTML 都在工作台里；保存后这里同步更新。</span></div>
+        {!blocked&&<ArticlePreview job={job} result={result} platformKind={platformKind} generatedTime={generatedTime}/>}
+      </Section>

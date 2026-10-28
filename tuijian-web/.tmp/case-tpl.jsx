@@ -1,0 +1,1 @@
+export default () => <div>{true ? '初稿' : `第${1}次修订`}</div>;

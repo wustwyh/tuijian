@@ -1,0 +1,1 @@
+export default () => <div><strong>{({planner:'资料整理'})[1]} · {true ? '初稿' : `第${1}次修订`}</strong></div>;

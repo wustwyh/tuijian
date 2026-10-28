@@ -1,0 +1,14 @@
+import {readFileSync} from "node:fs";
+const html = readFileSync(".tmp/shots/moments.html", "utf8");
+const unesc = (s) => s.replace(/&quot;/g,'"').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+const shown = unesc(/<div class="text">([\s\S]*?)<\/div>/.exec(html)[1]);
+const full = unesc(/<div class="full">([\s\S]*?)<\/div>/.exec(html)[1]);
+const summary = /<summary>([\s\S]*?)<\/summary>/.exec(html)[1];
+const job = await (await fetch("http://localhost:5173/api/generations/4e0ca6eb-fef7-4d99-bf34-d7ff117dc4f7")).json();
+const a = job.result.article;
+const bodyLen = (a.body||"").replace(/\s/g,"").length;
+console.log("卡内字数:", shown.length, "(≤150)", "| summary:", summary);
+console.log("展开全文字数:", full.length, "| 原文正文:", bodyLen, "| CTA:", (a.cta||"").length);
+console.log("全文是否包含正文结尾:", full.includes(a.body.trim().slice(-12)));
+console.log("占位提示:", /class="clip">([^<]*)/.exec(html)?.[1]);
+console.log("篇幅提示:", /篇幅提示/.test(html));

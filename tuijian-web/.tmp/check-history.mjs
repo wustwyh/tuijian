@@ -1,0 +1,35 @@
+import {openBrowser, measure} from "./cdp.mjs";
+const {session, close} = await openBrowser();
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const waitFor = async (expr, sec = 240) => { for (let i = 0; i < sec; i++) { const v = await session.evaluate(expr); if (v) return v; await sleep(1000); } return null; };
+try {
+  await measure(session, "http://localhost:5173/result/b081e220-517b-4241-ac8e-0d5bb2861a71", {width: 1440, height: 1000, settle: 2600, ready: ".rs-top", init: ["localStorage.setItem('tuijian_user','演示账号')"]});
+  await session.evaluate(`document.querySelector(".rs-main-btn").click()`);
+  await sleep(3000);
+  await session.evaluate(`[...document.querySelectorAll(".wb-tabs button")].find(b => b.textContent.includes("修改")).click()`);
+  await sleep(1000);
+  await session.evaluate(`document.querySelector(".wb .generated-article .article-lead")?.click()`);
+  await sleep(4000);
+  await session.evaluate(`[...document.querySelectorAll(".wb-chip-row .wb-chip")].find(b => b.textContent.includes("更口语"))?.click()`);
+  await sleep(500);
+  await session.evaluate(`document.querySelector(".wb-btn-primary").click()`);
+  await waitFor(`document.querySelectorAll(".wb-cands li").length || 0`, 150);
+  await session.evaluate(`document.querySelectorAll(".wb-cands li button")[0].click()`);
+  await sleep(600);
+  console.log("保存前 dirty:", await session.evaluate(`document.querySelector(".wb-dirty")?.textContent`));
+  await session.evaluate(`document.querySelector(".wb-save").click()`);
+  const done = await waitFor(`document.querySelector(".wb-save")?.textContent.includes("已是最新") ? 1 : 0`, 300);
+  console.log("保存完成:", done, "| 按钮:", await session.evaluate(`document.querySelector(".wb-save")?.textContent.trim()`));
+  await sleep(1500);
+  console.log("历史按钮:", await session.evaluate(`document.querySelector(".wb-history")?.textContent.trim()`));
+  await session.evaluate(`document.querySelector(".wb-history").click()`);
+  await sleep(1200);
+  console.log("历史列表:", await session.evaluate(`JSON.stringify({count: document.querySelectorAll(".wb-revs li").length, first: document.querySelector(".wb-revs li")?.innerText.replace(/\\n/g," | ").slice(0,80)})`));
+  const leadBefore = await session.evaluate(`document.querySelector(".wb .generated-article .article-lead")?.innerText.slice(0,20)`);
+  await session.evaluate(`document.querySelector(".wb-rev-restore")?.click()`);
+  await sleep(2000);
+  console.log("回溯:", await session.evaluate(`JSON.stringify({toast: document.querySelector(".wb-toast")?.textContent, dirty: document.querySelector(".wb-dirty")?.textContent})`));
+  console.log("回溯后导语:", await session.evaluate(`document.querySelector(".wb .generated-article .article-lead")?.innerText.slice(0,20)`), "| 之前:", leadBefore);
+  await session.evaluate(`document.querySelector(".wb-close").click()`);
+  await sleep(400);
+} finally { close(); }

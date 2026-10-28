@@ -1,0 +1,191 @@
+        <aside className="wb-side">
+          <div className="wb-side-head">
+            <div className="wb-scope" role="group" aria-label="改哪里">
+              <button type="button" className={scopeMode === 'local' ? 'is-on' : ''} onClick={() => switchScope('local')}>段落修改</button>
+              <button type="button" className={scopeMode === 'whole' ? 'is-on' : ''} onClick={() => switchScope('whole')}>整篇重写</button>
+            </div>
+            <button type="button" className={`wb-history${historyOpen ? ' is-on' : ''}`} onClick={() => { setHistoryOpen(v => !v); if (!historyOpen) loadRevisions(); }}>
+              历史 {revisions.length > 0 ? revisions.length : ''}
+            </button>
+            {dirty && <em className="wb-dirty">未保存</em>}
+          </div>
+
+          {historyOpen ? (
+            <div className="wb-revs">
+              <div className="wb-revs-head">
+                <strong>这份稿子的历史版本</strong>
+                <span>共 {revisions.length} 版，最多保留 30 版</span>
+              </div>
+              {revisions.length === 0 && <p className="wb-hint-sm">还没有历史版本。改完点「保存并重新核验」就会留下一版。</p>}
+              <ul>
+                {revisions.map(rev => (
+                  <li key={rev.id}>
+                    <div className="wb-rev-main">
+                      <span className="wb-rev-at">{new Date(rev.at).toLocaleString('zh-CN', {hour12: false, month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'})}</span>
+                      <span className="wb-rev-scope">{rev.scope}</span>
+                      <span className="wb-rev-meta">{rev.chars} 字 · {rev.source}</span>
+                    </div>
+                    {rev.requirement && <p className="wb-rev-req">{rev.requirement}</p>}
+                    <p className="wb-rev-lead">{rev.lead}</p>
+                    <button type="button" className="wb-rev-restore" onClick={() => restoreRevision(rev.id)} disabled={restoring}>回溯到这一版</button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <>
+              {target && isImageBlock(target) && (() => {
+                const currentImage = current.image_plan?.[target.imageIndex];
+                return (
+                  <div className="wb-panel wb-panel-image">
+                    <div className="wb-panel-head">
+                      <div>
+                        <strong>这张图</strong>
+                        <em>{stripMarkers(target.text).slice(0, 36)}{stripMarkers(target.text).length > 36 ? '…' : ''}</em>
+                      </div>
+                      <button type="button" className="wb-panel-close" onClick={() => { setSelected(null); setPanel(null); setImagePicker(false); }} aria-label="取消选择"><X size={15}/></button>
+                    </div>
+
+                    <div className="wb-image-preview">
+                      {currentImage?.url ? <img src={currentImage.url} alt=""/> : <span>这张图暂未取到原图</span>}
+                      <div className="wb-image-meta">
+                        <span>{currentImage?.position || '配图'} · {currentImage?.purpose || '产品图'}</span>
+                        <span>{currentImage?.width && currentImage?.height ? `${currentImage.width}×${currentImage.height}` : ''}</span>
+                      </div>
+                    </div>
+
+                    <p className="wb-question">图片是另一套改法：这里只换图或改图注。</p>
+                    <div className="wb-chips">
+                      <button type="button" className="wb-chip is-primary" onClick={() => setImagePicker(v => !v)}><ImagePlus size={13}/>{imagePicker ? '收起候选图' : '换一张图'}</button>
+                      <button type="button" className="wb-chip" onClick={() => pick({kind: 'caption', imageIndex: target.imageIndex, text: target.text})}><PenLine size={13}/>改这段图注</button>
+                    </div>
+
+                    {imagePicker && (
+                      <div className="wb-thumbs">
+                        {images.map((image, i) => (
+                          <button type="button" key={image.id || i} className={`wb-thumb${image.url === currentImage?.url ? ' is-on' : ''}`}
+                            onClick={() => {
+                              pushUndo();
+                              setDraft(d => ({...(d || article), image_plan: (d || article).image_plan.map((im, j) => j === target.imageIndex ? {...image, image_id: image.id, caption: im.caption, position: im.position, purpose: im.purpose} : im)}));
+                              setImagePicker(false);
+                              setToast('已换图，记得保存');
+                            }}>
+                            <img src={image.url} alt=""/>
+                          </button>
+                        ))}
+                        {!images.length && <p className="wb-state-inline">这条记录没有其他候选图。</p>}
+                      </div>
+                    )}
+
+                    <p className="wb-foot-note"><ExternalLink size={12}/>换图只影响这张；要改字请点旁边的图注或正文。</p>
+                  </div>
+                );
+              })()}
+
+              {(!target || !isImageBlock(target)) && <>
+                {!target && (
+                  <div className="wb-empty">
+                    <Wand2 size={18}/>
+                    <p>在左边点一下想改的<strong>标题、段落、图注</strong>，或者直接切到「整篇重写」。</p>
+                    <button type="button" className="wb-chip" onClick={() => switchScope('whole')}>不改段落，直接整篇重写</button>
+                  </div>
+                )}
+
+                {target && (
+                  <div className="wb-target">
+                    <div className="wb-target-head">
+                      <em>{LABELS[target.kind] || '这一段'}</em>
+                      <span>{chars(target.text)} 字</span>
+                      <button type="button" onClick={() => { setSelected(null); setPanel(null); resetEdit(); }} aria-label="取消选择"><X size={14}/></button>
+                    </div>
+                    <p>{stripMarkers(target.text).slice(0, 72)}{stripMarkers(target.text).length > 72 ? '…' : ''}</p>
+                  </div>
+                )}
+
+                <section className="wb-step">
+                  <h4><i>1</i>提需求</h4>
+                  <p className="wb-step-label">你可能想改：</p>
+                  <div className="wb-chip-row">
+                    {(keywords && keywords.length ? keywords : PRESETS).map(word => (
+                      <button type="button" key={word} className={`wb-chip${chips.includes(word) ? ' is-on' : ''}`} onClick={() => toggleChip(word)}>{word}</button>
+                    ))}
+                    <button type="button" className={`wb-chip wb-chip-add${showOwn ? ' is-on' : ''}`} onClick={() => setShowOwn(v => !v)}>
+                      <Plus size={12}/>{showOwn ? '收起' : '自己提需求'}
+                    </button>
+                  </div>
+                  {busy === 'keywords' && <p className="wb-state-inline"><Loader2 size={13} className="spin"/>正在看这段可以从哪改…</p>}
+
+                  {showOwn && (
+                    <div className="wb-own">
+                      <textarea className="wb-input" rows={3} value={request} onChange={e => setRequest(e.target.value)}
+                        placeholder="一句话说清：往哪个方向改、要保留什么。例如：别堆形容词，说清楚能装多少本书"/>
+                      <button type="button" className="wb-btn-soft" onClick={analyzeRequest} disabled={Boolean(busy) || (!request.trim() && !chips.length)}>
+                        {busy === 'analyze' ? <><Loader2 size={14} className="spin"/>AI 正在梳理…</> : <><Wand2 size={14}/>让 AI 梳理这条需求</>}
+                      </button>
+                    </div>
+                  )}
+                </section>
+
+                <section className="wb-step">
+                  <h4><i>2</i>AI 梳理需求</h4>
+                  {busy === 'analyze' && <p className="wb-state-inline"><Loader2 size={13} className="spin"/>AI 正在把你的话拆成可执行的要求…</p>}
+                  {analysis ? (
+                    <div className="wb-analysis">
+                      <p className="wb-analysis-req"><Sparkles size={13}/>{analysis.requirement}</p>
+                      {analysis.points?.length > 0 && <p><em>改什么</em>{analysis.points.join('、')}</p>}
+                      {analysis.keep?.length > 0 && <p><em>必须保留</em>{analysis.keep.join('、')}</p>}
+                      {analysis.avoid?.length > 0 && <p><em>不要做</em>{analysis.avoid.join('、')}</p>}
+                    </div>
+                  ) : chips.length > 0 || request.trim() ? (
+                    <p className="wb-hint-sm">方向：{chips.join('、') || request.trim()}。想更准可以点上面的「让 AI 梳理这条需求」。</p>
+                  ) : (
+                    <p className="wb-hint-sm">先在上面点一个方向，或者点「自己提需求」说一句。</p>
+                  )}
+                </section>
+
+                <section className="wb-step">
+                  <h4><i>3</i>{scopeMode === 'whole' ? '整篇重写' : '开始修改'}</h4>
+                  <button type="button" className="wb-btn-primary" onClick={rewriteByRequirement}
+                    disabled={Boolean(busy) || (!chips.length && !request.trim() && !analysis)}>
+                    {busy === 'rewrite'
+                      ? <><Loader2 size={14} className="spin"/>{scopeMode === 'whole' ? '正在重写整篇…' : '正在改这一段…'}</>
+                      : <><RefreshCw size={14}/>{scopeMode === 'whole' ? '整篇重写（只出 1 篇）' : '改这一段（给 3 个版本）'}</>}
+                  </button>
+
+                  {candidates?.length > 0 && (
+                    <ul className="wb-cands">
+                      {candidates.map((candidate, i) => (
+                        <li key={i}>
+                          <button type="button" className={picked === i ? 'is-on' : ''} onClick={() => adoptCandidate(i)}>
+                            <em>{i + 1}</em>
+                            <span>{stripMarkers(candidate).slice(0, 46)}{stripMarkers(candidate).length > 46 ? '…' : ''}</span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {candidates?.length > 0 && <p className="wb-hint-sm">点一版就用上，下面会给出修改前后的对比。</p>}
+                </section>
+
+                {compare && (
+                  <section className="wb-compare">
+                    <div className="wb-compare-head">
+                      <strong>对比</strong>
+                      <span>{compare.scope === 'whole' ? '整篇重写' : '这一段'}</span>
+                      <button type="button" className="wb-chip" onClick={() => { undo(); setCompare(null); }}><Undo2 size={12}/>撤销这次</button>
+                    </div>
+                    <div className="wb-compare-row">
+                      <div className="is-before"><em>修改前</em><p>{compare.before}</p></div>
+                      <div className="is-after"><em>修改后</em><p>{compare.after}</p></div>
+                    </div>
+                  </section>
+                )}
+
+                <p className="wb-foot-note"><ExternalLink size={12}/>满意就点右上角「保存并重新核验」，这一版会进「历史」。</p>
+              </>}
+            </>
+          )}
+
+          {error && <p className="wb-error" role="alert">{error}</p>}
+          <p className="wb-foot-note"><ExternalLink size={12}/>保存后自动重新核验，结果页（原界面）会同步更新。</p>
+        </aside>

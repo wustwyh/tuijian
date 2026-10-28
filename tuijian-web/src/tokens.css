@@ -1,0 +1,56 @@
+/* 设计 token：颜色 / 字号 / 圆角 / 尺寸。改视觉先改这里。 */
+
+/* HarmonyOS Sans SC 可变字体（wght 100–900）。文件约 20MB，后续可做子集瘦身 */
+@font-face {
+  font-family: 'HarmonyOS Sans SC';
+  src: url('../data/fonts/HarmonyOS Sans/HarmonyOS_Sans_SC.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+
+  /* 华为红：只给主按钮、选中态、强调数字、导航激活 */
+  --red: #cf0a2c;
+  --red-press: #a8081f;
+
+  /* 墨灰体系 */
+  --ink: #24272c;          /* 标题、正文 */
+  --ink-2: #5e636b;        /* 说明文字（在展台灰上对比度 ≥ 4.5） */
+  --ink-3: #9a9fa7;        /* 占位、禁用 */
+
+  /* 展台：灰底 + 白色内容面 */
+  --stage: #f5f6f8;
+  --stage-2: #f8f9fb;      /* 图框、示意图底 */
+  --surface: #ffffff;
+  --line: #e5e7eb;         /* 发丝线 */
+  --line-strong: #c4c8ce;
+
+  /* 来源标记（红色只留给操作） */
+  --ima: #2e5a87;          /* ima 知识库：实心标 */
+  --ai: #6a5fa0;           /* AI 生成 / 系统推断：虚线 */
+  --ai-wash: #f5f4fa;
+  --ok: #1f8a55;
+  --warn: #b7791f;
+
+  /* 字号阶梯 14 / 16 / 20 / 25 / 32 / 40 */
+  --fs-s: 14px;
+  --fs-m: 16px;
+  --fs-l: 20px;
+  --fs-xl: 25px;
+  --fs-2xl: 32px;
+  --fs-3xl: 40px;
+
+  /* 圆角按层级：标签 4 / 控件 8 / 卡片 12 / 弹层与面板 16 */
+  --r-tag: 4px;
+  --r-ctl: 8px;
+  --r-card: 12px;
+  --r-pop: 16px;
+
+  --font: 'HarmonyOS Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  --top-h: 56px;
+  --side-w: 232px;
+  --sheet-w: 304px;
+}

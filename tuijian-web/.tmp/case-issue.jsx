@@ -1,0 +1,1 @@
+export default () => <div>{[1].map((x,i)=><li key={i}><b>{x}</b>：{x}</li>)}</div>;

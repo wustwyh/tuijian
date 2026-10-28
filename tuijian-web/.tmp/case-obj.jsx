@@ -1,0 +1,1 @@
+export default () => <div>{({a:'x'})[1]}</div>;

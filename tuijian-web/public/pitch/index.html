@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>推鉴 · 决赛路演</title>
+<style>
+
+  :root{
+    --red:#cf0a2c; --red-2:#ff3b5c; --red-soft:rgba(207,10,44,.10);
+    --ink:#1d2025; --ink-2:#3a3f46; --ink-3:#666d76; --ink-4:#9aa1aa;
+    --line:#e3e6ea; --stage:#f4f5f7; --paper:#fff;
+    --u: 1px;
+    --font:"HarmonyOS Sans SC","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif;
+  }* {box-sizing:border-box;-webkit-font-smoothing:antialiased}
+  html,body{margin:0;height:100%;background:#f4f5f7;font-family:var(--font);overflow:hidden}#deck{position:fixed;left:50%;top:50%;width:1920px;height:1080px;
+        transform:translate(-50%,-50%);transform-origin:center center}.slide {position:absolute;inset:0;display:none;background:var(--stage);color:var(--ink);
+         padding:calc(78 * var(--u)) calc(112 * var(--u)) calc(58 * var(--u));
+         grid-template-rows:auto 1fr auto}.slide.on {display:grid}.slide.dark {background:linear-gradient(150deg,#0f1216 0%,#191f26 52%,#232b34 100%);color:#fff}.head {display:flex;flex-direction:column;gap:calc(12 * var(--u))}.eb {display:flex;align-items:center;gap:calc(12 * var(--u));font-size:calc(20 * var(--u));
+      font-weight:800;letter-spacing:.18em;color:var(--red)}.eb::before {content:"";width:calc(36 * var(--u));height:calc(3 * var(--u));background:var(--red)}.dark .eb {color:var(--red-2)}.dark .eb::before {background:var(--red-2)}h1 {margin:0;font-size:calc(62 * var(--u));line-height:1.1;letter-spacing:-.015em;font-weight:800}h1 .hi {color:var(--red)}.dark h1 .hi {color:var(--red-2)}.foot {display:flex;justify-content:space-between;align-items:flex-end;font-size:calc(19 * var(--u));
+        color:var(--ink-4);letter-spacing:.05em;padding-top:calc(16 * var(--u))}.dark .foot {color:#7b848f}.foot .pn {font-weight:800;color:var(--ink-3);font-variant-numeric:tabular-nums}.dark .foot .pn {color:#9aa3ad}/* 01 封面 */
+  .cover {grid-template-columns:1.12fr .88fr;grid-template-rows:1fr;align-items:center;overflow:hidden;
+         padding:calc(92 * var(--u)) calc(118 * var(--u))}.cover .glow {position:absolute;right:calc(-220 * var(--u));top:calc(-340 * var(--u));
+    width:calc(1000 * var(--u));height:calc(1000 * var(--u));border-radius:50%;
+    background:radial-gradient(circle,rgba(207,10,44,.5),rgba(207,10,44,.09) 46%,transparent 70%)}.cover .dots {position:absolute;left:calc(-150 * var(--u));bottom:calc(-190 * var(--u));
+    width:calc(680 * var(--u));height:calc(680 * var(--u));opacity:.3;
+    background-image:radial-gradient(rgba(255,255,255,.22) 1.4px,transparent 1.4px);
+    background-size:calc(24 * var(--u)) calc(24 * var(--u));
+    -webkit-mask-image:radial-gradient(circle at 40% 60%,#000 20%,transparent 68%);
+            mask-image:radial-gradient(circle at 40% 60%,#000 20%,transparent 68%)}.cover .left {position:relative;z-index:2}.cover .brand {display:flex;gap:calc(6 * var(--u));font-size:calc(190 * var(--u));font-weight:800;
+    line-height:1;letter-spacing:-.04em}.cover .brand .t {color:#fff}.cover .brand .j {color:var(--red-2);text-shadow:0 0 calc(60 * var(--u)) rgba(255,59,92,.5)}.cover .slogan {margin-top:calc(30 * var(--u));font-size:calc(48 * var(--u));font-weight:700;line-height:1.3}.cover .slogan em {font-style:normal;color:#ff8b9d}.cover .by {margin-top:calc(26 * var(--u));display:flex;align-items:center;gap:calc(16 * var(--u));
+    font-size:calc(24 * var(--u));color:#98a2ad}.cover .by b {color:#fff;font-weight:800;font-size:calc(28 * var(--u))}.cover .by .dot {width:calc(5 * var(--u));height:calc(5 * var(--u));border-radius:50%;background:#5c6672}.cover .meta {margin-top:calc(40 * var(--u));display:flex;gap:calc(44 * var(--u));
+    border-top:1px solid rgba(255,255,255,.14);padding-top:calc(22 * var(--u))}.cover .meta b {display:block;font-size:calc(38 * var(--u));font-weight:800;font-variant-numeric:tabular-nums}.cover .meta span {font-size:calc(18 * var(--u));color:#7f8894;letter-spacing:.1em}.stack {position:relative;z-index:2;display:flex;flex-direction:column;gap:calc(14 * var(--u));
+         padding-left:calc(30 * var(--u))}.sc {background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.13);
+      border-radius:calc(14 * var(--u));padding:calc(20 * var(--u)) calc(24 * var(--u));
+      display:flex;align-items:center;gap:calc(16 * var(--u))}.sc .no {font-size:calc(16 * var(--u));font-weight:800;color:var(--red-2);letter-spacing:.16em;
+          width:calc(58 * var(--u))}.sc .nm {font-size:calc(28 * var(--u));font-weight:800;color:#fff}.sc .ds {font-size:calc(18 * var(--u));color:#8d97a2;margin-left:auto;text-align:right;line-height:1.4}.sc.hot {background:rgba(207,10,44,.16);border-color:rgba(255,59,92,.45);
+          box-shadow:0 calc(14 * var(--u)) calc(36 * var(--u)) rgba(207,10,44,.28)}/* 02 推 / 鉴 */
+  .halves {grid-template-columns:1fr 1fr;padding:0;grid-template-rows:1fr}.half {padding:calc(86 * var(--u)) calc(82 * var(--u));display:flex;flex-direction:column;
+        justify-content:center;position:relative;overflow:hidden}.half.l {background:var(--paper);border-right:1px solid var(--line)}.half.r {background:linear-gradient(155deg,#151a20,#242c35)}.half .wm {position:absolute;right:calc(-14 * var(--u));bottom:calc(-80 * var(--u));
+    font-size:calc(420 * var(--u));font-weight:800;line-height:.75;color:var(--red);opacity:.055}.half.r .wm {color:#fff;opacity:.05}.half .lab {font-size:calc(21 * var(--u));font-weight:800;letter-spacing:.36em;color:var(--red)}.half.r .lab {color:var(--red-2)}.half h2 {margin:calc(16 * var(--u)) 0 0;font-size:calc(70 * var(--u));font-weight:800;
+    letter-spacing:-.02em;line-height:1.12}.half.r h2 {color:#fff}.half p {margin:calc(22 * var(--u)) 0 0;font-size:calc(25 * var(--u));line-height:1.72;
+    color:var(--ink-3);max-width:calc(650 * var(--u))}.half.r p {color:#bfc7d0}.half ul {margin:calc(26 * var(--u)) 0 0;padding:0;list-style:none;display:flex;
+    flex-direction:column;gap:calc(13 * var(--u))}.half li {display:flex;gap:calc(12 * var(--u));align-items:flex-start;font-size:calc(24 * var(--u));
+    color:var(--ink-2);line-height:1.55}.half.r li {color:#cfd6de}.half li::before {content:"";width:calc(7 * var(--u));height:calc(7 * var(--u));border-radius:calc(2 * var(--u));
+    background:var(--red);margin-top:calc(12 * var(--u));flex:none}/* 03 零输入 */
+  .zero {display:grid;grid-template-columns:calc(330 * var(--u)) 1fr;gap:calc(62 * var(--u));
+        align-self:center;padding-top:calc(10 * var(--u))}.zero .big {font-size:calc(230 * var(--u));font-weight:800;line-height:.82;letter-spacing:-.06em;color:var(--red)}.zero .big span {display:block;font-size:calc(48 * var(--u));line-height:1.2;letter-spacing:.02em;
+    color:var(--ink);margin-top:calc(8 * var(--u))}.zt {display:grid;grid-template-columns:calc(210 * var(--u)) 1fr calc(96 * var(--u));
+      gap:calc(24 * var(--u));align-items:center;padding:calc(22 * var(--u)) 0;
+      border-bottom:1px solid var(--line)}.zt:first-child {border-top:1px solid var(--line)}.zt .s {font-size:calc(26 * var(--u));font-weight:800}.zt .a {font-size:calc(24 * var(--u));color:var(--ink-3);line-height:1.55}.zt .b {justify-self:end;font-size:calc(21 * var(--u));font-weight:800;color:var(--red);
+    background:var(--red-soft);border:1px solid rgba(207,10,44,.22);
+    padding:calc(5 * var(--u)) calc(12 * var(--u));border-radius:calc(999 * var(--u))}/* 04 卡片 */
+  .cards {display:grid;grid-template-columns:1.42fr .58fr;gap:calc(48 * var(--u));
+         align-self:center;padding-top:calc(6 * var(--u))}.clist {display:grid;grid-template-columns:1fr 1fr;gap:calc(12 * var(--u))}.ccard {background:var(--paper);border:1px solid var(--line);border-radius:calc(11 * var(--u));
+    padding:calc(15 * var(--u)) calc(17 * var(--u));display:flex;flex-direction:column;gap:calc(5 * var(--u))}.ccard .nm {font-size:calc(24 * var(--u));font-weight:800}.ccard .ds {font-size:calc(18 * var(--u));color:var(--ink-3);line-height:1.45}.ccard.plus {background:#fff7f8;border:1px dashed rgba(207,10,44,.42)}.ccard.plus .nm {color:var(--red)}.numbox {display:flex;flex-direction:column;justify-content:center;padding-left:calc(30 * var(--u));
+    border-left:1px solid var(--line)}.numbox .n {font-size:calc(132 * var(--u));font-weight:800;line-height:.86;letter-spacing:-.05em;
+    background:linear-gradient(180deg,#d8102f,#87071b);-webkit-background-clip:text;background-clip:text;
+    color:transparent}.numbox .f {margin-top:calc(14 * var(--u));font-size:calc(22 * var(--u));color:var(--ink-3);line-height:1.6}.numbox .f b {display:block;font-size:calc(25 * var(--u));color:var(--ink);margin-bottom:calc(5 * var(--u))}/* 05 工作流 */
+  .flow {display:grid;grid-template-columns:repeat(4,1fr);gap:calc(38 * var(--u));
+        align-self:center;padding-top:calc(6 * var(--u))}.ph {background:var(--paper);border:1px solid var(--line);border-radius:calc(12 * var(--u));
+      padding:calc(18 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))}.ph .st {font-size:calc(17 * var(--u));font-weight:800;letter-spacing:.2em;color:var(--red)}.ph .ag {font-size:calc(24 * var(--u));font-weight:800;line-height:1.3}.ph .ag em {font-style:normal;color:var(--red);font-size:calc(18 * var(--u));display:block;
+    letter-spacing:.08em;margin-bottom:calc(3 * var(--u))}.ph .do {font-size:calc(18 * var(--u));color:var(--ink-3);line-height:1.5}.ph .give {margin-top:auto;font-size:calc(18 * var(--u));color:var(--ink-4);line-height:1.45;
+    border-top:1px dashed var(--line);padding-top:calc(10 * var(--u))}.ph .give b {color:var(--ink-2);font-weight:800}.ph.key {border-color:rgba(207,10,44,.34);background:#fff8f9}.s05.on {display:flex;flex-direction:column;gap:calc(10 * var(--u))}.s05 .flow {flex:1 1 auto;max-height:calc(360 * var(--u));margin:auto 0;width:100%}.s05 .conn,.s05 .mem {flex:none}.mem {display:grid;grid-template-columns:calc(320 * var(--u)) 1fr;gap:calc(22 * var(--u));
+    align-items:center;background:#1d2025;border-radius:calc(12 * var(--u));
+    padding:calc(13 * var(--u)) calc(20 * var(--u))}.mem .lb {font-size:calc(19 * var(--u));font-weight:800;letter-spacing:.12em;color:#ff8b9d;
+    display:flex;align-items:center;gap:calc(10 * var(--u))}.mem .lb b {color:#fff;font-size:calc(21 * var(--u))}.mem .tx {font-size:calc(19 * var(--u));color:#c2cad3;line-height:1.5}.mem .tx em {font-style:normal;color:#fff;font-weight:700}.conn {display:grid;grid-template-columns:repeat(4,1fr);height:calc(16 * var(--u));
+    margin-top:calc(4 * var(--u))}.conn i {display:block;width:calc(2 * var(--u));height:100%;justify-self:center;
+    background:linear-gradient(180deg,var(--red),rgba(207,10,44,.15))}.ph {position:relative}.ph:not(:last-child)::after {content:"";position:absolute;right:calc(-25 * var(--u));top:50%;
+    width:calc(11 * var(--u));height:calc(11 * var(--u));border-right:calc(3 * var(--u)) solid var(--red);
+    border-top:calc(3 * var(--u)) solid var(--red);transform:translateY(-50%) rotate(45deg)}/* 06 回路图 */
+  .loopwrap {position:relative;width:calc(1696 * var(--u));height:calc(548 * var(--u));
+    align-self:center;margin-top:calc(10 * var(--u))}.loopwrap svg {position:absolute;inset:0;width:100%;height:100%;overflow:visible}.loopwrap svg text {font-family:var(--font);font-size:15px;fill:#6b727b}.loopwrap svg text.rd {fill:var(--red);font-weight:700}.agbox {position:absolute;background:var(--paper);border:1px solid var(--line);
+    border-radius:calc(13 * var(--u));padding:calc(13 * var(--u)) calc(17 * var(--u));
+    display:flex;flex-direction:column;gap:calc(5 * var(--u));width:calc(360 * var(--u));
+    box-shadow:0 calc(10 * var(--u)) calc(26 * var(--u)) rgba(20,23,27,.07)}.agbox .t1 {font-size:calc(15 * var(--u));font-weight:800;letter-spacing:.18em;color:var(--red)}.agbox .t2 {font-size:calc(24 * var(--u));font-weight:800;line-height:1.2}.agbox .t3 {font-size:calc(18 * var(--u));color:var(--ink-3);line-height:1.45}.agbox.key {border-color:rgba(207,10,44,.42);background:#fff8f9}.agbox.me {background:#1d2025;border-color:#1d2025}.agbox.me .t1 {color:#ff8b9d}.agbox.me .t2 {color:#fff}.agbox.me .t3 {color:#9aa3ad}.agbox.ok {border-color:rgba(49,134,117,.45);background:#f2f9f6}.agbox.ok .t1 {color:#318675}.mem2 {display:grid;grid-template-columns:1.12fr .88fr;gap:calc(46 * var(--u));
+    align-self:start;padding-top:calc(10 * var(--u))}.mrow {display:grid;grid-template-columns:calc(200 * var(--u)) 1fr;gap:calc(16 * var(--u));
+    padding:calc(15 * var(--u)) calc(18 * var(--u));background:var(--paper);
+    border:1px solid var(--line);border-left:calc(4 * var(--u)) solid var(--red);
+    border-radius:calc(10 * var(--u));margin-bottom:calc(11 * var(--u))}.mrow .k {font-size:calc(23 * var(--u));font-weight:800;line-height:1.25}.mrow .k span {display:block;font-size:calc(16 * var(--u));color:var(--ink-4);
+    letter-spacing:.08em;margin-top:calc(2 * var(--u));font-weight:600}.mrow .v {font-size:calc(20 * var(--u));color:var(--ink-3);line-height:1.55}.fn {padding:calc(14 * var(--u)) 0;border-bottom:1px dashed var(--line)}.fn b {font-size:calc(24 * var(--u));font-weight:800;color:var(--ink)}.fn span {display:block;font-size:calc(20 * var(--u));color:var(--ink-3);
+    line-height:1.55;margin-top:calc(4 * var(--u))}.rule {margin-top:calc(16 * var(--u));background:#fff8f9;
+    border:1px solid rgba(207,10,44,.25);border-radius:calc(10 * var(--u));
+    padding:calc(13 * var(--u)) calc(17 * var(--u));font-size:calc(20 * var(--u));
+    color:var(--ink-2);line-height:1.55}.rule b {color:var(--red);font-weight:800}.s07 {grid-template-rows:auto 1fr auto auto}.s07 .mem2 {align-self:center}.band2 {display:grid;grid-template-columns:1fr 1fr;gap:calc(20 * var(--u))}.band2 div {border-radius:calc(10 * var(--u));padding:calc(13 * var(--u)) calc(18 * var(--u));
+    font-size:calc(20 * var(--u));line-height:1.55}.band2 .no {background:#f6f6f7;border:1px solid var(--line);color:#6b7079}.band2 .yes {background:#f2f9f6;border:1px solid rgba(49,134,117,.30);color:#255f50}.band2 b {display:block;font-size:calc(21 * var(--u));margin-bottom:calc(3 * var(--u))}/* 07 鉴 */
+  .ev {display:grid;grid-template-columns:1fr 1fr;gap:calc(48 * var(--u));align-self:center;
+      padding-top:calc(8 * var(--u))}.evrow {display:grid;grid-template-columns:calc(190 * var(--u)) 1fr;gap:calc(18 * var(--u));
+    padding:calc(18 * var(--u)) 0;border-bottom:1px solid var(--line);align-items:baseline}.evrow .k {font-size:calc(25 * var(--u));font-weight:800}.evrow .v {font-size:calc(24 * var(--u));color:var(--ink-3);line-height:1.5}.mock {background:var(--paper);border:1px solid var(--line);border-radius:calc(13 * var(--u));
+    padding:calc(24 * var(--u));box-shadow:0 calc(16 * var(--u)) calc(42 * var(--u)) rgba(20,23,27,.08)}.mock .mh {font-size:calc(18 * var(--u));letter-spacing:.14em;color:var(--ink-4);font-weight:800;
+    padding-bottom:calc(12 * var(--u));border-bottom:1px solid var(--line)}.mock .line {display:flex;gap:calc(11 * var(--u));padding:calc(12 * var(--u)) 0;
+    border-bottom:1px dashed var(--line);font-size:calc(20 * var(--u));color:var(--ink-2);line-height:1.5}.mock .line:last-child {border:0}.mock .ref {flex:none;font-size:calc(16 * var(--u));font-weight:800;color:var(--red);
+    background:var(--red-soft);border-radius:calc(4 * var(--u));padding:calc(2 * var(--u)) calc(7 * var(--u));
+    height:fit-content;margin-top:calc(3 * var(--u))}.ok {color:#1f7a5a;font-weight:800}.no-ok {color:var(--red);font-weight:800}/* 08 企业价值 */
+  .dd {display:grid;grid-template-columns:1fr 1fr;gap:calc(46 * var(--u));align-self:start;
+      padding-top:calc(8 * var(--u))}.ddc .h {display:flex;align-items:baseline;gap:calc(14 * var(--u));
+    border-bottom:calc(2 * var(--u)) solid var(--ink);padding-bottom:calc(8 * var(--u))}.ddc .h b {font-size:calc(32 * var(--u));font-weight:800}.ddc .h span {font-size:calc(18 * var(--u));color:var(--ink-4);letter-spacing:.12em}.ddc .it {display:grid;grid-template-columns:calc(40 * var(--u)) 1fr;gap:calc(12 * var(--u));
+    padding:calc(17 * var(--u)) 0;border-bottom:1px dashed var(--line)}.ddc .it .no {font-size:calc(16 * var(--u));font-weight:800;color:var(--red);letter-spacing:.1em;
+    padding-top:calc(4 * var(--u))}.ddc .it .tx {font-size:calc(22 * var(--u));color:var(--ink-3);line-height:1.55}.ddc .it .tx b {color:var(--ink);font-weight:800}.band {margin-top:calc(18 * var(--u));display:grid;grid-template-columns:repeat(3,1fr);
+    gap:calc(16 * var(--u))}.band div {background:var(--paper);border:1px solid var(--line);
+    border-left:calc(4 * var(--u)) solid var(--red);border-radius:calc(9 * var(--u));
+    padding:calc(12 * var(--u)) calc(16 * var(--u));font-size:calc(19 * var(--u));
+    color:var(--ink-3);line-height:1.5}.band b {display:block;font-size:calc(21 * var(--u));color:var(--ink);font-weight:800;
+    margin-bottom:calc(3 * var(--u))}.s08 {grid-template-rows:auto 1fr auto auto auto;row-gap:calc(4 * var(--u))}.s08 .dd {align-self:center}.s08 .foot {padding-top:0}.s08 .punch {margin-top:calc(12 * var(--u))}.punch {margin-top:calc(20 * var(--u));font-size:calc(32 * var(--u));font-weight:800;letter-spacing:-.01em}.punch .hi {color:var(--red)}/* 09 现场演示 */
+  .steps {display:grid;grid-template-columns:repeat(4,1fr);gap:calc(20 * var(--u));
+         align-self:center;padding-top:calc(6 * var(--u))}.step {background:var(--paper);border:1px solid var(--line);border-radius:calc(14 * var(--u));
+    padding:calc(24 * var(--u));box-shadow:0 calc(12 * var(--u)) calc(30 * var(--u)) rgba(20,23,27,.06)}.step .n {width:calc(44 * var(--u));height:calc(44 * var(--u));border-radius:calc(11 * var(--u));
+    background:var(--red);color:#fff;font-size:calc(22 * var(--u));font-weight:800;
+    display:flex;align-items:center;justify-content:center}.step h3 {margin:calc(18 * var(--u)) 0 calc(8 * var(--u));font-size:calc(28 * var(--u));font-weight:800}.step p {margin:0;font-size:calc(22 * var(--u));color:var(--ink-3);line-height:1.55}.endline {margin-top:calc(26 * var(--u));display:flex;align-items:baseline;gap:calc(18 * var(--u))}.endline .mark {font-size:calc(56 * var(--u));font-weight:800;letter-spacing:-.03em}.endline .mark .j {color:var(--red)}.endline .sl {font-size:calc(28 * var(--u));color:var(--ink-2)}.endline .sl em {font-style:normal;color:var(--red);font-weight:800}#bar{position:fixed;left:0;bottom:0;height:3px;background:var(--red);width:0;
+       transition:width .28s ease;z-index:30}#hud{position:fixed;right:16px;bottom:12px;z-index:30;font-size:12px;color:#6a737d;
+       letter-spacing:.06em;font-family:var(--font);user-select:none}#pno{position:fixed;left:16px;bottom:12px;z-index:30;font-size:12px;color:#6a737d;
+       font-family:var(--font);font-variant-numeric:tabular-nums}
+
+  @media print{
+    html,body{overflow:visible;background:#fff}
+    #deck{position:static;transform:none!important}
+    .slide{position:relative;inset:auto;display:grid!important;width:1920px;height:1080px;
+      page-break-after:always;break-after:page}
+    #bar,#hud,#pno{display:none}
+  }
+  @page{size:1920px 1080px;margin:0}
+
+</style>
+</head>
+<body>
+<div id="deck"></div>
+<div id="bar"></div><div id="pno"></div>
+<div id="hud">← → 翻页 · F 全屏</div>
+<script>
+const slides = [];
+
+/* 01 封面 */
+slides.push(`
+<section class="slide dark cover">
+  <div class="glow"></div><div class="dots"></div>
+  <div class="left">
+    <div class="brand"><span class="t">推</span><span class="j">鉴</span></div>
+    <div class="slogan">推一篇<em>好文案</em>，鉴<em>每一个细节</em>。</div>
+    <div class="by"><span>制作人</span><b>吴耀好</b><span class="dot"></span><span>浙江大学 · 计算机技术 · 智能体方向</span></div>
+    <div class="meta">
+      <div><b>10</b><span>产品</span></div>
+      <div><b>41</b><span>客户场景</span></div>
+      <div><b>8</b><span>平台</span></div>
+      <div><b>3280</b><span>种组合</span></div>
+    </div>
+  </div>
+  <div class="stack">
+    <div class="sc"><span class="no">01</span><span class="nm">产品卡片</span><span class="ds">一台机器一张卡</span></div>
+    <div class="sc"><span class="no">02</span><span class="nm">客户卡片</span><span class="ds">41 类使用场景</span></div>
+    <div class="sc hot"><span class="no">03</span><span class="nm">平台卡片</span><span class="ds">8 个渠道语体</span></div>
+    <div class="sc"><span class="no">04</span><span class="nm">选题 · 热点 · 素材</span><span class="ds">可增可改</span></div>
+    <div class="sc"><span class="no">05</span><span class="nm">AI 需求卡片</span><span class="ds">一句话变成卡</span></div>
+  </div>
+</section>`);
+
+/* 02 推 / 鉴 */
+slides.push(`
+<section class="slide halves">
+  <div class="half l">
+    <div class="wm">推</div>
+    <div class="lab">推</div>
+    <h2>生成一篇推文</h2>
+    <p>七类卡片点选，系统自己把这个产品的卖点组织成一篇能发的营销文案。</p>
+    <ul>
+      <li>先规划：定切入角度与卖点顺序</li>
+      <li>再写作：按平台的语体落笔</li>
+      <li>全程不出键盘</li>
+    </ul>
+  </div>
+  <div class="half r">
+    <div class="wm">鉴</div>
+    <div class="lab">鉴</div>
+    <h2>鉴别这篇推文</h2>
+    <p>质量、说法、数据逐项核：用了哪些素材、场景判断是否成立、每个参数引自哪条原文。</p>
+    <ul>
+      <li>五类依据全部可点开</li>
+      <li>核验不通过，不许定稿</li>
+      <li>编号由模型写，原文由程序回填</li>
+    </ul>
+  </div>
+</section>`);
+
+/* 03 零输入 */
+slides.push(`
+<section class="slide">
+  <div class="head"><div class="eb">输入层</div>
+    <h1>从开始到发布，<span class="hi">一个字都不用打</span></h1></div>
+  <div class="zero">
+    <div class="big">0<span>字输入</span></div>
+    <div>
+      <div class="zt"><span class="s">生成前</span><span class="a">产品 / 客户 / 平台 / 选题 / 热点 / 素材，七类卡片点选</span><span class="b">0 字</span></div>
+      <div class="zt"><span class="s">自定义需求</span><span class="a">AI 先分析你的想法，再把它变成一组可点选的卡片</span><span class="b">0 字</span></div>
+      <div class="zt"><span class="s">整篇重写</span><span class="a">AI 分析全文后按新方向重写，事实边界不动</span><span class="b">0 字</span></div>
+      <div class="zt"><span class="s">局部重写</span><span class="a">选一段重写，出多个版本并排对比，选最优</span><span class="b">0 字</span></div>
+    </div>
+  </div>
+  <div class="foot"><span>不是把输入变少，是把输入变成选择</span><span class="pn">03</span></div>
+</section>`);
+
+/* 04 卡片 */
+slides.push(`
+<section class="slide">
+  <div class="head"><div class="eb">卡片系统</div>
+    <h1>一张卡 = 一个维度的选项，<span class="hi">点一下就定了</span></h1></div>
+  <div class="cards">
+    <div class="clist">
+      <div class="ccard"><span class="nm">产品卡片</span><span class="ds">10 张，精确到版本：14 酷睿 Ultra、Pro S、D14…</span></div>
+      <div class="ccard"><span class="nm">客户卡片</span><span class="ds">41 类场景：政企、教育、移动办公、学生…</span></div>
+      <div class="ccard"><span class="nm">平台卡片</span><span class="ds">8 个渠道：公众号、朋友圈、小红书、长图、采购方案…</span></div>
+      <div class="ccard"><span class="nm">选题卡片</span><span class="ds">这篇从哪个角度切入、先讲什么</span></div>
+      <div class="ccard"><span class="nm">热点卡片</span><span class="ds">当下可借的时事与节点</span></div>
+      <div class="ccard"><span class="nm">素材卡片</span><span class="ds">这次用哪几份产品资料，可多选</span></div>
+      <div class="ccard"><span class="nm">AI 需求卡片</span><span class="ds">把一句自由描述，变成可复用的卡片</span></div>
+      <div class="ccard plus"><span class="nm">＋ 自定义卡片</span><span class="ds">库里没有的维度，自己加一张，随建随用</span></div>
+    </div>
+    <div class="numbox">
+      <div class="n">3280</div>
+      <div class="f"><b>10 产品 × 41 客户场景 × 8 平台</b>再乘选题、热点、素材，进入十万级组合。</div>
+    </div>
+  </div>
+  <div class="foot"><span>缺什么卡，就加什么卡：卡片可增可改，新场景不用等版本</span><span class="pn">04</span></div>
+</section>`);
+
+/* 05 工作流主干 */
+slides.push(`
+<section class="slide s05">
+  <div class="head"><div class="eb">多智能体 · 主干</div>
+    <h1>从点卡到初稿，<span class="hi">五个执行 · 一个记忆</span></h1></div>
+  <div class="mem">
+    <span class="lb">记忆层<b>MEMORY AGENT</b></span>
+    <span class="tx">全程共享同一份上下文：<em>你选了哪些卡、写作包长什么样、审核挑出哪几句、你改过什么</em>——
+    每个智能体都读得到、写得上，不用你复述，也不会各记一份。</span>
+  </div>
+  <div class="conn"><i></i><i></i><i></i><i></i></div>
+  <div class="flow">
+    <div class="ph">
+      <div class="st">阶段 1</div>
+      <div class="ag"><em>推荐 agent</em>补全你不知道的信息</div>
+      <div class="do">读完产品与平台卡片，给出匹配的目标用户、当下可用热点、相关素材清单。</div>
+      <div class="give"><b>交付</b>目标用户 · 热点 · 素材清单</div>
+    </div>
+    <div class="ph">
+      <div class="st">阶段 2</div>
+      <div class="ag"><em>需求 agent</em>多轮追问，一轮一问</div>
+      <div class="do">缺什么问什么，把要求收拢成可执行的样子；问不清就不往下走。</div>
+      <div class="give"><b>产出</b>创作要求</div>
+    </div>
+    <div class="ph key">
+      <div class="st">阶段 3</div>
+      <div class="ag"><em>总结 agent</em>装订成写作包</div>
+      <div class="do">产品事实、客户场景、平台语体、选题角度、可用素材、禁区，装成一份写作包。</div>
+      <div class="give"><b>交付</b>写作包</div>
+    </div>
+    <div class="ph">
+      <div class="st">阶段 4</div>
+      <div class="ag"><em>写作 agent</em>先规划，再落笔</div>
+      <div class="do">按写作包定骨架、排卖点顺序，事实句挂编号，生成图文初稿。</div>
+      <div class="give"><b>交付</b>图文初稿</div>
+    </div>
+  </div>
+  <div class="backbar"><span>下一环</span><span class="ln"></span><b>审核 agent 逐项复核 → 交给你定稿</b></div>
+  <div class="foot"><span>记忆层保证六个智能体看到的是同一份事实，不是六份</span><span class="pn">05</span></div>
+</section>`);
+
+/* 06 回路图 */
+slides.push(`
+<section class="slide">
+  <div class="head"><div class="eb">多智能体 · 回路</div>
+    <h1>通过就发，不通过就<span class="hi">回到写作</span></h1></div>
+  <div class="loopwrap">
+    <svg viewBox="0 0 1696 548" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#9aa1aa"/>
+        </marker>
+        <marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#cf0a2c"/>
+        </marker>
+      </defs>
+      <path d="M402,72 H552" fill="none" stroke="#9aa1aa" stroke-width="2" marker-end="url(#ahg)"/>
+      <path d="M558,116 H410" fill="none" stroke="#cf0a2c" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#ahr)"/>
+      <path d="M922,72 H1072" fill="none" stroke="#9aa1aa" stroke-width="2" marker-end="url(#ahg)"/>
+      <path d="M1400,140 V322" fill="none" stroke="#318675" stroke-width="2" marker-end="url(#ahg)"/>
+      <path d="M1100,140 V225" fill="none" stroke="#9aa1aa" stroke-width="2"/>
+      <path d="M1100,225 H740 V322" fill="none" stroke="#9aa1aa" stroke-width="2" marker-end="url(#ahg)"/>
+      <path d="M558,385 H410" fill="none" stroke="#9aa1aa" stroke-width="2" marker-end="url(#ahg)"/>
+      <path d="M200,330 V140" fill="none" stroke="#9aa1aa" stroke-width="2" marker-end="url(#ahg)"/>
+      <text x="479" y="60" text-anchor="middle">初稿</text>
+      <text x="484" y="140" text-anchor="middle" class="rd">不通过 · 直接打回</text>
+      <text x="999" y="60" text-anchor="middle">审核意见</text>
+      <text x="1410" y="238">通过 · 定稿发布</text>
+      <text x="920" y="212" text-anchor="middle">不满意</text>
+      <text x="484" y="372" text-anchor="middle">逐段评价</text>
+      <text x="212" y="242">修改要求</text>
+    </svg>
+    <div class="agbox" style="left:calc(40 * var(--u));top:calc(20 * var(--u))">
+      <span class="t1">写作 AGENT</span><span class="t2">先规划，再落笔</span>
+      <span class="t3">按写作包定骨架、排卖点，事实句挂编号</span></div>
+    <div class="agbox key" style="left:calc(560 * var(--u));top:calc(20 * var(--u))">
+      <span class="t1">审核 AGENT</span><span class="t2">逐项复核</span>
+      <span class="t3">产品事实 · 图片型号 · 合规 · 平台适配</span></div>
+    <div class="agbox me" style="left:calc(1080 * var(--u));top:calc(20 * var(--u))">
+      <span class="t1">你</span><span class="t2">看稿、定稿</span>
+      <span class="t3">通过就发，不满意就点</span></div>
+    <div class="agbox" style="left:calc(40 * var(--u));top:calc(330 * var(--u))">
+      <span class="t1">需求 AGENT</span><span class="t2">把不满意翻译成要求</span>
+      <span class="t3">仍然一轮一问，问到能落地</span></div>
+    <div class="agbox" style="left:calc(560 * var(--u));top:calc(330 * var(--u))">
+      <span class="t1">评价 AGENT</span><span class="t2">逐段给评价</span>
+      <span class="t3">这段强在哪、弱在哪、和哪段重复</span></div>
+    <div class="agbox ok" style="left:calc(1080 * var(--u));top:calc(330 * var(--u))">
+      <span class="t1">发布</span><span class="t2">定稿即交付</span>
+      <span class="t3">预览看到的就是导出的那一份</span></div>
+  </div>
+  <div class="foot"><span>回到写作 agent 时，前几轮的选择和意见还在记忆层里，不用你重讲一遍</span><span class="pn">06</span></div>
+</section>`);
+
+/* 07 记忆层 */
+slides.push(`
+<section class="slide s07">
+  <div class="head"><div class="eb">记忆层 · MEMORY AGENT</div>
+    <h1>六个智能体，<span class="hi">共用一份记忆</span></h1></div>
+  <div class="mem2">
+    <div>
+      <div class="mrow"><span class="k">选择记录<span>你写的</span></span>
+        <span class="v">选了哪台机型、哪类客户、哪个平台、哪几张素材——第一版和第五版指的是同一件事</span></div>
+      <div class="mrow"><span class="k">写作包<span>总结 agent 写</span></span>
+        <span class="v">事实、要求、禁区装订成一份，写作 agent 直接拿去用，不再自己猜</span></div>
+      <div class="mrow"><span class="k">审核与评价<span>审核 / 评价 agent 写</span></span>
+        <span class="v">哪句没过、为什么、哪段重复了——下一轮改写照单执行</span></div>
+      <div class="mrow"><span class="k">改动历史<span>你写的</span></span>
+        <span class="v">第几版改了什么、以哪一版为准，随时可回退</span></div>
+    </div>
+    <div>
+      <div class="fn"><b>① 记</b><span>每个 agent 写进来的都记下，带来源和时间，不靠谁"记得住"</span></div>
+      <div class="fn"><b>② 压</b><span>上下文要满时压成摘要，但产品事实与数字原样保留，不压缩</span></div>
+      <div class="fn"><b>③ 投</b><span>按需投喂：写作 agent 只拿写作包，审核 agent 只拿事实表，互不污染</span></div>
+      <div class="rule"><b>冲突怎么办</b>：以你最后一次的选择为准，旧版本降级成参考</div>
+    </div>
+  </div>
+  <div class="band2">
+    <div class="no"><b>没有记忆层</b>每轮都重新猜你改过什么，上下文一长就互相打架，改到第三版开始跑偏</div>
+    <div class="yes"><b>有记忆层</b>选择、写作包、审核意见、改动历史在同一份里，改到第五版依然对得上第一版</div>
+  </div>
+  <div class="foot"><span>所以改到第五版，第一版定下的要求还在</span><span class="pn">07</span></div>
+</section>`);
+
+/* 07 鉴 */
+slides.push(`
+<section class="slide">
+  <div class="head"><div class="eb">鉴</div>
+    <h1>文案是结果，<span class="hi">依据是过程</span></h1></div>
+  <div class="ev">
+    <div>
+      <div class="evrow"><span class="k">使用素材</span><span class="v">这篇引了哪几份资料，哪几份被判不相关</span></div>
+      <div class="evrow"><span class="k">场景判断</span><span class="v">它认为这是什么场景、写给谁看</span></div>
+      <div class="evrow"><span class="k">知识库依据</span><span class="v">每个卖点、参数引自哪一条原文</span></div>
+      <div class="evrow"><span class="k">配图来源</span><span class="v">每一张图都取自产品数据库，不是模型生成，型号对得上</span></div>
+      <div class="evrow"><span class="k">平台适配</span><span class="v">为什么是这个长度、这个语气</span></div>
+      <div class="evrow"><span class="k">核验结果</span><span class="v">每一句通过还是没通过</span></div>
+    </div>
+    <div class="mock">
+      <div class="mh">结果页 · 编号与原文对照</div>
+      <div class="line"><span class="ref">f_5</span><span>14 酷睿 Ultra 搭载 2.8K OLED 触控屏　<span class="ok">✓ 原文一致</span></span></div>
+      <div class="line"><span class="ref">f_7</span><span>机身重量 1.31 kg　<span class="ok">✓ 型号匹配</span></span></div>
+      <div class="line"><span class="ref">f_9</span><span>续航口径与官方资料一致　<span class="ok">✓ 合规</span></span></div>
+      <div class="line"><span class="ref">f_2</span><span>该卖点不适用于本客户场景　<span class="no-ok">✕ 已剔除</span></span></div>
+    </div>
+  </div>
+  <div class="foot"><span>它交的不只是一篇稿子，还有这篇稿子为什么成立</span><span class="pn">08</span></div>
+</section>`);
+
+/* 08 企业价值 */
+slides.push(`
+<section class="slide s08">
+  <div class="head"><div class="eb">企业价值</div>
+    <h1>引入它不是加个工具，是<span class="hi">替掉一条写稿链</span></h1></div>
+  <div class="dd">
+    <div class="ddc">
+      <div class="h"><b>降本</b><span>省的是人力，不是分钟</span></div>
+      <div class="it"><span class="no">01</span><span class="tx"><b>一条写稿链的人力</b>：产品出资料、市场写稿、设计配图、再逐级审，现在一个人点卡出稿。</span></div>
+      <div class="it"><span class="no">02</span><span class="tx"><b>一次返工就是一整篇</b>：型号错、参数错、平台不合规，过去发出去才发现；现在发布前就拦下。</span></div>
+      <div class="it"><span class="no">03</span><span class="tx"><b>新人不用再熬经验</b>：怎么写、哪些话不能说、各平台什么口径，都写在卡片和知识库里，新人第一天就按同一套标准写。</span></div>
+    </div>
+    <div class="ddc">
+      <div class="h"><b>增效</b><span>快的是节奏，不只是速度</span></div>
+      <div class="it"><span class="no">01</span><span class="tx"><b>从排期等稿到当场出稿</b>：不用等总部或代理排期，门店当天要投就当天有。</span></div>
+      <div class="it"><span class="no">02</span><span class="tx"><b>一个人覆盖全部产品与渠道</b>：10 产品 × 41 客户 × 8 平台，同一套流程，不用为每个组合建模板。</span></div>
+      <div class="it"><span class="no">03</span><span class="tx"><b>越改越准，不是越改越乱</b>：每一轮修改都落在同一份记忆上，改到第五版依然对得上第一版的要求。</span></div>
+    </div>
+  </div>
+  <div class="band">
+    <div><b>改习惯的代价被压到最小</b>只改一个动作：把打字换成点卡</div>
+    <div><b>不用重新培训</b>不学提示词、不记平台规则，会点鼠标就会用</div>
+    <div><b>收益是结构性的</b>省下来的是整条链的排期，不是一次沟通</div>
+  </div>
+  <div class="punch">小改动不值得改习惯，所以它<span class="hi">不是更快的打字机，是另一个写字的人</span>。</div>
+  <div class="foot"><span>降本：一条写稿链的人力与返工　增效：一次成稿的交付节奏</span><span class="pn">09</span></div>
+</section>`);
+
+/* 09 现场演示 */
+slides.push(`
+<section class="slide">
+  <div class="head"><div class="eb">现场演示</div>
+    <h1>接下来，<span class="hi">真机跑一遍</span></h1></div>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><h3>点卡</h3><p>产品 → 客户 → 平台，全程不出键盘</p></div>
+    <div class="step"><div class="n">2</div><h3>生成</h3><p>先出写作包，再落一篇完整推文</p></div>
+    <div class="step"><div class="n">3</div><h3>看鉴</h3><p>素材、场景、依据、核验，逐项摊开</p></div>
+    <div class="step"><div class="n">4</div><h3>改到能发</h3><p>评价、追问、局部重写，选一版定稿</p></div>
+  </div>
+  <div class="endline">
+    <div class="mark">推<span class="j">鉴</span></div>
+    <div class="sl">推一篇<em>好文案</em>，鉴<em>每一个细节</em>。</div>
+  </div>
+  <div class="foot"><span>从点第一张卡开始</span><span class="pn">10</span></div>
+</section>`);
+
+/* ===== 渲染 ===== */
+const deck = document.getElementById('deck');
+deck.innerHTML = slides.join('');
+const nodes = [...deck.querySelectorAll('.slide')];
+let cur = 0;
+
+function bgFor(n){
+  if (n.classList.contains('halves')) return 'linear-gradient(90deg,#ffffff 0 50%,#1b2129 50% 100%)';
+  if (n.classList.contains('dark')) return '#14171b';
+  return '#f4f5f7';
+}
+function fit(){
+  const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+  deck.style.transform = `translate(-50%,-50%) scale(${s})`;
+}
+window.addEventListener('resize', fit);
+
+function show(i){
+  cur = Math.max(0, Math.min(nodes.length - 1, i));
+  nodes.forEach((n, k) => n.classList.toggle('on', k === cur));
+  document.body.style.background = bgFor(nodes[cur]);
+  document.getElementById('bar').style.width = ((cur + 1) / nodes.length * 100) + '%';
+  document.getElementById('pno').textContent = `${cur + 1} / ${nodes.length}`;
+  history.replaceState(null, '', '#' + (cur + 1));
+}
+document.addEventListener('keydown', e => {
+  const k = e.key;
+  if (['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(k)) { e.preventDefault(); show(cur + 1); }
+  else if (['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(k)) { e.preventDefault(); show(cur - 1); }
+  else if (k === 'Home') show(0);
+  else if (k === 'End') show(nodes.length - 1);
+  else if (k.toLowerCase() === 'f') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+});
+document.addEventListener('click', e => {
+  if (e.detail === 0) return;
+  (e.clientX < window.innerWidth * 0.22) ? show(cur - 1) : show(cur + 1);
+});
+
+fit();
+show(parseInt(location.hash.slice(1), 10) > 0 ? parseInt(location.hash.slice(1), 10) - 1 : 0);
+
+if (location.search.includes('measure')) {
+  const out = [];
+  const deckR = deck.getBoundingClientRect();
+  out.push(`deck scale w=${deckR.width.toFixed(1)} h=${deckR.height.toFixed(1)}`);
+  const mi = parseInt((location.search.match(/measure=(\d+)/)||[])[1]||1,10);
+  const s1 = nodes[mi-1];
+  s1.classList.add('on');
+  const sr = s1.getBoundingClientRect();
+  out.push(`slide${mi} w=${sr.width.toFixed(1)} h=${sr.height.toFixed(1)}`);
+  [...s1.querySelectorAll('*')].forEach(el => {
+    if (el.closest('.glow,.dots')) return;
+    const r = el.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    const t = (el.textContent || '').trim().slice(0, 14) || el.className;
+    out.push(`  ${el.className || el.tagName} "${t}" x=${(r.left-sr.left).toFixed(0)} y=${(r.top-sr.top).toFixed(0)} w=${r.width.toFixed(0)} h=${r.height.toFixed(0)} bottom=${(r.bottom-sr.top).toFixed(0)}`);
+  });
+  s1.classList.remove('on');
+  const pre = document.createElement('pre'); pre.id='measure'; pre.textContent = out.join('\n');
+  document.body.appendChild(pre);
+}
+/* ===== 自检：出血 / 溢出 / 重叠 ===== */
+if (location.search.includes('audit')) {
+  const issues = [], rects = [];
+  nodes.forEach((n, i) => {
+    n.classList.add('on');
+    const P = n.getBoundingClientRect();
+    n.querySelectorAll('*').forEach(el => {
+      if (el.children.length) return;
+      if (el.closest('.glow,.dots,.wm')) return;
+      const r = el.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      const t = (el.textContent || '').trim().slice(0, 16) || el.className;
+      if (r.right > P.right + 2 || r.bottom > P.bottom + 2 || r.left < P.left - 2) issues.push(`p${i+1} 出血 ${t}`);
+      const cs = getComputedStyle(el);
+      if (el.clientWidth > 0 && cs.display !== 'inline' && cs.overflow !== 'visible' &&
+          (el.scrollWidth > el.clientWidth + Math.max(3, el.clientWidth * .1) ||
+           el.scrollHeight > el.clientHeight + Math.max(3, el.clientHeight * .1))) issues.push(`p${i+1} 溢出 ${t}`);
+      if (t) rects.push({ p: i + 1, el, r, t });
+    });
+    if (i !== cur) n.classList.remove('on');
+  });
+  for (let a = 0; a < rects.length; a++) for (let b = a + 1; b < rects.length; b++) {
+    const A = rects[a], B = rects[b];
+    if (A.p !== B.p || A.el.contains(B.el) || B.el.contains(A.el)) continue;
+    const ox = Math.min(A.r.right, B.r.right) - Math.max(A.r.left, B.r.left);
+    const oy = Math.min(A.r.bottom, B.r.bottom) - Math.max(A.r.top, B.r.top);
+    if (ox > 6 && oy > 6) issues.push(`p${A.p} 重叠 "${A.t}" × "${B.t}"`);
+  }
+  const pre = document.createElement('pre');
+  pre.id = 'audit';
+  pre.textContent = 'START\n' + (issues.length ? [...new Set(issues)].join('\n') : 'OK 无出血 无溢出 无重叠') + '\nEND';
+  document.body.appendChild(pre);
+}
+</script>
+</body>
+</html>

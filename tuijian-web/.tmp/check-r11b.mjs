@@ -1,0 +1,36 @@
+import {openBrowser, measure} from "./cdp.mjs";
+const {session, close} = await openBrowser();
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const waitFor = async (expr, sec = 240) => { for (let i = 0; i < sec; i++) { const v = await session.evaluate(expr); if (v) return v; await sleep(1000); } return null; };
+try {
+  await measure(session, "http://localhost:5173/result/b081e220-517b-4241-ac8e-0d5bb2861a71", {width: 1440, height: 1000, settle: 2600, ready: ".rs-top", init: ["localStorage.setItem('tuijian_user','演示账号')"]});
+  await session.evaluate(`document.querySelector(".rs-main-btn").click()`);
+  await sleep(3000);
+  await session.evaluate(`[...document.querySelectorAll(".wb-tabs button")].find(b => b.textContent.includes("修改")).click()`);
+  await sleep(1000);
+  console.log("历史:", await session.evaluate(`document.querySelector(".wb-history")?.textContent.trim()`));
+  await session.evaluate(`document.querySelector(".wb .generated-article .article-lead")?.click()`);
+  await sleep(4000);
+  await session.evaluate(`[...document.querySelectorAll(".wb-chip-row .wb-chip")].find(b => b.textContent.includes("短一点"))?.click()`);
+  await sleep(400);
+  await session.evaluate(`document.querySelector(".wb-btn-primary").click()`);
+  await waitFor(`document.querySelectorAll(".wb-cands li").length ? 1 : 0`, 150);
+  console.log("候选 + 立即对比:", await session.evaluate(`JSON.stringify({cands: document.querySelectorAll(".wb-cands li").length, compare: !!document.querySelector(".wb-compare"), applied: document.querySelector(".wb-compare-head span")?.textContent})`));
+  const lead0 = await session.evaluate(`document.querySelector(".wb .generated-article")?.innerText.slice(0, 24)`);
+  await session.evaluate(`document.querySelector(".wb-btn-apply").click()`);
+  await sleep(700);
+  const lead1 = await session.evaluate(`document.querySelector(".wb .generated-article")?.innerText.slice(0, 24)`);
+  console.log("用上后变化:", lead0 !== lead1, "| 状态:", await session.evaluate(`document.querySelector(".wb-compare-head span")?.textContent`), "| dirty:", await session.evaluate(`document.querySelector(".wb-dirty")?.textContent`));
+  await session.evaluate(`document.querySelector(".wb-save").click()`);
+  const saved = await waitFor(`document.querySelector(".wb-save")?.textContent.includes("已是最新") ? 1 : 0`, 300);
+  await sleep(1500);
+  console.log("保存完成:", saved, "| 历史:", await session.evaluate(`document.querySelector(".wb-history")?.textContent.trim()`));
+  await session.evaluate(`document.querySelector(".wb-history").click()`);
+  await sleep(1000);
+  console.log("历史条数:", await session.evaluate(`document.querySelectorAll(".wb-revs li").length`));
+  await session.evaluate(`document.querySelector(".wb-rev-restore")?.click()`);
+  await sleep(1500);
+  console.log("回溯:", await session.evaluate(`JSON.stringify({toast: document.querySelector(".wb-toast")?.textContent, dirty: document.querySelector(".wb-dirty")?.textContent})`));
+  await session.evaluate(`document.querySelector(".wb-close").click()`);
+  await sleep(400);
+} finally { close(); }

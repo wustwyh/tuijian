@@ -1,0 +1,7 @@
+node_modules/
+dist/
+data/
+public/mock/
+.env
+.env.*
+!.env.example

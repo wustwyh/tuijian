@@ -1,0 +1,146 @@
+        <aside className="wb-side">
+          <div className="wb-side-head">
+            <div className="wb-scope" role="group" aria-label="改哪里">
+              <button type="button" className={scopeMode === 'local' ? 'is-on' : ''} onClick={() => switchScope('local')}>这一段</button>
+              <button type="button" className={scopeMode === 'whole' ? 'is-on' : ''} onClick={() => switchScope('whole')}>整篇</button>
+            </div>
+            {dirty && <em className="wb-dirty">未保存</em>}
+          </div>
+
+          {target && isImageBlock(target) && (() => {
+            const currentImage = current.image_plan?.[target.imageIndex];
+            return (
+              <div className="wb-panel wb-panel-image">
+                <div className="wb-panel-head">
+                  <div>
+                    <strong>这张图</strong>
+                    <em>{stripMarkers(target.text).slice(0, 36)}{stripMarkers(target.text).length > 36 ? '…' : ''}</em>
+                  </div>
+                  <button type="button" className="wb-panel-close" onClick={() => { setSelected(null); setPanel(null); setImagePicker(false); }} aria-label="取消选择"><X size={15}/></button>
+                </div>
+
+                <div className="wb-image-preview">
+                  {currentImage?.url ? <img src={currentImage.url} alt=""/> : <span>这张图暂未取到原图</span>}
+                  <div className="wb-image-meta">
+                    <span>{currentImage?.position || '配图'} · {currentImage?.purpose || '产品图'}</span>
+                    <span>{currentImage?.width && currentImage?.height ? `${currentImage.width}×${currentImage.height}` : ''}</span>
+                  </div>
+                </div>
+
+                <p className="wb-question">图片是另一套改法：这里只换图或改图注。</p>
+                <div className="wb-chips">
+                  <button type="button" className="wb-chip is-primary" onClick={() => setImagePicker(v => !v)}><ImagePlus size={13}/>{imagePicker ? '收起候选图' : '换一张图'}</button>
+                  <button type="button" className="wb-chip" onClick={() => pick({kind: 'caption', imageIndex: target.imageIndex, text: target.text})}><PenLine size={13}/>改这段图注</button>
+                </div>
+
+                {imagePicker && (
+                  <div className="wb-thumbs">
+                    {images.map((image, i) => (
+                      <button type="button" key={image.id || i} className={`wb-thumb${image.url === currentImage?.url ? ' is-on' : ''}`}
+                        onClick={() => {
+                          pushUndo();
+                          setDraft(d => ({...(d || article), image_plan: (d || article).image_plan.map((im, j) => j === target.imageIndex ? {...image, image_id: image.id, caption: im.caption, position: im.position, purpose: im.purpose} : im)}));
+                          setImagePicker(false);
+                          setToast('已换图，记得保存');
+                        }}>
+                        <img src={image.url} alt=""/>
+                      </button>
+                    ))}
+                    {!images.length && <p className="wb-state-inline">这条记录没有其他候选图。</p>}
+                  </div>
+                )}
+
+                <p className="wb-foot-note"><ExternalLink size={12}/>换图只影响这张；要改字请点旁边的图注或正文。</p>
+              </div>
+            );
+          })()}
+
+          {(!target || !isImageBlock(target)) && <>
+            {!target && (
+              <div className="wb-empty">
+                <Wand2 size={18}/>
+                <p>在左边点一下想改的<strong>标题、段落、图注</strong>，或者直接改整篇。</p>
+                <button type="button" className="wb-chip" onClick={() => switchScope('whole')}>不改段落，直接改整篇</button>
+              </div>
+            )}
+
+            {target && (
+              <div className="wb-target">
+                <div className="wb-target-head">
+                  <em>{LABELS[target.kind] || '这一段'}</em>
+                  <span>{chars(target.text)} 字</span>
+                  <button type="button" onClick={() => { setSelected(null); setPanel(null); setRequirements(null); setAnalysis(null); setRequirement(''); setRequest(''); }} aria-label="取消选择"><X size={14}/></button>
+                </div>
+                <p>{stripMarkers(target.text).slice(0, 72)}{stripMarkers(target.text).length > 72 ? '…' : ''}</p>
+              </div>
+            )}
+
+            <section className="wb-step">
+              <h4><i>1</i>提需求<small>AI 先替你想，你只管挑</small></h4>
+              <button type="button" className="wb-btn-soft" onClick={loadRequirements} disabled={Boolean(busy)}>
+                {busy === 'requirements' ? <><Loader2 size={14} className="spin"/>AI 正在想改法…</> : <><Sparkles size={14}/>AI 帮我想 3 条改法</>}
+              </button>
+              {requirements?.length > 0 && (
+                <ul className="wb-reqs">
+                  {requirements.map((item, i) => (
+                    <li key={i}>
+                      <button type="button" className={requirement === item.label ? 'is-on' : ''} onClick={() => chooseRequirement(item)}>
+                        <b>{item.label}</b>
+                        {item.detail && <span>{item.detail}</span>}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+
+            <section className="wb-step">
+              <h4><i>2</i>说一句你的想法<small>不想打字就跳过</small></h4>
+              <textarea className="wb-input" rows={2} value={request} onChange={e => setRequest(e.target.value)}
+                placeholder="比如：别堆形容词，说清楚能装多少本书就行"/>
+              <button type="button" className="wb-btn-soft" onClick={analyzeRequest} disabled={Boolean(busy) || !request.trim()}>
+                {busy === 'analyze' ? <><Loader2 size={14} className="spin"/>AI 正在拆解…</> : <><Wand2 size={14}/>让 AI 分析这条需求</>}
+              </button>
+            </section>
+
+            <section className="wb-step">
+              <h4><i>3</i>按需求重写</h4>
+              {analysis
+                ? <div className="wb-analysis">
+                    <p className="wb-analysis-req"><Sparkles size={13}/>{analysis.requirement}</p>
+                    {analysis.points?.length > 0 && <p><em>改什么</em>{analysis.points.join('、')}</p>}
+                    {analysis.keep?.length > 0 && <p><em>必须保留</em>{analysis.keep.join('、')}</p>}
+                    {analysis.avoid?.length > 0 && <p><em>不要做</em>{analysis.avoid.join('、')}</p>}
+                  </div>
+                : effectiveRequirement
+                  ? <p className="wb-analysis-req"><Sparkles size={13}/>{effectiveRequirement}</p>
+                  : <p className="wb-hint-sm">先挑一条改法，或者写一句你的想法。</p>}
+              <button type="button" className="wb-btn-primary" onClick={rewriteByRequirement} disabled={Boolean(busy) || !effectiveRequirement}>
+                {busy === 'rewrite' ? <><Loader2 size={14} className="spin"/>正在重写…</> : <><RefreshCw size={14}/>按这个需求重写</>}
+              </button>
+              {panel?.requirement && busy !== 'rewrite' && (
+                <div className="wb-cand">
+                  <span className="wb-req-label"><Sparkles size={13}/>这版怎么改的</span>
+                  <p>{panel.requirement}</p>
+                  <div className="wb-req-actions">
+                    <button type="button" className="wb-chip is-primary" onClick={nextCandidate} disabled={Boolean(busy)}><RefreshCw size={13}/>换一版</button>
+                    <button type="button" className="wb-chip" onClick={undo} disabled={!undoStack.length}><Undo2 size={13}/>撤回</button>
+                    <span className="wb-req-count">{panel.index + 1}/{panel.candidates.length}</span>
+                  </div>
+                </div>
+              )}
+            </section>
+
+            <section className="wb-step wb-step-quiet">
+              <h4><i>4</i>或者直接点一个方向</h4>
+              <div className="wb-chips">
+                {keywords
+                  ? keywords.map(keyword => <button type="button" key={keyword} className="wb-chip" onClick={() => applyKeyword(keyword)} disabled={Boolean(busy)}>{keyword}</button>)
+                  : <button type="button" className="wb-chip" onClick={() => target && fetchKeywords(target)} disabled={Boolean(busy) || !target}>{busy === 'keywords' ? 'AI 正在看…' : '看看能怎么改'}</button>}
+              </div>
+            </section>
+          </>}
+
+          {error && <p className="wb-error" role="alert">{error}</p>}
+          <p className="wb-foot-note"><ExternalLink size={12}/>保存后自动重新核验，结果页（原界面）会同步更新。</p>
+        </aside>

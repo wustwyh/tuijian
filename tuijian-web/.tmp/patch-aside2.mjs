@@ -1,0 +1,11 @@
+import {readFileSync, writeFileSync} from "node:fs";
+const file = "src/pages/ArticleWorkbench.jsx";
+let s = readFileSync(file, "utf8");
+const start = s.indexOf('        <aside className="wb-side">');
+const end = s.indexOf('        </aside>') + '        </aside>'.length;
+if (start < 0 || end < 0) throw new Error("找不到 aside");
+const aside = readFileSync(".tmp/aside2.jsx.txt", "utf8");
+s = s.slice(0, start) + aside + s.slice(end);
+s = s.replace("  Sparkles, Check, Loader2, ImagePlus, RotateCcw, ExternalLink, PenLine,", "  Sparkles, Check, Loader2, ImagePlus, RotateCcw, ExternalLink, PenLine, Plus, History,");
+writeFileSync(file, s);
+console.log("aside swapped");

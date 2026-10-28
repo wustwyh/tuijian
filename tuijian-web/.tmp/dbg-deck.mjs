@@ -1,0 +1,10 @@
+import {packTextBlocks, splitSourceBlock} from "../src/card-deck.js";
+const r = await fetch("http://localhost:5173/api/generations/edd82c5c-2281-4942-881e-fe6dd67eba1a", {cache:"no-store"});
+const job = await r.json();
+const a = job.result.article;
+const src = [a.lead, a.body].filter(Boolean).join("\n");
+const cut = splitSourceBlock(src);
+console.log("sources:", cut.sources.length, "| head text len", cut.text.length);
+for (const p of cut.text.split(/\r?\n+/).filter(t=>t.trim())) console.log(p.length, p.slice(0,28));
+const blocks = packTextBlocks(cut.text, {maxHeight: 397});
+blocks.forEach((b,i) => console.log(`block${i+1}: ${b.length} 字, ${b.split("\n").length} 段`));

@@ -1,0 +1,8 @@
+id="r-article" no="03" title="图文软文" action={!blocked?<button type="button" className="btn-ghost section-action-btn" onClick={()=>setPreviewOpen(true)}><Eye size={14}/>预览发布稿</button>:null}>
+        {blocked&&<p className="result-error">草稿未通过核验：正文暂不展示，避免误用。点「改稿」可以逐段修，改完会自动重新核验。</p>}
+        {job.result?.versions?.length>0&&<div className="restore-bar"><button type="button" className="btn-ghost" disabled={restoring||editingArticle} onClick={restoreVersion}><RotateCcw size={15}/>{restoring?'正在撤回…':'撤回上次保存'}</button><span>上一次保存前的版本还留着，撤回后会重新核验。</span></div>}
+        {!editingArticle&&<div className="article-edit-entry"><button type="button" className="btn-ghost" onClick={()=>{setFixRequest(null);setEditingArticle(true);}}><Pencil size={16}/>改稿</button><span className="article-edit-hint">点渲染稿里的任意一段就能改，AI 给关键词，选一个就重写，改完立刻看到效果。</span></div>}
+        {editingArticle
+          ? <ArticleEditor job={job} result={result} platformKind={platformKind} generatedTime={generatedTime} suggestion={fixRequest} onEditing={setEditingArticle} onSaved={data=>{setFixRequest(null);setJob(data);const ver=data.result?.verification;const label=ver?({passed:'核验通过',pending:'仍有待确认事项',rejected:'有未通过项',conflict:'资料冲突'})[ver.overall_status]||ver.overall_status:'未核验';setNotice('修改已保存，并已重新核验：'+label+'。请在第四段确认结果。');}}/>
+          : (!blocked&&<ArticlePreview job={job} result={result} platformKind={platformKind} generatedTime={generatedTime}/>)}
+      </Section>

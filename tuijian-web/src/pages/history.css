@@ -1,0 +1,99 @@
+/* 历史记录：档案式卡片墙。宽屏自动多列，内容整体居中 */
+.history-page{max-width:min(1680px,100%);margin:0 auto;padding-bottom:80px}
+
+.history-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:22px}
+.history-eyebrow{display:inline-block;margin-bottom:8px;font-size:11px;font-weight:700;letter-spacing:.14em;color:#b96f91}
+.history-head h1{font-size:32px;line-height:1.2;background:linear-gradient(110deg,#1d2026 30%,#b2173c);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.history-head p{margin-top:8px;max-width:640px;color:var(--ink-2);font-size:14px;line-height:1.7}
+.history-new{flex:none;display:inline-flex;align-items:center;gap:8px;height:44px}
+
+/* 顶部四个数字卡：点一下就是筛选 */
+.history-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:26px}
+.history-stat{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;align-items:center;gap:2px 10px;padding:16px 18px;border:1px solid #ece3ea;border-radius:16px;background:linear-gradient(135deg,#fff,#fdf8fb);text-align:left;cursor:pointer;transition:border-color .18s,box-shadow .18s,transform .12s}
+.history-stat:hover{border-color:#e0bccd;box-shadow:0 10px 26px #7d365710;transform:translateY(-1px)}
+.history-stat.is-active{border-color:#b2173c;background:linear-gradient(135deg,#fff,#fbEDF2);box-shadow:0 10px 26px #cf0a2c14}
+.history-stat-icon{grid-row:1 / span 2;display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:#f7edf2;color:#b2173c}
+.history-stat-num{font-size:24px;font-weight:700;line-height:1.1;color:#1d2026}
+.history-stat-label{font-size:12px;color:var(--ink-2)}
+
+.history-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}
+.history-filters{display:flex;gap:8px;flex-wrap:wrap}
+.history-filter{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 14px;border:1px solid #ebdde5;border-radius:999px;background:#fff;color:var(--ink-2);font-size:13px;cursor:pointer;transition:color .16s,border-color .16s,background .16s}
+.history-filter b{font-size:11px;font-weight:600;color:#a3909b}
+.history-filter:hover{border-color:#e0bccd;color:#b2173c}
+.history-filter.is-active{background:#b2173c;border-color:#b2173c;color:#fff}
+.history-filter.is-active b{color:#ffd9e4}
+.history-total{font-size:12px;color:var(--ink-3);white-space:nowrap}
+
+/* 卡片墙：宽屏 4 列，普通屏 3 列，窄屏自动降列 */
+.history-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.history-card{position:relative;display:flex;flex-direction:column;gap:12px;min-height:186px;padding:18px;border:1px solid #ece3ea;border-radius:16px;background:#fff;color:inherit;text-decoration:none;overflow:hidden;transition:border-color .18s,box-shadow .2s,transform .12s}
+.history-card::before{content:'';position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,#cf0a2c,#f0829a 55%,#8f6ad4);opacity:.85}
+.history-card:hover{border-color:#e2b9c9;box-shadow:0 14px 34px #7d365718;transform:translateY(-2px)}
+.history-card:hover .history-open{color:#b2173c;gap:6px}
+.history-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.history-platform{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:8px;background:#f6eef3;color:#8d3a5c;font-size:11px;font-weight:700;letter-spacing:.02em}
+.history-card[data-platform="wechat"] .history-platform{background:#eaf6ef;color:#1c7a4b}
+.history-card[data-platform="xhs"] .history-platform{background:#fdecec;color:#c02a3a}
+.history-card[data-platform="weibo"] .history-platform{background:#fdf1e4;color:#c06a1d}
+.history-card[data-platform="news"] .history-platform{background:#eaf1fb;color:#2b5da8}
+.history-card[data-platform="zhihu"] .history-platform{background:#e8f0fb;color:#2c5aa0}
+.history-card[data-platform="store"] .history-platform{background:#f3edfb;color:#6a4bb0}
+.history-card[data-platform="moments"] .history-platform{background:#e9f7f4;color:#1f7a70}
+.history-card[data-platform="business"] .history-platform{background:#eef0f4;color:#455166}
+.history-card-title{margin:0;font-size:17px;line-height:1.45;color:#1d2026;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.history-card-tags{display:flex;flex-wrap:wrap;gap:6px}
+.history-card-tags span{padding:3px 9px;border-radius:7px;background:#f7f8fa;border:1px solid #eef0f3;color:var(--ink-2);font-size:12px;line-height:1.6}
+.history-card-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:12px;border-top:1px dashed #eee3ea}
+.history-time{font-size:12px;color:#a090a4;font-variant-numeric:tabular-nums}
+.history-open{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#b96f91;transition:color .16s,gap .16s}
+
+/* 骨架屏 */
+.history-card.is-skeleton{justify-content:center;gap:14px;pointer-events:none}
+.history-card.is-skeleton::before{opacity:.35}
+.history-card.is-skeleton span{display:block;height:14px;border-radius:7px;background:linear-gradient(90deg,#f3eef1,#fbf7f9,#f3eef1);background-size:200% 100%;animation:history-shimmer 1.4s linear infinite}
+.history-card.is-skeleton span:nth-child(1){width:38%;height:22px}
+.history-card.is-skeleton span:nth-child(2){width:78%}
+.history-card.is-skeleton span:nth-child(3){width:56%}
+@keyframes history-shimmer{from{background-position:0 0}to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.history-card.is-skeleton span{animation:none}}
+
+/* 空态 */
+.history-empty{display:grid;justify-items:center;gap:12px;padding:64px 24px;border:1px dashed #e6d3de;border-radius:20px;background:radial-gradient(ellipse at 50% 0%,#fdf3f8,transparent 70%),#fff;text-align:center}
+.history-empty-art{display:grid;place-items:center;width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,#fbe6ed,#efe6fb);color:#b2173c}
+.history-empty h2{font-size:19px}
+.history-empty p{max-width:420px;color:var(--ink-2);font-size:14px;line-height:1.75}
+.history-blank{padding:40px 0;color:var(--ink-2);font-size:14px}
+
+/* 中屏与窄屏 */
+@media (max-width:1200px){
+  .history-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .history-grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+}
+@media (max-width:760px){
+  .history-head{flex-direction:column;align-items:flex-start}
+  .history-head h1{font-size:26px}
+  .history-new{width:100%;justify-content:center}
+  .history-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .history-stat{padding:12px 14px}
+  .history-stat-num{font-size:20px}
+  .history-grid{grid-template-columns:1fr}
+  .history-toolbar{flex-direction:column;align-items:flex-start;gap:10px}
+}
+
+/* 按产品/客户/平台筛选 */
+.history-scope{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 14px;margin:0 0 20px;border:1px solid #eee4ea;border-radius:14px;background:#fff}
+.history-scope-title{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#a4506f}
+.history-select{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#8b7d84}
+.history-select>span{white-space:nowrap}
+.history-select select{height:32px;max-width:220px;padding:0 28px 0 10px;border:1px solid #e6dde3;border-radius:9px;background:#fdfafb url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a0909a' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 9px center;color:#2a2d33;font:inherit;font-size:12.5px;appearance:none;cursor:pointer}
+.history-select select:hover{border-color:#d9b3c4;background-color:#fff6fa}
+.history-select select:focus{outline:2px solid #d6396860;outline-offset:1px}
+.history-clear{display:inline-flex;align-items:center;gap:4px;height:30px;padding:0 10px;border:1px dashed #d9b3c4;border-radius:999px;background:#fff;color:#a4506f;font-size:12px;cursor:pointer}
+.history-clear:hover{background:#fff2f7;border-color:#cf8ba7;color:#8f2b4f}
+@media (max-width:760px){
+  .history-scope{gap:8px}
+  .history-select{flex:1 1 46%}
+  .history-select select{width:100%;max-width:none}
+  .history-clear{flex:1 1 100%;justify-content:center}
+}

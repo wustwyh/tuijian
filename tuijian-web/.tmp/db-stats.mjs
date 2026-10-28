@@ -1,0 +1,10 @@
+import {DatabaseSync} from "node:sqlite";
+const db = new DatabaseSync("data/storage/tuijian.sqlite");
+const g = db.prepare("SELECT COUNT(*) c FROM generations").get();
+const r = db.prepare("SELECT COUNT(*) c FROM revisions").get();
+const sizes = db.prepare("SELECT status, COUNT(*) c, SUM(LENGTH(result)) bytes FROM generations GROUP BY status").all();
+console.log("generations", g.c, "revisions", r.c);
+console.log(JSON.stringify(sizes));
+const one = db.prepare("SELECT id, created_at, status, LENGTH(summary) s, LENGTH(input) i, LENGTH(result) r FROM generations ORDER BY created_at DESC LIMIT 3").all();
+console.log(JSON.stringify(one));
+db.close();

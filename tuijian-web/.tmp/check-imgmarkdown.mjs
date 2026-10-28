@@ -1,0 +1,20 @@
+import {buildPublishHtml} from "../src/publish-html.js";
+import {platformSpec} from "../src/platform-layout.js";
+import {writeFileSync, mkdirSync} from "node:fs";
+const id = "e5b28d3c-808a-4890-8480-eaaeec324ddf";
+const base = "http://localhost:5173";
+const job = await (await fetch(`${base}/api/generations/${id}`)).json();
+const a = job.result.article;
+const spec = platformSpec(job.summary.platformId || job.summary.platform);
+const loaded = await Promise.all((a.image_plan || []).map(async (img) => {
+  const r = await fetch(base + img.url);
+  return {img, mime: r.headers.get("content-type") || "image/jpeg", bytes: new Uint8Array(await r.arrayBuffer())};
+}));
+const html = buildPublishHtml({article: a, loaded, spec, generatedTime: "2026/10/22 10:50:00"});
+mkdirSync(".tmp/shots", {recursive: true});
+writeFileSync(".tmp/shots/wechat2.html", html);
+console.log("平台:", spec.label, "| 图片:", loaded.length, "张");
+console.log("导出含 image_id:", html.includes("image_id"), "| 含 '![':", html.includes("!["), "| figure 数:", (html.match(/<figure\b/g)||[]).length);
+console.log("空段落 <p></p>:", /<p>\s*<\/p>/.test(html));
+const firstPara = /<div class="flow">([\s\S]{0,160})/.exec(html)?.[1]?.replace(/data:image[^"]+/g, "IMG");
+console.log("正文开头:", firstPara?.slice(0, 120));

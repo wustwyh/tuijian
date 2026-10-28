@@ -1,0 +1,51 @@
+/* 选题推荐 / 热点 / 需求填写方式 */
+.insight-refresh{display:inline-flex;align-items:center;gap:5px;margin-left:auto;padding:5px 11px;border:1px solid #f0dbe5;border-radius:999px;background:#fff7fa;color:#a8446a;font:inherit;font-size:12px;cursor:pointer}
+.insight-refresh:hover:not(:disabled){background:#fdeef4}
+.insight-refresh:disabled{opacity:.55;cursor:not-allowed}
+.insight-state{display:flex;align-items:center;gap:8px;margin:6px 0 10px;font-size:12.5px;color:#a0909a}
+.insight-note{margin:8px 0 0;font-size:11.5px;line-height:1.7;color:#a0909a}
+
+.insight-hot .insight-search{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #eadfe5;border-radius:12px;background:#fff}
+.insight-hot .insight-search svg{color:#b08a9c;flex:none}
+.insight-hot .insight-search input{flex:1;border:none;background:none;font:inherit;font-size:13px;outline:none;min-width:0;color:#2a2d33}
+.insight-hot .insight-search button{flex:none;height:30px;padding:0 14px;border:none;border-radius:8px;background:linear-gradient(135deg,#c85a7f,#a8446a);color:#fff;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.insight-hot .insight-search button:disabled{opacity:.55;cursor:not-allowed}
+
+.hot-list{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.hot-card{display:flex;flex-direction:column;gap:5px;width:100%;height:100%;padding:12px 13px;border:1px solid #f0e4ea;border-radius:12px;background:#fff;font:inherit;text-align:left;cursor:pointer}
+.hot-card:hover{border-color:#e3bccd;background:#fffafc}
+.hot-card.is-on{border-color:#c85a7f;background:#fdeef4;box-shadow:0 4px 14px #c85a7f1f}
+.hot-head{display:flex;align-items:baseline;gap:7px}
+.hot-head strong{font-size:13px;font-weight:600;color:#2a2d33;line-height:1.5}
+.hot-head span{font-size:11px;color:#b08a9c;background:#fdf4f8;border-radius:5px;padding:1px 6px;white-space:nowrap}
+.hot-card p{margin:0;font-size:12px;line-height:1.65;color:#6a626a}
+.hot-card .hot-angle{display:flex;align-items:flex-start;gap:4px;color:#8a6a9a}
+.hot-card .hot-angle svg{margin-top:2px;flex:none}
+.hot-add{margin-top:auto;font-size:11.5px;font-weight:600;color:#a8446a}
+.hot-card.is-on .hot-add{color:#8f3a5c}
+
+.hot-picked{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:12px;padding-top:10px;border-top:1px dashed #f0e7ec}
+.hot-picked-label{font-size:11.5px;color:#a0909a}
+.hot-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 6px 4px 10px;border-radius:999px;background:#fdeef4;border:1px solid #f3d3e0;color:#a8446a;font-size:12px}
+.hot-chip button{display:grid;place-items:center;width:16px;height:16px;border:none;border-radius:50%;background:#fff;color:#b0577a;cursor:pointer;padding:0}
+.hot-clear{margin-left:auto;border:none;background:none;color:#a0909a;font:inherit;font-size:11.5px;cursor:pointer;text-decoration:underline}
+
+/* 需求页：自己写 / 和 AI 聊 */
+.req-switch{display:flex;flex-direction:column;gap:8px}
+.req-tabs{display:inline-flex;gap:4px;padding:3px;border-radius:11px;background:#f4eef2;align-self:flex-start}
+.req-tabs button{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:none;border-radius:9px;background:none;color:#7d6d76;font:inherit;font-size:13px;cursor:pointer}
+.req-tabs button.is-on{background:#fff;color:#a8446a;font-weight:600;box-shadow:0 1px 4px #7d2f4a1f}
+.req-tabs em{font-style:normal;font-size:10.5px;color:#c85a7f;background:#fdeef4;border-radius:999px;padding:1px 6px}
+.req-hint{margin:0;font-size:12.5px;line-height:1.75;color:#8b7d84}
+.req-count{margin:6px 0 0;font-size:11.5px;color:#a0909a}
+
+.hot-foot{display:flex;align-items:center;gap:10px;margin-top:auto}
+.hot-src{margin-left:auto;font-size:11.5px;color:#8a7f88;text-decoration:underline;text-underline-offset:2px}
+.hot-src:hover{color:#a8446a}
+.hot-sources{margin-top:10px;font-size:12px;color:#8b7d84}
+.hot-sources summary{cursor:pointer;color:#a0909a}
+.hot-sources ul{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.hot-sources li{display:flex;flex-direction:column;gap:2px;padding:7px 9px;border:1px solid #f2ecef;border-radius:8px;background:#fff}
+.hot-sources a{color:#5a6b8c;text-decoration:none;font-size:12px;line-height:1.5}
+.hot-sources a:hover{text-decoration:underline}
+.hot-sources span{font-size:11.5px;color:#a0909a;line-height:1.5}

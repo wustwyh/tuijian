@@ -1,0 +1,71 @@
+/* 平台版式预览：抽象色块，只表达排版结构 */
+.ppv{display:flex;flex-direction:column;justify-content:flex-start;gap:6px;width:100%;height:100%;padding:10px 12px;box-sizing:border-box;border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px #f0e7ec;overflow:hidden}
+
+.ppv-line{display:block;height:5px;border-radius:3px;background:#ece6ea}
+.ppv-line.is-strong{height:8px;border-radius:4px;background:#cfc2ca}
+.ppv-line.ppv-kicker{height:4px;background:#f3d3df}
+.ppv-para{display:flex;flex-direction:column;gap:5px}
+.ppv-img{display:block;border-radius:6px;background:linear-gradient(120deg,#f4e2ea,#e8ecf7)}
+.ppv-img.tone-2{background:linear-gradient(120deg,#e9e4f6,#dfeef2)}
+.ppv-img.tone-3{background:linear-gradient(120deg,#f6ece2,#eef1e4)}
+.ppv-pills{display:flex;gap:5px;margin-top:auto}
+.ppv-pills>i{display:block;height:9px;width:26px;border-radius:999px;background:#f1e3ea}
+.ppv-row{display:flex;align-items:center;gap:7px}
+.ppv-col{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
+.ppv-avatar{width:16px;height:16px;border-radius:50%;background:#e8dbe3;flex:none}
+.ppv-grid2{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.ppv-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.ppv-cta{display:block;height:12px;width:56%;margin-top:auto;border-radius:6px;background:#c85a7f}
+
+/* 长图文 */
+.ppv-article{gap:7px}
+
+/* 卡片流（小红书） */
+.ppv-card{flex-direction:row;gap:7px;align-items:flex-start;position:relative;padding-bottom:16px}
+.ppv-card-item{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0}
+.ppv-card-item.is-main{flex:1.5}
+.ppv-dots{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);display:flex;gap:4px}
+.ppv-dots>i{width:5px;height:5px;border-radius:50%;background:#e2d6dd}
+.ppv-dots>i:first-child{background:#c85a7f}
+
+/* 朋友圈 */
+.ppv-moment{gap:7px}
+
+/* 门店长图 */
+.ppv-poster{gap:7px}
+.ppv-poster .ppv-img{flex:none}
+
+/* 微博/快手这类短文案 */
+.ppv-feed{gap:7px}
+
+/* 新闻稿 */
+.ppv-news{gap:6px}
+
+/* 知乎问答 */
+.ppv-qa{gap:6px}
+.ppv-q,.ppv-h{display:flex;align-items:center;gap:6px}
+.ppv-q>b,.ppv-h>b{flex:none;display:grid;place-items:center;width:16px;height:16px;border-radius:5px;background:#f0dfe7;color:#a4506f;font-size:9px;font-weight:800}
+.ppv-q>span,.ppv-h>span{flex:1;min-width:0}
+
+/* 采购方案 */
+.ppv-doc{gap:7px}
+.ppv-doc-row{display:flex;gap:7px;align-items:flex-start}
+.ppv-num{flex:none;display:grid;place-items:center;width:14px;height:14px;border-radius:4px;background:#efe6ec;color:#a4506f;font-size:8px;font-weight:800}
+
+/* 平台卡里的预览区 */
+.pf-preview{display:block;width:100%;height:158px;margin-bottom:2px;border-radius:12px;background:linear-gradient(160deg,#fbf7f9,#f4eef6);padding:8px;box-sizing:border-box;overflow:hidden}
+.pf-preview>.ppv{height:100%}
+@media (max-width:760px){
+  .pf-preview{height:138px}
+}
+
+/* 手机上预览窗更窄：内容等比瘦一圈，保证骨架不被裁 */
+@media (max-width:480px){
+  .pf-preview{height:150px;padding:6px}
+  .ppv{gap:4px;padding:8px 10px}
+  .ppv-line{height:4px}
+  .ppv-line.is-strong{height:6px}
+  .ppv-para{gap:4px}
+  .ppv-doc-row{gap:5px}
+  .ppv-num,.ppv-q>b,.ppv-h>b{width:12px;height:12px}
+}

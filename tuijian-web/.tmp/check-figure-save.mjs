@@ -1,0 +1,31 @@
+import {openBrowser, measure} from "./cdp.mjs";
+const {session, close} = await openBrowser();
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const waitFor = async (expr, sec = 60) => { for (let i = 0; i < sec; i++) { const v = await session.evaluate(expr); if (v) return v; await sleep(1000); } return null; };
+const id = "16ae9440-f38d-450d-8c37-81d6bfc1e46d";
+try {
+  const r = await measure(session, `http://localhost:5173/result/${id}`, {width: 1440, height: 1000, settle: 2200, ready: "#r-article", init: ["localStorage.setItem('tuijian_user','演示账号')"]});
+  console.log('errors:', JSON.stringify(r.errors));
+  console.log('平台标签:', await session.evaluate(`document.querySelector('.article-platform')?.textContent || ''`), '｜布局类:', await session.evaluate(`document.querySelector('.generated-article')?.className || ''`));
+  await session.evaluate(`[...document.querySelectorAll('button')].find(b=>b.textContent.includes('预览发布稿'))?.click()`);
+  await sleep(2200);
+  await session.evaluate(`[...document.querySelectorAll('.pp-tabs button')].find(b=>b.textContent.includes('改稿'))?.click()`);
+  await sleep(1200);
+  const fig = await session.evaluate(`(() => { const f=document.querySelector('.edit-hit[data-kind="figure"]'); if(!f) return 'no-figure'; f.click(); return f.textContent.slice(0,20); })()`);
+  console.log('点配图:', fig);
+  const chips = await waitFor(`document.querySelectorAll('.ai-chip').length >= 2 ? [...document.querySelectorAll('.ai-chip')].map(b=>b.textContent.trim()).join('｜') : 0`, 40);
+  console.log('配图关键词:', chips);
+  const beforeImg = await session.evaluate(`document.querySelector('.article-figure img')?.src.slice(-24) || ''`);
+  await session.evaluate(`[...document.querySelectorAll('.ai-chip')].find(b=>b.textContent.includes('换一张图'))?.click()`);
+  await sleep(400);
+  const thumbs = await session.evaluate(`document.querySelectorAll('.ai-thumb').length`);
+  await session.evaluate(`document.querySelectorAll('.ai-thumb')[1]?.click()`);
+  await sleep(600);
+  const afterImg = await session.evaluate(`document.querySelector('.article-figure img')?.src.slice(-24) || ''`);
+  console.log(`换图: 缩略图 ${thumbs} 个｜图片变化 ${beforeImg !== afterImg}`);
+  const t0 = Date.now();
+  await session.evaluate(`[...document.querySelectorAll('.btn-primary')].find(b=>b.textContent.includes('保存并重新核验'))?.click()`);
+  const back = await waitFor(`document.querySelector('.pp-frame') ? 'preview' : ''`, 90);
+  console.log(`保存并回到预览 ${Math.round((Date.now()-t0)/1000)}s｜tab:`, back);
+  console.log('通知:', await session.evaluate(`document.querySelector('.product-notice')?.textContent || ''`));
+} finally { close(); }
